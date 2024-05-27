@@ -18,6 +18,12 @@
       inputs.home-manager.nixosModules.home-manager
     ];
 
+  # TODO
+  # boot = {
+  #   kernelPackages = pkgs.linuxPackages_latest;
+  #   kernelParams = [ "quiet" ];
+  # };
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${VARS.userSettings.username} = {
     isNormalUser = true;
