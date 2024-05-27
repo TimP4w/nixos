@@ -14,6 +14,7 @@
       ../modules/services.nix
       ../modules/docker.nix
       ../modules/grub.nix
+      ../modules/gaming.nix
 
       inputs.home-manager.nixosModules.home-manager
     ];

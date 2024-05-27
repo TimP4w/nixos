@@ -8,6 +8,8 @@
     ./common/apps/brave.nix
     ./common/apps/nvim
 
+    ./common/gaming
+
     ./common/dev/kubernetes.nix
     ./common/dev/terraform.nix
 
