@@ -32,6 +32,9 @@
     unzip
     curl
 
+    parted
+    gparted
+
     vscode
     brave
     warp-terminal
