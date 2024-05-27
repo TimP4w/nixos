@@ -1,0 +1,42 @@
+local vars = require('timp4w.vars')
+local M = {}
+
+M.setup_snyk_ls = function()
+  local lspconfig = require 'lspconfig'
+  local configs = require 'lspconfig.configs'
+
+  if not configs.snyk then
+    configs.snyk = {
+      default_config = {
+        cmd = {vars.SNYK.BINARY_PATH, '-f', '/tmp/snyk-ls-vim.log' },
+        root_dir = function(name)
+          return lspconfig.util.find_git_ancestor(name) or vim.loop.os_homedir()
+        end,
+        init_options = {
+          activateSnykOpenSource = "true",
+          activateSnykCode = "false",
+          activateSnykIac = "true",
+          insecure = "false",
+          -- endpoint = "https://example.com"
+          -- additionalParams = "--all-projects"
+          -- additionalEnv = MAVEN_OPTS=-Djava.awt.headless=true;FOO=BAR
+          -- path = /usr/local/bin
+          -- organization = "a string"
+          sendErrorReports = "false",
+          enableTelemetry = "false",
+          manageBinariesAutomatically = "true",
+          -- cliPath = "/a/patch/snyk-cli"
+          token = vars.SNYK.TOKEN,
+          automaticAuthentication = "true",
+          enableTrustedFolderFeature = "true",
+          -- trustedFolders = ["", ""]
+
+        }
+      },
+    }
+  end
+  lspconfig.snyk.setup {}
+end
+
+return M
+
