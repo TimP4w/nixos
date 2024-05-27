@@ -1,6 +1,9 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 
 {
+  environment.systemPackages = with pkgs; [
+    nvitop
+  ];
 
   environment.sessionVariables = { NIXOS_OZONE_WL = "1"; }; # Workaround for electron apps
 
