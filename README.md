@@ -17,7 +17,7 @@ Ensure that the infos in `variables.nix` are correct.
 # Clone Repository
 nix-shell -p git git-crypt
 git clone https://github.com/TimP4w/nix
-mv nix .nix
+mv nixos .nix
 
 # Decrypt Secrets
 cd .nix
