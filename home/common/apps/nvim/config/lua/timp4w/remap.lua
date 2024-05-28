@@ -71,3 +71,6 @@ vim.keymap.set("n", "gR", function() require("trouble").toggle("lsp_references")
 --Remove stupid "disable mouse" entry
 vim.cmd.aunmenu{'PopUp.How-to\\ disable\\ mouse'}
 vim.cmd.aunmenu{'PopUp.-1-'}
+
+-- Noice
+vim.keymap.set('n', '<space>nd', function() require("noice").cmd("dismiss") end)
