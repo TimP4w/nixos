@@ -30,12 +30,15 @@
       };
     in
     {
+      nixosModules = import ./modules;
+
       nixosConfigurations = {
         ${VARS.hostSettings.hostname} = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs pkgs-unstable VARS; };
           modules = [
             ./hosts/${VARS.hostSettings.hostname}/configuration.nix
-          ];
+          ]
+          ++ (builtins.attrValues outputs.nixosModules);
         };
       };
     };

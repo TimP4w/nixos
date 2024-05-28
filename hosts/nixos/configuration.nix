@@ -3,19 +3,6 @@
   imports =
     [
       ./hardware-configuration.nix # Include the results of the hardware scan.
-      ../modules/gnome.nix
-      ../modules/audio.nix
-      ../modules/nvidia.nix
-      ../modules/fonts.nix
-      ../modules/network.nix
-      ../modules/locale.nix
-      ../modules/shell.nix
-      ../modules/packages.nix
-      ../modules/services.nix
-      ../modules/docker.nix
-      ../modules/grub.nix
-      ../modules/gaming.nix
-
       inputs.home-manager.nixosModules.home-manager
     ];
 
@@ -25,12 +12,37 @@
   #   kernelParams = [ "quiet" ];
   # };
 
+  environment.systemPackages = with pkgs; [
+    python3
+    nodejs
+    python3
+    nodejs
+    gparted
+    vscode
+    warp-terminal
+    nixpkgs-fmt
+  ];
+
+  modules.nixos = {
+    basic.enable = true;
+
+    docker.enable = true;
+    audio.enable = true;
+    desktop.enable = true;
+    gaming.enable = true;
+    gnome.enable = true;
+    grub.enable = true;
+    ld.enable = true;
+    network.enable = true;
+    nvidia.enable = true;
+    zsh.enable = true;
+  };
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${VARS.userSettings.username} = {
     isNormalUser = true;
     description = VARS.userSettings.username;
     extraGroups = [ "networkmanager" "wheel" ];
-    shell = pkgs.zsh;
   };
 
   home-manager = {
@@ -43,13 +55,8 @@
     users.${VARS.userSettings.username} = import ../../home/${VARS.userSettings.username}.nix;
   };
 
-  environment.variables = {
-    NIXOS_CONFIG_DIR = VARS.hostSettings.configDir;
-  };
-
 
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11";
-
 }
