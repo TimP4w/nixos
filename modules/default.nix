@@ -10,4 +10,5 @@
   network = import ./network;
   nvidia = import ./nvidia;
   zsh = import ./zsh;
+  pipewire = import ./audio/pipewire.nix;
 }

@@ -31,7 +31,9 @@ let
   # This doesn't work in general because of missing development information.
   jack-libs = pkgs.runCommand "jack-libs" { } ''
     mkdir -p "$out/lib"
+    mkdir -p "$out/lib32"
     ln -s "${cfg.package.jack}/lib" "$out/lib/pipewire"
+    ln -s "${pkgs.pkgsi686Linux.pipewire.jack}/lib" "$out/lib32/pipewire"
   '';
 
   configPackages = cfg.configPackages;
@@ -410,7 +412,7 @@ in
     };
 
     environment.sessionVariables.LD_LIBRARY_PATH =
-      mkIf cfg.jack.enable [ "${cfg.package.jack}/lib" ];
+      mkIf cfg.jack.enable [ "${cfg.package.jack}/lib" "${pkgs.pkgsi686Linux.pipewire.jack}/lib" ];
 
     networking.firewall.allowedUDPPorts = mkIf cfg.raopOpenFirewall [ 6001 6002 ];
 
