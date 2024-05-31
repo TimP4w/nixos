@@ -27,9 +27,15 @@
     basic.enable = true;
 
     docker.enable = true;
-    audio.enable = true;
+    audio = {
+      enable = true;
+      # enableRealTime = false;
+    };
     desktop.enable = true;
-    gaming.enable = true;
+    gaming = {
+      enable = true;
+      enableRocksmith2014 = true; # Needs reboot if toggled
+    };
     gnome.enable = true;
     grub.enable = true;
     ld.enable = true;

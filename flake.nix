@@ -6,6 +6,7 @@
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable"; 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    musnix.url = "github:musnix/musnix";
 
     # hardware.url = "github:nixos/nixos-hardware";
 
@@ -36,6 +37,7 @@
         ${VARS.hostSettings.hostname} = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs pkgs-unstable VARS; };
           modules = [
+            inputs.musnix.nixosModules.musnix
             ./hosts/${VARS.hostSettings.hostname}/configuration.nix
           ]
           ++ (builtins.attrValues outputs.nixosModules);
