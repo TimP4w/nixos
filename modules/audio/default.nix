@@ -42,6 +42,10 @@ in
       musnix = mkIf cfg.enableRealTime {
         # https://github.com/musnix/musnix
         enable = true;
+        kernel = {
+          realtime = true;
+        };
+
       };
 
       users.users.${VARS.userSettings.username} = mkIf cfg.enableRealTime {
