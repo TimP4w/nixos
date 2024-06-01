@@ -8,7 +8,7 @@
 
   boot = {
     #   kernelPackages = pkgs.linuxPackages_latest;
-    kernelParams = [ "quiet" "splash" ];
+    kernelParams = [ "quiet" ]; # "splash" is breaking stuf...
   };
 
   environment.systemPackages = with pkgs; [
