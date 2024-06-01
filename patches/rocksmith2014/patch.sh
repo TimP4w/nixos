@@ -178,7 +178,7 @@ patch_wineasio() {
 
     echo "Copying ${STEAMPATH}/steamapps/compatdata/221680/pfx/* --> ${WINEPREFIX}/"
     cp -a -r "${STEAMPATH}/steamapps/compatdata/221680/pfx/"* "${WINEPREFIX}/"
-    
+
     for dll in "${WINEASIODLLS[@]}"; do
         if echo "$dll" | grep -q "32"; then
             patch_wineasio_32bit "$dll"
@@ -240,10 +240,10 @@ cleanup() {
 }
 
 ################### Execute ################### 
+print_system_info
 greet
 backup
 prepare
-print_system_info
 patch_wineasio
 patch_rs_asio
 add_configs
