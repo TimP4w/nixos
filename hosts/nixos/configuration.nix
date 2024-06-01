@@ -6,11 +6,10 @@
       inputs.home-manager.nixosModules.home-manager
     ];
 
-  # TODO
-  # boot = {
-  #   kernelPackages = pkgs.linuxPackages_latest;
-  #   kernelParams = [ "quiet" ];
-  # };
+  boot = {
+    #   kernelPackages = pkgs.linuxPackages_latest;
+    kernelParams = [ "quiet" "splash" ];
+  };
 
   environment.systemPackages = with pkgs; [
     python3
