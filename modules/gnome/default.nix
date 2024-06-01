@@ -26,6 +26,10 @@ in
 
     services.libinput.enable = true;
 
+    environment.variables = {
+      QT_QPA_PLATFORM = "wayland";
+    };
+
     environment.systemPackages = with pkgs; [
       gnome.gnome-tweaks
     ];
