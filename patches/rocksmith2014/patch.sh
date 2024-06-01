@@ -4,17 +4,20 @@ set -e
 
 ######################### VARS ###############################
 USER=$(whoami)
+
+PROTONVER="Proton - Experimental"
+RSASIOVER="0.7.1"
+WINEPREFIX="/home/${USER}/.wine" # TODO: We can't actually use a prefix (maybe try with a flake or steam-run bash?), so we use the default dir and we copy the content back and forth
+
+# These shouldn't change
+WINEASIOPATH="${LD_WINEASIO_PATH}/lib/wine" 
+
 WINEASIODLLS=(
     "/i386-unix/wineasio32.dll.so" 
     "/i386-windows/wineasio32.dll" 
     "/x86_64-unix/wineasio64.dll.so" 
     "/x86_64-windows/wineasio64.dll"
 )
-
-PROTONVER="Proton - Experimental"
-WINEASIOPATH="${LD_WINEASIO_PATH}/lib/wine" 
-WINEPREFIX="/home/${USER}/.wine"
-
 STEAMPATH="/home/${USER}/.steam/steam"
 PROTONPATH="${STEAMPATH}/steamapps/common/${PROTONVER}"
 WINE="${PROTONPATH}/files/bin/wine"
@@ -42,9 +45,22 @@ backup() {
 
 print_system_info() {
     echo "======== System Info "========
-    echo "NixOS $(nixos-version)"
+    echo "NixOS $(nixos-version) [$(getconf LONG_BIT)-bit]"
     echo "Wine $(steam-run "${WINE}" --version)"
     echo "Wine64 $(steam-run "${WINE64}" --version)"
+    echo "Wineasio $(basename "$LD_WINEASIO_PATH" | sed 's/^[^-]*-//')"
+    echo "Pipewire Jack $(basename "$LD_PIPEWIRE_JACK_PATH" | sed 's/^[^-]*-//')"
+    echo "RS_ASIO (Desired) $RSASIOVER"
+    echo "Proton (Desired) $PROTONVER"
+}
+
+check_installed() {
+    if which $1 >/dev/null 2>&1; then
+        echo "$1 present"
+    else
+        echo "Required $1 is not installed!"
+        exit 1
+    fi
 }
 
 prepare() {
@@ -68,12 +84,24 @@ prepare() {
     CHECKFILES=(
         "$WINE"
         "$WINE64"
+        "./config/Rocksmith.ini"
+        "./config/RS_ASIO.ini"
+        "./cdlc/D3DX9_42.dll"
+        "./cdlc/xinput1_3.dll"
+    )
+
+    CHECKPROGRAMS=(
+        "steam"
+        "steam-run"
+        "pipewire"
     )
 
     for path in "${CHECKPATHS[@]}"; do
         if [ ! -d "${path}" ]; then
             echo "Necessary directory ${path} not found!"
             exit 1
+        else
+            echo "$path found"
         fi
     done
 
@@ -81,14 +109,23 @@ prepare() {
         if [ ! -f "${file}" ]; then
             echo "Necessary file ${file} not found!"
             exit 1
+        else 
+            echo "$file found"
         fi
     done
 
+    for program in "${CHECKPROGRAMS[@]}"; do
+        check_installed $program
+    done
 
-    # TODO: Check steam-run installed
-    ## TODO: Find a way to specify an actual prefix!
-    echo "Copying ${STEAMPATH}/steamapps/compatdata/221680/pfx/* --> ${WINEPREFIX}/"
-    cp -a -r "${STEAMPATH}/steamapps/compatdata/221680/pfx/"* "${WINEPREFIX}/"
+    for dll in "${WINEASIODLLS[@]}"; do
+        if [ ! -f "${WINEASIOPATH}${dll}" ]; then
+            echo "Necessary file ${dll} not found!"
+            exit 1
+        else 
+            echo "$dll found"
+        fi
+    done
 }
 
 register_dll() {
@@ -105,7 +142,7 @@ safe_copy() {
 patch_wineasio_32bit() {
     echo "[Wineasio] Applying Patch for 32-bit"
     safe_copy "${WINEASIOPATH}${1}" "${PROTONPATH}/files/lib/wine${1}"
-
+    # TODO: We assume it's a 64-bit system. Shouldn't change in the future, but do we want to add a test like for 64-bit?
     if [[ $1 == *.so ]]; then
         local wineasio_dll=$(echo ${WINEASIOPATH}${1} | sed -e 's|/i386-unix/wineasio32.dll.so|/i386-windows/wineasio32.dll|g')
         if [ -e "${WINEASIOPATH}${1}" ] && [ -e "${wineasio_dll}" ]; then
@@ -139,6 +176,9 @@ patch_wineasio() {
     echo "======== Wineasio ========"
     echo "[Wineasio] Install Wineasio"
 
+    echo "Copying ${STEAMPATH}/steamapps/compatdata/221680/pfx/* --> ${WINEPREFIX}/"
+    cp -a -r "${STEAMPATH}/steamapps/compatdata/221680/pfx/"* "${WINEPREFIX}/"
+    
     for dll in "${WINEASIODLLS[@]}"; do
         if echo "$dll" | grep -q "32"; then
             patch_wineasio_32bit "$dll"
@@ -159,12 +199,12 @@ patch_rs_asio() {
     echo "======== RS_ASIO ========"
 
     echo "[RS_ASIO] Dowload RS_ASIO"
-    if [ ! -f "release-0.7.1.zip" ]; then
-        wget https://github.com/mdias/rs_asio/releases/download/v0.7.1/release-0.7.1.zip > /dev/null 2>&1
+    if [ ! -f "release-${RSASIOVER}.zip" ]; then
+        wget https://github.com/mdias/rs_asio/releases/download/v${RSASIOVER}/release-${RSASIOVER}.zip > /dev/null 2>&1
     fi
 
     echo "[RS_ASIO] Unzip"
-    unzip release-0.7.1.zip -d RS_ASIO
+    unzip release-${RSASIOVER}.zip -d RS_ASIO
 
     echo "[RS_ASIO] Copy to Rocksmith"
     cp -a "RS_ASIO/"* "${STEAMPATH}/steamapps/common/Rocksmith2014/"
@@ -200,7 +240,6 @@ cleanup() {
 }
 
 ################### Execute ################### 
-
 greet
 backup
 prepare
