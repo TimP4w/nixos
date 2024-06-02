@@ -28,6 +28,7 @@ in
 
     environment.variables = {
       QT_QPA_PLATFORM = "wayland";
+      GTK_THEME = "Orchis-Dark-Nord";
     };
 
     environment.systemPackages = with pkgs; [

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   dconf.settings = {
     "org/gnome/desktop/interface" = {
@@ -31,9 +31,19 @@
   gtk = {
     enable = true;
     theme = {
-      name = "Adwaita-dark";
-      package = pkgs.gnome.gnome-themes-extra;
+      name = "Orchis-Dark-Nord";
+      package = (pkgs.orchis-theme.override { tweaks = [ "solid" "nord" ]; });
     };
+
+    iconTheme = {
+      name = "kora";
+      package = pkgs.kora-icon-theme;
+    };
+
+    #cursorTheme = {
+    #  name = "Adwaita";
+    #  package = pkgs.gnome.adwaita-icon-theme;
+    #};
 
     gtk3.extraConfig = {
       Settings = ''
