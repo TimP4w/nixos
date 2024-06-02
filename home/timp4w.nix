@@ -7,6 +7,7 @@
 
     ./common/apps/brave.nix
     ./common/apps/nvim
+    ./common/apps/kitty.nix
 
     ./common/gaming
 
