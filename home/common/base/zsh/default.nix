@@ -1,6 +1,10 @@
 { pkgs, VARS, ... }:
 
 {
+  home.packages = with pkgs; [
+    thefuck
+  ];
+
   programs.zsh = {
     enable = true;
     package = pkgs.zsh;
@@ -12,13 +16,17 @@
     oh-my-zsh = {
       enable = true;
       package = pkgs.oh-my-zsh;
-      theme = "af-magic";
+      theme = "gnzh"; #"af-magic";
       plugins = [
         "sudo"
         "terraform"
         "systemadmin"
         "vi-mode"
         "git"
+        "thefuck"
+        # "autoenv"
+        "direnv"
+        "fluxcd"
       ];
     };
 
