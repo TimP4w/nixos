@@ -32,17 +32,19 @@
     ff = only
 [init]
     defaultBranch = main
+[core]
+    editor = code --wait
+[diff]
+    tool = vscode
+[difftool "vscode"]
+    cmd = code --wait --diff $LOCAL $REMOTE
 [merge]
-    tool = vimdiff3
-    conflictstyle = zdiff3
-[mergetool "vimdiff3"]
-    path = nvim
+    tool = vscode
 [mergetool "vscode"]
     cmd = code --wait $MERGED
+    keepBackup = false
 [pager]
     branch = false
-[mergetool]
-    keepBackup = false
 [delta]
     navigate = true
     features = sideb-by-side line-numbers decorations
