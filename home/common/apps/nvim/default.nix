@@ -1,10 +1,13 @@
 { pkgs, ... }:
 {
-  # TODO: add clipboard provider!
+  programs.neovim = {
+    enable = true;
+  };
+
   home.packages = with pkgs; [
     neovide
-    neovim
     ripgrep # Needed by telescope to search across whole project
+    wl-clipboard
   ];
 
   home.file.".config/nvim" = {
