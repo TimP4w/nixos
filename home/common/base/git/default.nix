@@ -60,11 +60,15 @@
         defaultBranch = "main";
       };
       merge = {
-        tool = "nvimdiff";
+        tool = "vscode";
         conflictstyle = "zdiff3";
       };
       mergetool = {
         layout = "(LOCAL,MERGED,REMOTE)";
+        vscode.cmd = "code --wait $MERGED";
+      };
+      difftool = {
+        vscode.cmd = "code - -wait - -diff $LOCAL $REMOTE";
       };
       pager.branch = false;
       mergetool.keepBackup = false;
