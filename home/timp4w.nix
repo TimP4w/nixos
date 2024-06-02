@@ -33,13 +33,10 @@
 
   home.packages = with pkgs; [
     plex-media-player
-    mpv
-    amberol
     spotify
     telegram-desktop
     _1password-gui
     discord
-
     go-task
   ] ++ (with pkgs-unstable; [ ]);
 

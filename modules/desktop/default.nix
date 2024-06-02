@@ -23,6 +23,16 @@ in
     programs.firefox.enable = true;
     environment.systemPackages = with pkgs; [
       brave
+      papers
+      (mpv.override {
+        scripts = [
+          mpvScripts.modernx
+          mpvScripts.reload
+          mpvScripts.thumbfast
+          mpvScripts.mpris
+        ];
+      })
+      amberol
     ];
   };
 }
