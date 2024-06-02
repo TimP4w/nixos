@@ -1,10 +1,6 @@
 { config, pkgs, lib, VARS, ... }:
 with lib; let
   cfg = config.modules.nixos.grub;
-  sleek-grub-theme-dark = pkgs.sleek-grub-theme.override {
-    withStyle = "dark";
-  };
-
 in
 {
   options.modules.nixos.grub = {
@@ -22,7 +18,7 @@ in
           devices = [ "nodev" ];
           efiSupport = true;
           useOSProber = true;
-          theme = sleek-grub-theme-dark;
+          theme = (pkgs.sleek-grub-theme.override { withStyle = "dark"; });
           gfxmodeEfi = "2560x1440";
         };
       };
