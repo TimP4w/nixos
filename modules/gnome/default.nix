@@ -33,6 +33,9 @@ in
 
     environment.systemPackages = with pkgs; [
       gnome.gnome-tweaks
+      wl-clipboard
+      gnome.nautilus-python
+      turtle
     ];
 
     programs.dconf.enable = true;

@@ -18,14 +18,14 @@
 
   ];
 
-  #accounts.email.accounts = {
-  #  tim = {
-  #    primary = true;
-  #    address = VARS.userSettings.email;
-  #    thunderbird.enable = true;
-  #    realName = VARS.userSettings.name;
-  #  };
-  #};
+  accounts.email.accounts = {
+    timMain = {
+      primary = true;
+      address = VARS.userSettings.email;
+      thunderbird.enable = true;
+      realName = VARS.userSettings.name;
+    };
+  };
 
   home = {
     username = VARS.userSettings.username;
@@ -37,6 +37,7 @@
     spotify
     telegram-desktop
     _1password-gui
+    _1password
     discord
     go-task
   ] ++ (with pkgs-unstable; [ ]);

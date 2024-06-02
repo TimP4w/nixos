@@ -21,9 +21,11 @@ in
 
     # Basic desktop packages
     programs.firefox.enable = true;
+    services.flatpak.enable = true;
     environment.systemPackages = with pkgs; [
       brave
-      papers
+      thunderbird
+      papers # PDF Reader
       (mpv.override {
         scripts = [
           mpvScripts.modernx

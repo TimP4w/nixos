@@ -32,6 +32,7 @@ in
       ] ++ optionals cfg.enableRealTime [
         qjackctl
         qpwgraph
+        helvum
         rtaudio
       ];
 
