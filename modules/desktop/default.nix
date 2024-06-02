@@ -16,6 +16,7 @@ in
       fira-code
       fira-code-symbols
       (nerdfonts.override { fonts = [ "FiraCode" ]; })
+      corefonts # windows fonts, Segoe UI missing ):
     ];
 
     # Basic desktop packages
