@@ -6,5 +6,6 @@
     kubernetes-helm
     fluxcd
     kustomize
+    k9s
   ];
 }
