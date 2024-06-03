@@ -24,7 +24,8 @@ in
     services.flatpak.enable = true;
     environment.systemPackages = with pkgs; [
       brave
-      thunderbird
+      thunderbird # HW Acceleration makes it crash ):
+      resources
       papers # PDF Reader
       (mpv.override {
         scripts = [
