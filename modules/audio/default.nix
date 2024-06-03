@@ -41,13 +41,13 @@ in
       };
 
       musnix = mkIf cfg.enableRealTime {
-        # https://github.com/musnix/musnix
+        #  # https://github.com/musnix/musnix
         enable = true;
-        kernel = {
-          realtime = true;
-          packages = pkgs.linuxPackages_6_9_rt;
-        };
-
+        #  kernel = {
+        #    #realtime = true;
+        #    #packages = pkgs.linuxPackages_6_9_rt;
+        #  };
+        #
       };
 
       users.users.${VARS.userSettings.username} = mkIf cfg.enableRealTime {
