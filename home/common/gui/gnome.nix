@@ -26,6 +26,7 @@
   home.packages = with pkgs; [
     gnomeExtensions.transparent-topbar # not compatible gnome 46.1
     gnomeExtensions.tray-icons-reloaded
+    # gnomeExtensions.wireless-hid not working
   ];
 
   gtk = {
