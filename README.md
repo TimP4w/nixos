@@ -50,7 +50,17 @@ nix-cleanup
 ```
 
 # TODO
-- [ ] Add Kitty
 - [ ] Add Hyprland
 - [ ] Configure default apps (see brave)
 - [ ] Add gpg
+
+# Links
+- [NixOS packages](https://search.nixos.org/packages) - Packages DB
+- [Flake Parts](https://github.com/hercules-ci/flake-parts) - Framework to write nix flakes
+- [flake-utils
+](https://github.com/numtide/flake-utils) - Pure Nix flake utility functions.
+- [nix-update](https://github.com/Mic92/nix-update) - Nix-update updates versions/source hashes of nix packages.
+- [musnix](https://github.com/musnix/musnix) - Real-time audio in NixOS
+- [Nix Community Templates](https://github.com/nix-community/templates) - A collection of basic [development] templates. Using flake-utils.
+- [nix-darwin](https://github.com/LnL7/nix-darwin) - Nix modules for darwin, `/etc/nixos/configuration.nix` for macOS.
+- [NUR](https://github.com/nix-community/NUR/) - The Nix User Repository (NUR) is a community-driven meta repository for Nix packages.
