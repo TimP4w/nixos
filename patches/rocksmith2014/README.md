@@ -3,35 +3,52 @@
 Code in this directory is licensed with LGPL-2.1 license due to the copied parts of the wineasio-register script.
 
 ## NixOS
-Minimal config needed (audio)
+Minimal config needed
 
 ```
+  ### Audio
   sound.enable = true;
-  security.rtkit.enable = true;
 
   services.pipewire = {
     enable = true;
     jack.enable = true; 
   };
 
-  musnix.enable = true; # Check https://github.com/musnix/musnix for how to install
+
+  ### Audio Extra 
+  security.rtkit.enable = true; # Enables rtkit (https://directory.fsf.org/wiki/RealtimeKit)
+  
+  #
+  # domain = "@audio": This specifies that the limits apply to users in the @audio group.
+  # item = "memlock": Controls the amount of memory that can be locked into RAM.
+  # value (`unlimited`) allows members of the @audio group to lock as much memory as needed. This is crucial for audio processing to avoid swapping and ensure low latency.
+  #
+  # item = "rtprio": Controls the real-time priority that can be assigned to processes.
+  # value (`99`) is the highest real-time priority level. This setting allows audio applications to run with real-time scheduling, reducing latency and ensuring smoother performance.
+  #
+  security.pam.loginLimits = [
+    { domain = "@audio"; item = "memlock"; type = "-"; value = "unlimited"; }
+    { domain = "@audio"; item = "rtprio"; type = "-"; value = "99"; }
+  ];
+
+  # Add user to `audio` and `rtkit` groups.
+  users.users.<username>.extraGroups = [ "audio" "rtkit" ];
 
   environment.systemPackages = with pkgs; [
     qjackctl
     rtaudio 
-    wineasio  # Wineasio compiled
-    pkgsi686Linux.pipewire.jack # 32-bit lib for pipewire jack
   ];
 
-  # Export env variables with store location (if these change, we need to re-patch!)
-  environment.variables = {
-    LD_WINEASIO_PATH = "${pkgs.wineasio}";
-    LD_PIPEWIRE_JACK_PATH = "${pkgs.pkgsi686Linux.pipewire.jack}";
+  ### Steam (https://nixos.wiki/wiki/Steam)
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+    package = pkgs.steam.override {
+      extraLibraries = pkgs: [ pkgs.pkgsi686Linux.pipewire.jack ]; # Adds pipewire jack (32-bit)
+      extraPkgs = pkgs: [ pkgs.wineasio ]; # Adds wineasio
+    };
   };
-
-  users.users.<username>.extraGroups = [ "audio" "rtkit" ];
-
-  programs.steam.enable = true; 
 
 ```
 
@@ -51,15 +68,15 @@ Simply download Rocksmith 2014 and launch it one time
 Prerequisites:
 - Ensure you launched Rocksmith at least once
 - Copy the CDLC patch `*.dll` inside the `cdlc` directory
+- `steam-run` installed (i.e. steam is in a fhs env)
 
-
-Run `./patch.sh` 
+Run `steam-run ./patch.sh`
 
 ### 5. Add Launch Options to Rocksmith
 Copy the following command and paste it as Launch Options (Steam > Rocksmith 2014 > Right Click > Properties... > General > Launch Options)
 
 ``` 
-LD_PRELOAD=$LD_PIPEWIRE_JACK_PATH/lib/libjack.so PIPEWIRE_LATENCY=256/48000 %command%
+LD_PRELOAD=/lib/libjack.so PIPEWIRE_LATENCY=256/48000 %command%
 ```
 
 ### 6. Test & Enjoy
@@ -81,11 +98,6 @@ Proton (Desired) Proton - Experimental
 
 
 ## Known Problems / Issues & TODOs
-- [ ] Latency is not ideal. Pretty low but noticeable when there are many fast notes. Rocksmith still picks them up but the audio delay is at the limit of tolerable.
+- [ ] Latency is not perfect. Enabling other RT options may increase performance slightly. However it's playable and comparable to Windows'.
 - [ ] Proton updates may require a re-patching (however system updates should work fine).
-- [ ] This is breaking a bit the "nix way", since we need to know the store location of pipewire-jack 32-bit library.
-- [ ] VBASIOTest32.exe doesn't work, because the 32-bit library of JACK cannot be dinamically linked. For Rocksmith it works because we explicitely add it to the launch options in steam (see point #5.). A patch of the pipewire service was attempted and it worked in making VBASIOTest work, but it's not desirable to maintain it separately only for this. Maybe a PR on nixpkgs should be considered?
-- [ ] We can't change the inputs of Rocksmith when it's running, otherwise it will crash. Therefore disabling the devices we don't want to automatically connect is required.
-- [ ] Needs musnix but I'm not exactly sure why. Need to test.
-- [ ] We need to copy the content of the `pfx` dir into `~/.wine` because we can't use the `WINEPREFIX` env variable with `steam-run` (or actually I don't know how to do it). Needs some research.
-- [ ] Backup directories before making changes (Script is indepotent, do we need a backup?).
+- [ ] We (mostly) can't change the inputs of Rocksmith when it's running, otherwise it will crash. Therefore disabling the devices we don't want to automatically connect is often required.

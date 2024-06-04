@@ -14,6 +14,10 @@ in
         enable = true;
         remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
         dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+        package = pkgs.steam.override {
+          extraLibraries = pkgs: [ pkgs.pkgsi686Linux.pipewire.jack ]; # Needed by Rocksmith2014
+          extraPkgs = pkgs: [ pkgs.wineasio ]; # Needed by Rocksmith2014
+        };
       };
 
       modules.nixos.audio = mkIf cfg.enableRocksmith2014 {
@@ -21,14 +25,5 @@ in
         enableRealTime = true;
       };
 
-      environment.systemPackages = mkIf cfg.enableRocksmith2014 (with pkgs; [
-        wineasio # Wineasio compiled
-        pkgsi686Linux.pipewire.jack # 32-bit lib for pipewire jack
-      ]);
-
-      environment.variables = mkIf cfg.enableRocksmith2014 {
-        LD_WINEASIO_PATH = "${pkgs.wineasio}";
-        LD_PIPEWIRE_JACK_PATH = "${pkgs.pkgsi686Linux.pipewire.jack}";
-      };
     };
 }

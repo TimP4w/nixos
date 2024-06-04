@@ -7,35 +7,51 @@ USER=$(whoami)
 
 PROTONVER="Proton - Experimental"
 RSASIOVER="0.7.1"
-WINEPREFIX="/home/${USER}/.wine" # TODO: We can't actually use a prefix (maybe try with a flake or steam-run bash?), so we use the default dir and we copy the content back and forth
 
-# These shouldn't change
-WINEASIOPATH="${LD_WINEASIO_PATH}/lib/wine" 
+STEAMPATH="/home/${USER}/.steam/steam"
+PROTONPATH="${STEAMPATH}/steamapps/common/${PROTONVER}"
+WINE="${PROTONPATH}/files/bin/wine"
+WINE64="${PROTONPATH}/files/bin/wine64"
+WINEPREFIX="${STEAMPATH}/steamapps/compatdata/221680/pfx/"
 
+LAUNCH_OPTIONS="LD_PRELOAD=/lib/libjack.so PIPEWIRE_LATENCY=256/48000 %command%"
+
+
+# Constants (these shouldn't change!)
+WINEASIOPATH="/lib/wine" 
 WINEASIODLLS=(
     "/i386-unix/wineasio32.dll.so" 
     "/i386-windows/wineasio32.dll" 
     "/x86_64-unix/wineasio64.dll.so" 
     "/x86_64-windows/wineasio64.dll"
 )
-STEAMPATH="/home/${USER}/.steam/steam"
-PROTONPATH="${STEAMPATH}/steamapps/common/${PROTONVER}"
-WINE="${PROTONPATH}/files/bin/wine"
-WINE64="${PROTONPATH}/files/bin/wine64"
 
-LAUNCH_OPTIONS="LD_PRELOAD=\$LD_PIPEWIRE_JACK_PATH/lib/libjack.so PIPEWIRE_LATENCY=256/48000 %command%"
 #############################################################
+print_blue() {
+    BLUE='\033[0;34m'
+    NC='\033[0m' # No Color
+    echo -e "${BLUE}$1${NC}"
+}
+print_green() {
+    GREEN='\033[0;32m'
+    NC='\033[0m' # No Color
+    echo -e "${GREEN}$1${NC}"
+}
+
+print_red() {
+    RED='\033[0;31m'
+    NC='\033[0m' # No Color
+    echo -e "${RED}$1${NC}"
+}
 
 greet() {
-    echo "======== Rocksmith 2014 - Wineasio patcher for NixOS ========"
-    echo hello $USER!
-    echo "Before starting, add the cdlcs dlls (D3DX9_42.dll & xinput1_3.dll) in the cdlc directory"
-    read -p "Do you want to continue? (Y/N): " user_input
-    user_input=$(echo "$user_input" | tr '[:lower:]' '[:upper:]')
-    if [ "$user_input" != "Y" ]; then
-        echo "Exiting..."
-        exit 0
-    fi
+    print_blue "======== Rocksmith 2014 - Wineasio patcher for NixOS ========"
+
+    read -p "Override Proton Version [${PROTONVER}]: " USER_PROTONVER
+    PROTONVER=${USER_PROTONVER:-$PROTONVER}
+
+    read -p "Override RS_ASIO Version [${RSASIOVER}]: " USER_RSASIOVER
+    RSASIOVER=${USER_RSASIOVER:-$RSASIOVER}
 }
 
 backup() {
@@ -44,14 +60,23 @@ backup() {
 }
 
 print_system_info() {
-    echo "======== System Info "========
+    print_blue "======== System Info "========
     echo "NixOS $(nixos-version) [$(getconf LONG_BIT)-bit]"
-    echo "Wine $(steam-run "${WINE}" --version)"
-    echo "Wine64 $(steam-run "${WINE64}" --version)"
-    echo "Wineasio $(basename "$LD_WINEASIO_PATH" | sed 's/^[^-]*-//')"
-    echo "Pipewire Jack $(basename "$LD_PIPEWIRE_JACK_PATH" | sed 's/^[^-]*-//')"
-    echo "RS_ASIO (Desired) $RSASIOVER"
-    echo "Proton (Desired) $PROTONVER"
+    echo "Kernel $(uname -r)"
+    echo "Wine $("${WINE}" --version)"
+    echo "Wine64 $("${WINE64}" --version)"
+    #echo "Wineasio $(basename "$LD_WINEASIO_PATH" | sed 's/^[^-]*-//')"
+    #echo "Pipewire Jack $(basename "$LD_PIPEWIRE_JACK_PATH" | sed 's/^[^-]*-//')"
+    echo "RS_ASIO (Desired) ${RSASIOVER}"
+    echo "Proton (Desired) ${PROTONVER}"
+
+    echo "Before starting, add the cdlcs dlls (D3DX9_42.dll & xinput1_3.dll) in the cdlc directory"
+    read -p "Do you want to continue? (Y/N): " user_input
+    user_input=$(echo "$user_input" | tr '[:lower:]' '[:upper:]')
+    if [ "$user_input" != "Y" ]; then
+        echo "Exiting..."
+        exit 0
+    fi
 }
 
 check_installed() {
@@ -63,20 +88,22 @@ check_installed() {
     fi
 }
 
-prepare() {
-    echo "======== Check and prepare "========
 
+prepare() {
+    print_blue "======== Check and prepare "========
+    check_passed=true
     ## Create .wine dir
-    rm -rf $WINEPREFIX
-    mkdir $WINEPREFIX
+    #rm -rf $WINEPREFIX
+    #mkdir $WINEPREFIX
 
     CHECKPATHS=(
         "$WINEPREFIX"
         "$WINEASIOPATH"
         "$STEAMPATH"
         "$PROTONPATH"
-        "$LD_PIPEWIRE_JACK_PATH"
-        "$LD_WINEASIO_PATH"
+        "/lib/wine"
+        #"$LD_PIPEWIRE_JACK_PATH"
+        #"$LD_WINEASIO_PATH"
         "${STEAMPATH}/steamapps/compatdata/221680" 
         "${STEAMPATH}/steamapps/compatdata/221680/pfx/"
     )
@@ -88,6 +115,7 @@ prepare() {
         "./config/RS_ASIO.ini"
         "./cdlc/D3DX9_42.dll"
         "./cdlc/xinput1_3.dll"
+        "/lib/libjack.so"
     )
 
     CHECKPROGRAMS=(
@@ -96,21 +124,37 @@ prepare() {
         "pipewire"
     )
 
+    echo "=== Paths ==="
+
+
     for path in "${CHECKPATHS[@]}"; do
         if [ ! -d "${path}" ]; then
-            echo "Necessary directory ${path} not found!"
-            exit 1
+            echo "Directory ${path} ... $(print_red NOT found!)"
+            check_passed=false
         else
-            echo "$path found"
+            echo "Directory ${path} ... $(print_green OK)"
         fi
     done
 
+    echo "=== Files ==="
+
+
     for file in "${CHECKFILES[@]}"; do
         if [ ! -f "${file}" ]; then
-            echo "Necessary file ${file} not found!"
-            exit 1
+            echo "File ${file} ... $(print_red NOT found!)"
+            check_passed=false
         else 
-            echo "$file found"
+            echo "File ${file} ... $(print_green OK)"
+        fi
+    done
+
+    for dll in "${WINEASIODLLS[@]}"; do
+        if [ ! -f "${WINEASIOPATH}${dll}" ]; then
+            echo "File ${dll} ... $(print_red NOT found!)"
+            check_passed=false
+
+        else 
+            echo "File ${dll} ... $(print_green OK)"
         fi
     done
 
@@ -118,19 +162,15 @@ prepare() {
         check_installed $program
     done
 
-    for dll in "${WINEASIODLLS[@]}"; do
-        if [ ! -f "${WINEASIOPATH}${dll}" ]; then
-            echo "Necessary file ${dll} not found!"
-            exit 1
-        else 
-            echo "$dll found"
-        fi
-    done
+    if [ "$check_passed" = false ]; then
+        print_red "A check failed. Exiting the program."
+        exit 1
+    fi
 }
 
 register_dll() {
     echo "[Wineasio] Registering ${1}"
-    steam-run "${2}" regsvr32 "${1}" > /dev/null 2>&1
+    "${2}" regsvr32 "${1}" > /dev/null 2>&1
 }
 
 safe_copy() {
@@ -173,11 +213,11 @@ patch_wineasio_64bit() {
 }
 
 patch_wineasio() {
-    echo "======== Wineasio ========"
+    print_blue "======== Wineasio ========"
     echo "[Wineasio] Install Wineasio"
 
-    echo "Copying ${STEAMPATH}/steamapps/compatdata/221680/pfx/* --> ${WINEPREFIX}/"
-    cp -a -r "${STEAMPATH}/steamapps/compatdata/221680/pfx/"* "${WINEPREFIX}/"
+    #echo "Copying ${STEAMPATH}/steamapps/compatdata/221680/pfx/* --> ${WINEPREFIX}/"
+    #cp -a -r "${STEAMPATH}/steamapps/compatdata/221680/pfx/"* "${WINEPREFIX}/"
 
     for dll in "${WINEASIODLLS[@]}"; do
         if echo "$dll" | grep -q "32"; then
@@ -190,13 +230,13 @@ patch_wineasio() {
     done
 
     ### Copy patched wineprefix back
-    rm -rf ${STEAMPATH}/steamapps/compatdata/221680/pfx
-    mkdir ${STEAMPATH}/steamapps/compatdata/221680/pfx
-    cp -a -r "${WINEPREFIX}/"* "${STEAMPATH}/steamapps/compatdata/221680/pfx/"
+    #rm -rf ${STEAMPATH}/steamapps/compatdata/221680/pfx
+    #mkdir ${STEAMPATH}/steamapps/compatdata/221680/pfx
+    #cp -a -r "${WINEPREFIX}/"* "${STEAMPATH}/steamapps/compatdata/221680/pfx/"
 }
 
 patch_rs_asio() {
-    echo "======== RS_ASIO ========"
+    print_blue "======== RS_ASIO ========"
 
     echo "[RS_ASIO] Dowload RS_ASIO"
     if [ ! -f "release-${RSASIOVER}.zip" ]; then
@@ -211,37 +251,38 @@ patch_rs_asio() {
 }
 
 add_configs() {
-    echo "======== CONFIGURATION ========"
+    print_blue "======== CONFIGURATION ========"
     echo "[CONF] Copy configs"
     cp -a "config/"* "${STEAMPATH}/steamapps/common/Rocksmith2014/"
 }
 
 patch_cdlc() {
-    echo "======== CDLCs ========"
+    print_blue "======== CDLCs ========"
     echo "[CDLC] Install CDLC Patch"
     cp -a "cdlc/"* "${STEAMPATH}/steamapps/common/Rocksmith2014/"
 }
 
 
 finalise() {
-    echo "======== DONE ========"
+    print_blue "======== DONE ========"
 
     echo "Patch applied, you can now configure Rocksmith"
 
-    echo "Add the following launchg option to Rocksmith on steam"
-    echo "========================================================="
+    echo "Add the following launch option to Rocksmith on steam"
+    echo 
+    echo "================================================================"
     echo $LAUNCH_OPTIONS
-    echo "========================================================="
+    echo "================================================================"
 }
 
 cleanup() {
-    echo "======== CLEANUP ========"
-    rm -rf $WINEPREFIX
+    print_blue "======== CLEANUP ========"
+    #rm -rf $WINEPREFIX
 }
 
 ################### Execute ################### 
-print_system_info
 greet
+print_system_info
 backup
 prepare
 patch_wineasio
