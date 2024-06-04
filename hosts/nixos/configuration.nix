@@ -19,7 +19,6 @@
     gparted
     vscode
     warp-terminal
-    nixpkgs-fmt
   ];
 
   modules.nixos = {

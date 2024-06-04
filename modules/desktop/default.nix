@@ -27,6 +27,9 @@ in
       thunderbird # HW Acceleration makes it crash ):
       resources
       papers # PDF Reader
+      nh # https://github.com/viperML/nh
+      nixd # TODO: Move to dev module 
+      nixpkgs-fmt
       (mpv.override {
         scripts = [
           mpvScripts.modernx
