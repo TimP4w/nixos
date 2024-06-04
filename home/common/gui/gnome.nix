@@ -1,6 +1,10 @@
 { pkgs, lib, ... }:
 {
   dconf.settings = {
+    "org/gnome/mutter" = {
+      experimental-features = [ "variable-refresh-rate" "scale-monitor-framebuffer" ];
+    };
+
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
     };
