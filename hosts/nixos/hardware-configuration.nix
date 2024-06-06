@@ -16,13 +16,15 @@
 
   fileSystems."/" =
     {
-      device = "/dev/disk/by-uuid/d02f3433-ebff-406c-a08d-5a352137e3f1";
+      device = "/dev/disk/by-uuid/96e2b20e-a750-4c9a-ad76-daf1e828465c";
       fsType = "ext4";
     };
 
+  boot.initrd.luks.devices."luks-db183d21-bf5e-46ed-817a-af43496af57d".device = "/dev/disk/by-uuid/db183d21-bf5e-46ed-817a-af43496af57d";
+
   fileSystems."/boot" =
     {
-      device = "/dev/disk/by-uuid/5437-DA02";
+      device = "/dev/disk/by-uuid/67F4-A847";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
