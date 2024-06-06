@@ -49,6 +49,13 @@ sudo scripts/cleanup.sh
 nix-cleanup
 ```
 
+# CheatSheet
+
+### Home manager fails 
+```
+sudo journalctl -u home-manager-timp4w -r
+```
+
 # TODO
 - [ ] Add Hyprland
 - [ ] Configure default apps (see brave)
