@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, pkgs-unstable, ... }:
 {
   dconf.settings = {
     "org/gnome/mutter" = {
@@ -9,6 +9,16 @@
       color-scheme = "prefer-dark";
     };
 
+    "org/gnomee/shell/extensions/dash-to-dock" = {
+      multi-monitor = true;
+      isolate-montiros = true;
+      show-apps-at-top = true;
+      show-mounts-network = true;
+      isolate-locations = true;
+      custom-theme-shrink = true;
+      intellihide-mode = "ALL_WINDOWS";
+    };
+
     "org/gnome/shell" = {
       favorite-apps = [
         "brave-browser.desktop"
@@ -16,13 +26,16 @@
         "org.telegram.desktop.desktop"
         "discord.desktop"
         "spotify.desktop"
+        "plexmediaplayer.desktop"
         "org.gnome.Nautilus.desktop"
-        "warp.desktop" # TODO: check correct name
+        "dev.warp.Warp.desktop"
       ];
 
       disable-user-extensions = false;
       enabled-extensions = [
         "trayIconsReloaded@selfmade.pl"
+        "user-theme@gnome-shell-extensions.gcampax.github.com"
+        "dash-to-dock@micxgx.gmail.com"
       ];
     };
   };
@@ -31,15 +44,21 @@
     gnomeExtensions.transparent-topbar # not compatible gnome 46.1
     gnomeExtensions.tray-icons-reloaded
     # gnomeExtensions.wireless-hid not working
+    gnomeExtensions.dash-to-dock
+    gnome.adwaita-icon-theme
+
   ];
 
   gtk = {
     enable = true;
     theme = {
-      name = "Orchis-Dark-Nord";
-      package = (pkgs.orchis-theme.override { tweaks = [ "solid" "nord" ]; });
+      # name = "Orchis-Dark-Nord";
+      # package = (pkgs-unstable.orchis-theme.override { tweaks = [ "solid" "nord" ]; });
+      name = "WhiteSur-Dark";
+      package = (pkgs.whitesur-gtk-theme.override { iconVariant = "gnome"; nautilusStyle = "glassy"; });
     };
 
+    # Breaks some icons... ):
     iconTheme = {
       name = "kora";
       package = pkgs.kora-icon-theme;
