@@ -30,6 +30,7 @@ in
       nh # https://github.com/viperML/nh
       nixd # TODO: Move to dev module 
       nixpkgs-fmt
+      onlyoffice-bin_latest
       (mpv.override {
         scripts = [
           mpvScripts.modernx
