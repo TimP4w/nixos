@@ -40,6 +40,7 @@
     _1password
     discord
     go-task
+    guitarix
   ] ++ (with pkgs-unstable; [ ]);
 
 
