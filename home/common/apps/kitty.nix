@@ -12,6 +12,8 @@
       font_size = "11.0";
 
       background_opacity = "50";
+
+      hide_window_decorations = "yes";
     };
 
     font = {
