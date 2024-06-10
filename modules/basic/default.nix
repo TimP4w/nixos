@@ -25,6 +25,7 @@ in
       unzip
       curl
       parted
+      fzf
     ];
 
     ## Locale
