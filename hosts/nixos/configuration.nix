@@ -19,6 +19,7 @@
     gparted
     vscode
     warp-terminal
+    mdadm
   ];
 
   modules.nixos = {
