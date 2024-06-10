@@ -41,6 +41,7 @@
     discord
     go-task
     guitarix
+    oh-my-posh
   ] ++ (with pkgs-unstable; [ ]);
 
 
