@@ -1,21 +1,29 @@
 { inputs, lib, config, pkgs, pkgs-unstable, VARS, ... }:
 {
   imports = [
-    ./common/base
+    ./modules/common
 
-    ./common/gui/gnome.nix
+    ./modules/browsers/brave.nix
 
-    ./common/apps/brave.nix
-    ./common/apps/nvim
-    ./common/apps/kitty.nix
+    ./modules/development
+    ./modules/development/kubernetes.nix
+    ./modules/development/terraform.nix
 
-    ./common/gaming
+    ./modules/gaming
 
-    ./common/dev/kubernetes.nix
-    ./common/dev/terraform.nix
+    ./modules/git
 
-    ./configs/ssh
+    ./modules/gnome
 
+    ./modules/gnome
+
+    ./modules/kitty
+
+    ./modules/nvim
+
+    ./modules/ssh
+
+    ./modules/zsh
   ];
 
   accounts.email.accounts = {
