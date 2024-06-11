@@ -5,18 +5,6 @@ set -e
 ######################### VARS ###############################
 USER=$(whoami)
 
-PROTONVER="Proton - Experimental"
-RSASIOVER="0.7.1"
-
-STEAMPATH="/home/${USER}/.steam/steam"
-PROTONPATH="${STEAMPATH}/steamapps/common/${PROTONVER}"
-WINE="${PROTONPATH}/files/bin/wine"
-WINE64="${PROTONPATH}/files/bin/wine64"
-WINEPREFIX="${STEAMPATH}/steamapps/compatdata/221680/pfx/"
-
-LAUNCH_OPTIONS="LD_PRELOAD=/lib/libjack.so PIPEWIRE_LATENCY=256/48000 %command%"
-
-
 # Constants (these shouldn't change!)
 WINEASIOPATH="/lib/wine" 
 WINEASIODLLS=(
@@ -25,38 +13,113 @@ WINEASIODLLS=(
     "/x86_64-unix/wineasio64.dll.so" 
     "/x86_64-windows/wineasio64.dll"
 )
+STEAMPATH="/home/${USER}/.steam/steam"
+WINEPREFIX="${STEAMPATH}/steamapps/compatdata/221680/pfx/"
+LAUNCH_OPTIONS="LD_PRELOAD=/lib/libjack.so PIPEWIRE_LATENCY=256/48000 %command%"
+
+# Defaults
+RSASIOVER="0.7.1"
+PROTONVER="Proton - Experimental" 
+FILES_OR_DIST="files"
+PROTONPATH="${STEAMPATH}/steamapps/common/${PROTONVER}"
+WINE="${PROTONPATH}/${FILES_OR_DIST}/bin/wine"
+WINE64="${PROTONPATH}/${FILES_OR_DIST}/bin/wine64"
 
 #############################################################
-print_blue() {
-    BLUE='\033[0;34m'
-    NC='\033[0m' # No Color
-    echo -e "${BLUE}$1${NC}"
+print_color() {
+    local COLOR=$1
+    local NC='\033[0m'
+    echo -e "${COLOR}$2${NC}"
 }
+
+print_blue() {
+    local BLUE='\033[0;34m'
+    print_color $BLUE "$1"
+}
+
 print_green() {
-    GREEN='\033[0;32m'
-    NC='\033[0m' # No Color
-    echo -e "${GREEN}$1${NC}"
+    local GREEN='\033[0;32m'
+    print_color $GREEN "$1"
 }
 
 print_red() {
-    RED='\033[0;31m'
-    NC='\033[0m' # No Color
-    echo -e "${RED}$1${NC}"
+    local RED='\033[0;31m'
+    print_color $RED "$1"
+}
+
+print_orange() {
+    local ORANGE='\033[38;5;214m'  
+    print_color $ORANGE "$1"
+}
+
+validate_proton_input() {
+    if [[ -z $1 || $1 =~ ^[0-2]$ ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+choose_proton() {
+    echo "Please choose your proton version that you use to run Rocksmith:"
+    print_orange "0) Proton - Experimental [Default]"
+    echo "1) Proton 9.0 (Beta)"
+    echo "2) Proton 8.0"
+
+    read -p "Choose your Proton Version (0-2): " USERPROTONVER
+
+    if validate_proton_input "$USERPROTONVER"; then
+         case $USERPROTONVER in
+            0)
+                PROTONVER="Proton - Experimental"
+                FILES_OR_DIST="files"
+                ;;
+            1)
+                PROTONVER="Proton 9.0 (Beta)"
+                FILES_OR_DIST="files"  
+                ;;
+            2)
+                PROTONVER="Proton 8.0"
+                FILES_OR_DIST="dist"
+                ;;
+        esac
+
+        PROTONPATH="${STEAMPATH}/steamapps/common/${PROTONVER}"
+        WINE="${PROTONPATH}/${FILES_OR_DIST}/bin/wine"
+        WINE64="${PROTONPATH}/${FILES_OR_DIST}/bin/wine64"
+
+        print_blue "Using $PROTONVER"
+    else
+        print_red "You need to select a value between 0 and 2, please try again"
+        choose_proton
+    fi
+}
+
+validate_rsasio_input() {
+    if [[ -z $1 || $1 =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+choose_rsasio() {
+    read -p "Override RS_ASIO Version [$(print_orange ${RSASIOVER})]: " USER_RSASIOVER
+    if validate_rsasio_input "$USER_RSASIOVER"; then
+        RSASIOVER=${USER_RSASIOVER:-$RSASIOVER}
+        print_blue "Using $RSASIOVER"
+    else
+        print_red "The value is not in the correct format: x.y.z"
+        choose_rsasio
+    fi
 }
 
 greet() {
     print_blue "======== Rocksmith 2014 - Wineasio patcher for NixOS ========"
 
-    read -p "Override Proton Version [${PROTONVER}]: " USER_PROTONVER
-    PROTONVER=${USER_PROTONVER:-$PROTONVER}
+    choose_proton
 
-    read -p "Override RS_ASIO Version [${RSASIOVER}]: " USER_RSASIOVER
-    RSASIOVER=${USER_RSASIOVER:-$RSASIOVER}
-}
-
-backup() {
-    echo "Bacukp..."
-    ## TODO: make backup before doing stuff
+    choose_rsasio
 }
 
 print_system_info() {
@@ -65,36 +128,24 @@ print_system_info() {
     echo "Kernel $(uname -r)"
     echo "Wine $("${WINE}" --version)"
     echo "Wine64 $("${WINE64}" --version)"
-    #echo "Wineasio $(basename "$LD_WINEASIO_PATH" | sed 's/^[^-]*-//')"
-    #echo "Pipewire Jack $(basename "$LD_PIPEWIRE_JACK_PATH" | sed 's/^[^-]*-//')"
+
     echo "RS_ASIO (Desired) ${RSASIOVER}"
     echo "Proton (Desired) ${PROTONVER}"
-
-    echo "Before starting, add the cdlcs dlls (D3DX9_42.dll & xinput1_3.dll) in the cdlc directory"
-    read -p "Do you want to continue? (Y/N): " user_input
-    user_input=$(echo "$user_input" | tr '[:lower:]' '[:upper:]')
-    if [ "$user_input" != "Y" ]; then
-        echo "Exiting..."
-        exit 0
-    fi
 }
 
 check_installed() {
     if which $1 >/dev/null 2>&1; then
-        echo "$1 present"
+        echo "$1 $(print_green present)"
     else
-        echo "Required $1 is not installed!"
+        print_red "Required $1 is not installed!"
         exit 1
     fi
 }
 
 
-prepare() {
+check_and_prepare() {
     print_blue "======== Check and prepare "========
     check_passed=true
-    ## Create .wine dir
-    #rm -rf $WINEPREFIX
-    #mkdir $WINEPREFIX
 
     CHECKPATHS=(
         "$WINEPREFIX"
@@ -102,8 +153,6 @@ prepare() {
         "$STEAMPATH"
         "$PROTONPATH"
         "/lib/wine"
-        #"$LD_PIPEWIRE_JACK_PATH"
-        #"$LD_WINEASIO_PATH"
         "${STEAMPATH}/steamapps/compatdata/221680" 
         "${STEAMPATH}/steamapps/compatdata/221680/pfx/"
     )
@@ -111,11 +160,12 @@ prepare() {
     CHECKFILES=(
         "$WINE"
         "$WINE64"
+        "/lib/libjack.so"
+
         "./config/Rocksmith.ini"
         "./config/RS_ASIO.ini"
         "./cdlc/D3DX9_42.dll"
         "./cdlc/xinput1_3.dll"
-        "/lib/libjack.so"
     )
 
     CHECKPROGRAMS=(
@@ -129,7 +179,7 @@ prepare() {
 
     for path in "${CHECKPATHS[@]}"; do
         if [ ! -d "${path}" ]; then
-            echo "Directory ${path} ... $(print_red NOT found!)"
+            echo "Directory ${path} ... $(print_red "NOT found!")"
             check_passed=false
         else
             echo "Directory ${path} ... $(print_green OK)"
@@ -141,7 +191,7 @@ prepare() {
 
     for file in "${CHECKFILES[@]}"; do
         if [ ! -f "${file}" ]; then
-            echo "File ${file} ... $(print_red NOT found!)"
+            echo "File ${file} ... $(print_red "NOT found!")"
             check_passed=false
         else 
             echo "File ${file} ... $(print_green OK)"
@@ -166,6 +216,13 @@ prepare() {
         print_red "A check failed. Exiting the program."
         exit 1
     fi
+
+    read -p "This script will add wineasio to proton and Rocksmith, register it and install RS_ASIO. Do you want to continue? (Y/N): " user_input
+    user_input=$(echo "$user_input" | tr '[:lower:]' '[:upper:]')
+    if [ "$user_input" != "Y" ]; then
+        print_red "Exiting..."
+        exit 0
+    fi
 }
 
 register_dll() {
@@ -181,8 +238,7 @@ safe_copy() {
 
 patch_wineasio_32bit() {
     echo "[Wineasio] Applying Patch for 32-bit"
-    safe_copy "${WINEASIOPATH}${1}" "${PROTONPATH}/files/lib/wine${1}"
-    # TODO: We assume it's a 64-bit system. Shouldn't change in the future, but do we want to add a test like for 64-bit?
+    safe_copy "${WINEASIOPATH}${1}" "${PROTONPATH}/${FILES_OR_DIST}/lib/wine${1}"
     if [[ $1 == *.so ]]; then
         local wineasio_dll=$(echo ${WINEASIOPATH}${1} | sed -e 's|/i386-unix/wineasio32.dll.so|/i386-windows/wineasio32.dll|g')
         if [ -e "${WINEASIOPATH}${1}" ] && [ -e "${wineasio_dll}" ]; then
@@ -196,7 +252,7 @@ patch_wineasio_32bit() {
 patch_wineasio_64bit() {
     echo "[Wineasio] Applying Patch for 64-bit"
 
-    safe_copy "${WINEASIOPATH}${1}" "${PROTONPATH}/files/lib64/wine${1}"
+    safe_copy "${WINEASIOPATH}${1}" "${PROTONPATH}/${FILES_OR_DIST}/lib64/wine${1}"
 
     if [[ $1 == *.so ]]; then
         if [ ! -d "${WINEPREFIX}/drive_c/windows/syswow64" ]; then
@@ -216,9 +272,6 @@ patch_wineasio() {
     print_blue "======== Wineasio ========"
     echo "[Wineasio] Install Wineasio"
 
-    #echo "Copying ${STEAMPATH}/steamapps/compatdata/221680/pfx/* --> ${WINEPREFIX}/"
-    #cp -a -r "${STEAMPATH}/steamapps/compatdata/221680/pfx/"* "${WINEPREFIX}/"
-
     for dll in "${WINEASIODLLS[@]}"; do
         if echo "$dll" | grep -q "32"; then
             patch_wineasio_32bit "$dll"
@@ -228,11 +281,6 @@ patch_wineasio() {
             echo "$dll doesn't contain 32 or 64 in its name. Can't choose if 32 or 64 bit."
         fi
     done
-
-    ### Copy patched wineprefix back
-    #rm -rf ${STEAMPATH}/steamapps/compatdata/221680/pfx
-    #mkdir ${STEAMPATH}/steamapps/compatdata/221680/pfx
-    #cp -a -r "${WINEPREFIX}/"* "${STEAMPATH}/steamapps/compatdata/221680/pfx/"
 }
 
 patch_rs_asio() {
@@ -246,7 +294,9 @@ patch_rs_asio() {
     echo "[RS_ASIO] Unzip"
     unzip release-${RSASIOVER}.zip -d RS_ASIO
 
-    echo "[RS_ASIO] Copy to Rocksmith"
+    sed -i 's/Driver=[^ ]*/Driver=wineasio-rsasio/g' "RS_ASIO/RS_ASIO.ini"
+
+    echo "[RS_ASIO] Copying RS_ASIO to Rocksmith installation"
     cp -a "RS_ASIO/"* "${STEAMPATH}/steamapps/common/Rocksmith2014/"
 }
 
@@ -263,31 +313,28 @@ patch_cdlc() {
 }
 
 
+
 finalise() {
     print_blue "======== DONE ========"
 
     echo "Patch applied, you can now configure Rocksmith"
 
-    echo "Add the following launch option to Rocksmith on steam"
+    echo "First, check that the RS_ASIO.ini file is correct"
+    echo
+    echo "Finally, add the following launch option to Rocksmith on steam"
     echo 
     echo "================================================================"
     echo $LAUNCH_OPTIONS
     echo "================================================================"
 }
 
-cleanup() {
-    print_blue "======== CLEANUP ========"
-    #rm -rf $WINEPREFIX
-}
 
 ################### Execute ################### 
 greet
 print_system_info
-backup
-prepare
+check_and_prepare
 patch_wineasio
 patch_rs_asio
 add_configs
 patch_cdlc
 finalise
-cleanup
