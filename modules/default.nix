@@ -10,4 +10,6 @@
   network = import ./network;
   nvidia = import ./nvidia;
   zsh = import ./zsh;
+  password-manager = import ./password-manager;
+  logitech = import ./logitech;
 }

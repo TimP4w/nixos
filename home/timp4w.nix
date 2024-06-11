@@ -36,8 +36,6 @@
     plex-media-player
     spotify
     telegram-desktop
-    _1password-gui
-    _1password
     discord
     go-task
     guitarix
