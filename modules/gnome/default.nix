@@ -13,7 +13,7 @@ in
 
       # Configure keymap in X11
       xkb.layout = "ch";
-      xkb.variant = "fr_nodeadkeys";
+      xkb.variant = "de";
 
       displayManager = {
         gdm.enable = true;
