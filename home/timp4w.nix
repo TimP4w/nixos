@@ -50,6 +50,10 @@
     oh-my-posh
   ] ++ (with pkgs-unstable; [ ]);
 
+  home.sessionPath = [
+    "/home/timp4w/.nix/scripts"
+    "$HOME/.local/bin"
+  ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.11";
