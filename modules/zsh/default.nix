@@ -12,8 +12,6 @@ in
     programs.zsh.shellAliases = {
       ll = "ls -l";
       nix-rebuild = "sudo nixos-rebuild switch --flake $NIXOS_CONFIG_DIR#${VARS.hostSettings.hostname}";
-      nix-cleanup = "sudo $NIXOS_CONFIG_DIR/scripts/cleanup.sh";
-      nix-update = "sudo $NIXOS_CONFIG_DIR/scripts/update.sh";
       nix-run = "nix-shell --run $SHELL -p";
     };
 
