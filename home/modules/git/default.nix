@@ -17,13 +17,26 @@
     };
 
     extraConfig = {
-      gpg.program = "gpg2";
+      commit = {
+        gpgsign = true;
+        verbose = true;
+      };
+
+      user = {
+        signingkey = "923079CE4BC4C4A4";
+      };
+
+      gpg = {
+        program = "gpg";
+      };
+
       rebase = {
         abbreviatedCommands = true;
         autosquash = true;
         autostash = true;
         missingCommitsCheck = "warn";
       };
+
       alias = {
         amend = "commit -a --amend --no-edit";
         cb = "checkout -b";
@@ -47,33 +60,40 @@
           --format=format:'%C(bold blue)%h%C(reset)%C(auto)%d%C(reset)
           %C(auto)%s%C(reset) %C(dim green)(%ae)%C(reset)'";
       };
-      commit = {
-        verbose = true;
-      };
+
       push = {
         default = "matching";
       };
+
       pull = {
         ff = "only";
       };
+
       init = {
         defaultBranch = "main";
       };
+
       merge = {
         tool = "vscode";
         conflictstyle = "zdiff3";
       };
+
       mergetool = {
         layout = "(LOCAL,MERGED,REMOTE)";
         vscode.cmd = "code --wait $MERGED";
       };
+
+      core = {
+        editor = "code --wait";
+      };
+
       difftool = {
         vscode.cmd = "code - -wait - -diff $LOCAL $REMOTE";
       };
+
       pager.branch = false;
       mergetool.keepBackup = false;
     };
   };
-
 
 }
