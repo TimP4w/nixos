@@ -36,17 +36,27 @@ sudo nixos-rebuild switch --flake .#nixos
 
 --- OR ---
 
-nix-rebuild
+rebuild
 ```
 
 # Clean old stores
 ```bash
 cd $NIXOS_CONFIG_DIR  
-sudo scripts/cleanup.sh
+sudo scripts/cleanup
 
 --- OR ---
 
-nix-cleanup
+cleanup
+```
+
+# Update / Upgrade
+```bash
+cd $NIXOS_CONFIG_DIR  
+sudo scripts/update
+
+--- OR ---
+
+update
 ```
 
 # CheatSheet

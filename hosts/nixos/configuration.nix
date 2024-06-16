@@ -14,24 +14,23 @@
   ## Backup Disks RAID
   #
   # `$ sudo mdadm --assemble --scan`
-  # `$ sudo mdadm --detail --scan | sudo tee -a /etc/mdadm.conf`
+  # `$ sudo mdadm --detail --scan | sudo tee -a /etc/mdadm/mdadm.conf`
   #
-  fileSystems."/mnt/raid" = {
-    device = "/dev/md0";
-    fsType = "ext4";
-    options = [ "defaults" ];
-  };
-
-  systemd.services.mdadm = {
-    description = "MDADM RAID arrays";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "local-fs.target" ];
-    serviceConfig = {
-      ExecStart = "${pkgs.mdadm}/bin/mdadm --assemble --scan";
-      ExecStop = "${pkgs.mdadm}/bin/mdadm --stop --scan";
-      RemainAfterExit = true;
-    };
-  };
+  # fileSystems."/mnt/raid" = {
+  #   device = "/dev/md0";
+  #   fsType = "ext4";
+  #   options = [ "defaults" ];
+  # };
+  # systemd.services.mdadm = {
+  #   description = "MDADM RAID arrays";
+  #   wantedBy = [ "multi-user.target" ];
+  #   after = [ "local-fs.target" ];
+  #   serviceConfig = {
+  #     ExecStart = "${pkgs.mdadm}/bin/mdadm --assemble --scan";
+  #     ExecStop = "${pkgs.mdadm}/bin/mdadm --stop --scan";
+  #     RemainAfterExit = true;
+  #   };
+  # };
 
   environment.systemPackages = with pkgs; [
     python3
@@ -42,6 +41,9 @@
     vscode
     warp-terminal
     mdadm # raid
+    gnupg
+    pinentry
+    pinentry-tty
   ];
 
   modules.nixos = {
