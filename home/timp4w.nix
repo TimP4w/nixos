@@ -13,8 +13,7 @@
 
     ./modules/git
 
-    ./modules/gnome
-
+    ./modules/hyprland
     ./modules/gnome
 
     ./modules/kitty
@@ -24,6 +23,8 @@
     ./modules/ssh
 
     ./modules/zsh
+
+    ./modules/rclone
   ];
 
   accounts.email.accounts = {
