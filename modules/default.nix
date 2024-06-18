@@ -12,4 +12,5 @@
   zsh = import ./zsh;
   password-manager = import ./password-manager;
   logitech = import ./logitech;
+  hyprland = import ./hyprland;
 }
