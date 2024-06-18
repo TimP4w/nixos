@@ -11,7 +11,7 @@ in
     programs.zsh.enable = true;
     programs.zsh.shellAliases = {
       ll = "ls -l";
-      nix-rebuild = "sudo nixos-rebuild switch --flake $NIXOS_CONFIG_DIR#${VARS.hostSettings.hostname}";
+      nix-rebuild = "$NIXOS_CONFIG_DIR/scripts/rebuild";
       nix-run = "nix-shell --run $SHELL -p";
     };
 

@@ -16,7 +16,7 @@ Ensure that the infos in `variables.nix` are correct.
 ```bash
 # Clone Repository
 nix-shell -p git git-crypt
-git clone https://github.com/TimP4w/nix
+git clone --recurse-submodules https://github.com/TimP4w/nix
 mv nixos .nix
 
 # Decrypt Secrets
@@ -24,7 +24,7 @@ cd .nix
 git-crypt unlock <path to nixos_gitcrypt.key>
 
 # Rebuild system
-sudo nixos-rebuild switch --flake .#nixos
+sudo scripts/rebuild
 sudo reboot
 ```
 
@@ -32,7 +32,7 @@ sudo reboot
 # Rebuild
 ```bash
 cd $NIXOS_CONFIG_DIR  
-sudo nixos-rebuild switch --flake .#nixos
+sudo scripts/rebuild # or check how the script does it (git submodules!)
 
 --- OR ---
 
@@ -67,9 +67,9 @@ sudo journalctl -u home-manager-timp4w -r
 ```
 
 # TODO
-- [ ] Add Hyprland
+- [x] Add Hyprland
 - [ ] Configure default apps (see brave)
-- [ ] Add gpg
+- [x] Add gpg
 
 # Links
 - [NixOS packages](https://search.nixos.org/packages) - Packages DB
@@ -81,3 +81,12 @@ sudo journalctl -u home-manager-timp4w -r
 - [Nix Community Templates](https://github.com/nix-community/templates) - A collection of basic [development] templates. Using flake-utils.
 - [nix-darwin](https://github.com/LnL7/nix-darwin) - Nix modules for darwin, `/etc/nixos/configuration.nix` for macOS.
 - [NUR](https://github.com/nix-community/NUR/) - The Nix User Repository (NUR) is a community-driven meta repository for Nix packages.
+
+
+# Git Submodules
+
+*Committing Changes:*
+ 
+- Changes to the submodule are committed to the submodule's repository. Navigate into the submodule directory, make your changes, commit, and push them as usual.
+- When you update the submodule reference in the main repository (e.g., after making changes in the submodule), commit the change in the main repository to keep track of the submodule state
+- Re-initialize submodules: `git submodule update --init --recursive`

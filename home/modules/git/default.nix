@@ -23,11 +23,15 @@
       };
 
       user = {
-        signingkey = "923079CE4BC4C4A4";
+        signingkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKpni+ggWelhFEBViG9U2eqT0/N5G8zyzTrXYwuqupd1"; # TODO: get from variables.nix
       };
 
       gpg = {
         program = "gpg";
+        format = "ssh";
+        ssh = {
+          program = "${pkgs._1password-gui}/bin/op-ssh-sign";
+        };
       };
 
       rebase = {
