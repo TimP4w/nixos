@@ -1,1 +1,0 @@
-sudo nixos-rebuild switch --flake "$NIXOS_CONFIG_DIR?submodules=1#nixos"

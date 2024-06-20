@@ -3,7 +3,6 @@
   imports =
     [
       ./hardware-configuration.nix # Include the results of the hardware scan.
-      inputs.home-manager.nixosModules.home-manager
     ];
 
   boot = {
@@ -76,15 +75,6 @@
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
-  home-manager = {
-    extraSpecialArgs = {
-      inherit inputs outputs pkgs-unstable VARS;
-      vars = {
-        hostName = config.networking.hostName;
-      };
-    };
-    users.${VARS.userSettings.username} = import ../../home/${VARS.userSettings.username}.nix;
-  };
 
 
   # Before changing this value read the documentation for this option

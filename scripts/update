@@ -1,2 +1,0 @@
-nix flake update $NIXOS_CONFIG_DIR
-sudo nixos-rebuild switch --flake $NIXOS_CONFIG_DIR#nixos --upgrade

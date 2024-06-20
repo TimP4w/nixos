@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, VARS, ... }:
 
 {
   nixpkgs = {
@@ -25,6 +25,42 @@
 
   # Enable home-manager
   programs.home-manager.enable = true;
+
+  # Helper scripts
+  home.file = {
+    ".local/bin/rebuild" = {
+      text = ''
+        sudo nixos-rebuild switch --flake "/home/${VARS.userSettings.username}/.nix?submodules=1#${VARS.hostSettings.hostname}"
+      '';
+      executable = true;
+    };
+    ".local/bin/cleanup" = {
+      text = ''
+        sudo nix-collect-garbage -d
+        sudo nix-store --gc
+        sudo nix store verify --all
+        sudo nix store repair --all
+      '';
+      executable = true;
+    };
+    ".local/bin/update" = {
+      text = ''
+        nix flake update /home/${VARS.userSettings.username}/.nix
+        sudo nixos-rebuild switch --flake "/home/${VARS.userSettings.username}/.nix?submodules=1#${VARS.hostSettings.hostname}" --upgrade
+
+      '';
+      executable = true;
+    };
+  };
+
+  home.sessionPath = [
+    "$HOME/.local/bin"
+  ];
+
+  # = {
+  #  source = ./config;
+  #  recursive = true; # Ensure the whole directory and its contents are copied
+  #};
 
   # Nicely reload system units when changing configs
   systemd.user = {

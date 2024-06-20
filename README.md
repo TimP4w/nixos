@@ -24,7 +24,7 @@ cd .nix
 git-crypt unlock <path to nixos_gitcrypt.key>
 
 # Rebuild system
-sudo scripts/rebuild
+sudo nixos-rebuild switch --flake "/home/<username>/.nix?submodules=1#<hostname>"
 sudo reboot
 ```
 
@@ -32,7 +32,7 @@ sudo reboot
 # Rebuild
 ```bash
 cd $NIXOS_CONFIG_DIR  
-sudo scripts/rebuild # or check how the script does it (git submodules!)
+sudo nixos-rebuild switch --flake "/home/<username>/.nix?submodules=1#<hostname>"
 
 --- OR ---
 
@@ -41,18 +41,14 @@ rebuild
 
 # Clean old stores
 ```bash
-cd $NIXOS_CONFIG_DIR  
-sudo scripts/cleanup
-
---- OR ---
-
 cleanup
 ```
 
 # Update / Upgrade
 ```bash
+nix flake update $NIXOS_CONFIG_DIR 
 cd $NIXOS_CONFIG_DIR  
-sudo scripts/update
+sudo nixos-rebuild switch --flake "/home/<username>/.nix?submodules=1#<hostname>" --upgrade
 
 --- OR ---
 

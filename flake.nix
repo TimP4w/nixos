@@ -19,6 +19,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
     # hardware.url = "github:nixos/nixos-hardware";
 
     # Home manager
@@ -28,7 +29,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... } @ inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-wsl, ... } @ inputs:
     let
       # Import variables
       VARS = import ./variables.nix;
@@ -45,11 +46,45 @@
       nixosModules = import ./modules;
 
       nixosConfigurations = {
-        ${VARS.hostSettings.hostname} = nixpkgs.lib.nixosSystem {
+        nixos = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs pkgs-unstable VARS; };
           modules = [
             inputs.musnix.nixosModules.musnix
-            ./hosts/${VARS.hostSettings.hostname}/configuration.nix
+            inputs.home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                extraSpecialArgs = {
+                  inherit inputs outputs pkgs-unstable VARS;
+                  vars = {
+                    hostName = "nixos";
+                  };
+                };
+                users.${VARS.userSettings.username} = import ./home/users/${VARS.userSettings.username};
+              };
+            }
+            ./hosts/nixos/configuration.nix
+
+          ]
+          ++ (builtins.attrValues outputs.nixosModules);
+        };
+        tpad-lu-77 = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs pkgs-unstable VARS; };
+          modules = [
+            inputs.musnix.nixosModules.musnix
+            nixos-wsl.nixosModules.default
+            inputs.home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                extraSpecialArgs = {
+                  inherit inputs outputs pkgs-unstable VARS;
+                  vars = {
+                    hostName = "tpad-lu-77";
+                  };
+                };
+                users.${VARS.userSettings.username} = import ../../home/users/${VARS.userSettings.username};
+              };
+            }
+            ./hosts/tpad-lu-77/configuration.nix
           ]
           ++ (builtins.attrValues outputs.nixosModules);
         };

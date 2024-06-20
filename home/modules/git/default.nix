@@ -6,9 +6,6 @@
   programs.git = {
     enable = true;
 
-    userName = VARS.userSettings.name;
-    userEmail = VARS.userSettings.email;
-
     delta = {
       enable = true;
       options = {
@@ -18,20 +15,7 @@
 
     extraConfig = {
       commit = {
-        gpgsign = true;
         verbose = true;
-      };
-
-      user = {
-        signingkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKpni+ggWelhFEBViG9U2eqT0/N5G8zyzTrXYwuqupd1"; # TODO: get from variables.nix
-      };
-
-      gpg = {
-        program = "gpg";
-        format = "ssh";
-        ssh = {
-          program = "${pkgs._1password-gui}/bin/op-ssh-sign";
-        };
       };
 
       rebase = {
