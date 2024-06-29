@@ -8,9 +8,10 @@ in
   };
 
   config = mkIf cfg.enable {
+    programs.solaar.enable = true;
     environment.systemPackages = with pkgs; [
-      solaar # Logitech device control (not working?)
       usbutils
+      logitech-udev-rules
     ];
   };
 }

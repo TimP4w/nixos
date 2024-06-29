@@ -21,7 +21,12 @@
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
     # hardware.url = "github:nixos/nixos-hardware";
-
+    solaar = {
+      url = "https://flakehub.com/f/Svenum/Solaar-Flake/*.tar.gz"; # For latest stable version
+      #url = "https://flakehub.com/f/Svenum/Solaar-Flake/1.1.13.tar.gz" # uncomment line for version 1.1.13
+      #url = "github:Svenum/Solaar-Flake/main"; # Uncomment line for latest unstable version
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # Home manager
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
@@ -29,7 +34,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-wsl, ... } @ inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-wsl, solaar, ... } @ inputs:
     let
       # Import variables
       VARS = import ./variables.nix;
@@ -50,6 +55,7 @@
           specialArgs = { inherit inputs outputs pkgs-unstable VARS; };
           modules = [
             inputs.musnix.nixosModules.musnix
+            solaar.nixosModules.default
             inputs.home-manager.nixosModules.home-manager
             {
               home-manager = {
@@ -71,6 +77,7 @@
           specialArgs = { inherit inputs outputs pkgs-unstable VARS; };
           modules = [
             inputs.musnix.nixosModules.musnix
+            solaar.nixosModules.default
             nixos-wsl.nixosModules.default
             inputs.home-manager.nixosModules.home-manager
             {
