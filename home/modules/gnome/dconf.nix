@@ -42,6 +42,8 @@ with lib.hm.gvariant;
         "dash2dock-lite@icedman.github.com"
         "mprisLabel@moon-0xff.github.com"
         "quake-terminal@diegodario88.github.io"
+        "blur-my-shell@aunetx"
+        "tiling-assistant@leleat-on-github"
       ];
       favorite-apps = [
         "brave-browser.desktop"
@@ -180,5 +182,48 @@ with lib.hm.gvariant;
       wine-behavior = true;
     };
 
+    "org/gnome/shell/extensions/tiling-assistant" = {
+      activate-layout0 = [ ];
+      activate-layout1 = [ ];
+      activate-layout2 = [ ];
+      activate-layout3 = [ ];
+      active-window-hint = 1;
+      active-window-hint-color = "rgb(8,96,242)";
+      auto-tile = [ ];
+      center-window = [ ];
+      debugging-free-rects = [ ];
+      debugging-show-tiled-rects = [ ];
+      default-move-mode = 0;
+      dynamic-keybinding-behavior = 0;
+      import-layout-examples = false;
+      last-version-installed = 47;
+      maximize-with-gap = false;
+      restore-window = [ "<Super>Down" ];
+      search-popup-layout = [ ];
+      single-screen-gap = 8;
+      tile-bottom-half = [ "<Super>KP_2" ];
+      tile-bottom-half-ignore-ta = [ ];
+      tile-bottomleft-quarter = [ "<Super>KP_1" ];
+      tile-bottomleft-quarter-ignore-ta = [ ];
+      tile-bottomright-quarter = [ "<Super>KP_3" ];
+      tile-bottomright-quarter-ignore-ta = [ ];
+      tile-edit-mode = [ "<Shift><Alt>l" ];
+      tile-left-half = [ "<Super>Left" "<Super>KP_4" ];
+      tile-left-half-ignore-ta = [ ];
+      tile-maximize = [ "<Super>Up" "<Super>KP_5" ];
+      tile-maximize-horizontally = [ ];
+      tile-maximize-vertically = [ ];
+      tile-right-half = [ "<Super>Right" "<Super>KP_6" ];
+      tile-right-half-ignore-ta = [ ];
+      tile-top-half = [ "<Super>KP_8" ];
+      tile-top-half-ignore-ta = [ ];
+      tile-topleft-quarter = [ "<Super>KP_7" ];
+      tile-topleft-quarter-ignore-ta = [ ];
+      tile-topright-quarter = [ "<Super>KP_9" ];
+      tile-topright-quarter-ignore-ta = [ ];
+      toggle-always-on-top = [ ];
+      toggle-tiling-popup = [ ];
+      window-gap = 8;
+    };
   };
 }

@@ -9,7 +9,8 @@
     gnomeExtensions.dash2dock-lite # dash2dock-lite@icedman.github.com
     gnomeExtensions.mpris-label # "mprisLabel@moon-0xff.github.com"
     gnomeExtensions.quake-terminal # "quake-terminal@diegodario88.github.io"
-
+    gnomeExtensions.tiling-assistant # "tiling-assistant@leleat-on-github"
+    gnomeExtensions.blur-my-shell # "blur-my-shell@aunetx"
     gnome.adwaita-icon-theme
   ];
 
