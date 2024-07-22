@@ -45,6 +45,8 @@
     pinentry-tty
   ];
 
+  virtualisation.waydroid.enable = true;
+
   modules.nixos = {
     basic.enable = true;
     docker.enable = true;
@@ -75,7 +77,14 @@
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
-
+  hardware.bluetooth.enable = true; # enables support for Bluetooth
+  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
+  services.blueman.enable = true;
+  hardware.bluetooth.settings = {
+    General = {
+      Experimental = true;
+    };
+  };
 
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
