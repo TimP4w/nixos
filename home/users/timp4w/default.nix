@@ -76,6 +76,7 @@
     go-task
     guitarix
     oh-my-posh
+    slack
   ] ++ (with pkgs-unstable; [ ]);
 
 
