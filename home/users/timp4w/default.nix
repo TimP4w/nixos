@@ -8,6 +8,7 @@
     ../../modules/development
     ../../modules/development/kubernetes.nix
     ../../modules/development/terraform.nix
+    ../../modules/development/go.nix
 
     ../../modules/gaming
 
