@@ -8,7 +8,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    programs.solaar.enable = true;
+    services.solaar.enable = true;
     environment.systemPackages = with pkgs; [
       usbutils
       logitech-udev-rules
