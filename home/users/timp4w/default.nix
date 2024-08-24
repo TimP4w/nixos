@@ -78,6 +78,7 @@
     guitarix
     oh-my-posh
     slack
+    postman
   ] ++ (with pkgs-unstable; [ ]);
 
 
