@@ -43,6 +43,7 @@
     gnupg
     pinentry
     pinentry-tty
+    # xwaylandvideobridge
   ];
 
   virtualisation.waydroid.enable = true;
@@ -60,7 +61,7 @@
       enableRocksmith2014 = true; # Needs reboot if toggled
     };
     gnome.enable = true;
-    hyprland.enable = true;
+    # hyprland.enable = true;
     grub.enable = true;
     ld.enable = true;
     network.enable = true;
@@ -85,6 +86,18 @@
       Experimental = true;
     };
   };
+
+  /*
+
+    fileSystems."/mnt/k3s" = {
+    device = "192.168.1.3:/volume1/k3s";
+    fsType = "nfs";
+    options = [ "nfsvers=4.1" ];
+    };
+  */
+
+  # Hack to avoid a suspending loop after waking up. Mind that this system is NOT a laptop and doesn't have a lid... 
+  services.logind.lidSwitchExternalPower = "ignore";
 
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
