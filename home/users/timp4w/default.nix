@@ -12,7 +12,8 @@
 
     ../../modules/gaming
 
-    # ../../modules/hyprland
+    ../../modules/hyprland
+
     ../../modules/gnome
 
     ../../modules/kitty
@@ -79,7 +80,9 @@
     oh-my-posh
     slack
     postman
-  ] ++ (with pkgs-unstable; [ ]);
+  ] ++ (with pkgs-unstable; [
+    zed-editor
+  ]);
 
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, VARS, ... }:
+{ config, pkgs, lib, inputs, VARS, ... }:
 with lib; let
   cfg = config.modules.nixos.hyprland;
 in
@@ -33,8 +33,10 @@ in
 
     programs.hyprland = {
       enable = true;
+      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+      portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+      xwayland.enable = true;
     };
-
 
     environment.systemPackages = with pkgs; [
       wl-clipboard
@@ -44,10 +46,14 @@ in
       brightnessctl
       anyrun
       swayosd
+      playerctl
+      swayosd
+      xwayland
+      wayland-protocols
+      hyprlock
     ];
 
     # services.xserver.displayManager.startx.enable = true;
-
     # xdg.portal = {
     #   enable = true;
     #   extraPortals = with pkgs; [

@@ -61,7 +61,7 @@
       enableRocksmith2014 = true; # Needs reboot if toggled
     };
     gnome.enable = true;
-    # hyprland.enable = true;
+    hyprland.enable = true;
     grub.enable = true;
     ld.enable = true;
     network.enable = true;

@@ -37,29 +37,66 @@
   };
 
   home.sessionVariables = {
-    WLR_NO_HARDWARE_CURSORS = 1;
     NIXOS_OZONE_WL = 1;
-
   };
+
+  home.packages = with pkgs; [
+    # hyprnome
+    waybar
+  ];
 
   wayland.windowManager.hyprland = {
     enable = true;
-
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
 
+
     settings = {
-      debug = {
-        overlay = false;
-      };
+      env = [
+        "XCURSOR_SIZE,24"
+        "HYPRCURSOR_SIZE,24"
+        "AQ_DRM_DEVICES,/dev/dri/card1" # :/dev/dri/card0"
+
+        #NVIDIA
+        "LIBVA_DRIVER_NAME,nvidia"
+        "XDG_SESSION_TYPE,wayland"
+        "GBM_BACKEND,nvidia-drm"
+        "__GLX_VENDOR_LIBRARY_NAME,nvidia"
+        "__GL_GSYNC_ALLOWED,1"
+        "__GL_VRR_ALLOWED,1" # - Controls if Adaptive Sync should be used. Recommended to set as “0” to avoid having problems on some games.
+
+        # Electron stuff
+        "ELECTRON_OZONE_PLATFORM_HINT,auto"
+
+        "GDK_BACKEND,wayland,x11,*" # GTK: Use wayland if available. If not: try x11, then any other GDK backend.
+        "QT_QPA_PLATFORM,wayland;xcb" #  Qt: Use wayland if available, fall back to x11 if not.
+        "SDL_VIDEODRIVER,wayland" # Run SDL2 applications on Wayland. Remove or set to x11 if games that provide older versions of SDL cause compatibility issues
+        "CLUTTER_BACKEND,wayland" # Clutter package already has wayland enabled, this variable will force Clutter applications to try and use the Wayland backend
+
+        # XDG specific environment variables are often detected through portals and applications that may set those for you, however it is not a bad idea to set them explicitly.
+        "XDG_CURRENT_DESKTOP,Hyprland"
+        "XDG_SESSION_TYPE,wayland"
+        "XDG_SESSION_DESKTOP,Hyprland"
+
+        # "AQ_NO_ATOMIC,1" # use legacy DRM interface instead of atomic mode setting. NOT recommended.
+      ];
+
+      # debug = {
+      #   overlay = false;
+      #   disable_logs = false;
+      #   enable_stdout_logs = true;
+      # };
 
       monitor = [
         "DP-3,2560x1440@165,0x0,1"
         "DP-1,2560x1440@165,2560x0,1"
-        # ",preferred,auto,1"
+        #",preferred,auto,auto"
       ];
 
       exec-once = [
+        "swayosd-server"
+        "waybar"
         # "kitty"
+        # "nm-applet &"
       ];
 
       cursor = {
@@ -77,10 +114,14 @@
         #col.active_border = "rgba(33ccffee) rgba(00ff99ee) 45deg";
         #col.inactive_border = "rgba(595959aa)"; # transparent
 
-        allow_tearing = false;
+        allow_tearing = true;
         resize_on_border = true;
         layout = "dwindle";
 
+      };
+
+      render = {
+        explicit_sync = 2;
       };
 
       decoration = {
@@ -129,10 +170,10 @@
         pseudotile = true; # Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
         preserve_split = true; # You probably want this
       };
-
-      # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
+      #
+      ## See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
       #master = {
-      #  new_is_master = true;
+      #  new_status = "slave";
       #};
 
       # https://wiki.hyprland.org/Configuring/Variables/#misc
@@ -142,6 +183,7 @@
         vfr = true;
         vrr = 1;
       };
+
 
       input = {
         kb_layout = "ch";
@@ -159,17 +201,7 @@
         };
       };
 
-      # https://wiki.hyprland.org/Configuring/Variables/#gestures
-      gestures = {
-        workspace_swipe = false;
-      };
-
-      # Example per-device config
-      # See https://wiki.hyprland.org/Configuring/Keywords/#per-device-input-configs for more
-      device = {
-        name = "epic-mouse-v1";
-        sensitivity = -0.5;
-      };
+      # https://wiki.hyprland.org/Configuring/Variablrender
 
       bind = [
         "SUPER, T, exec, kitty"
@@ -199,6 +231,7 @@
         "SUPER, 9, workspace, 9"
         "SUPER, 0, workspace, 10"
 
+
         # Move active window to a workspace with mainMod + SHIFT + [0-9]
         "SUPER SHIFT, 1, movetoworkspace, 1"
         "SUPER SHIFT, 2, movetoworkspace, 2"
@@ -215,32 +248,41 @@
         "SUPER, S, togglespecialworkspace, magic"
         "SUPER SHIFT, S, movetoworkspace, special:magic"
 
+        "SUPER ALT, Alt_l, hyprexpo:expo, toggle" # can be: toggle, off/disable or on/enable
+
         # Scroll through existing workspaces with mainMod + scroll
         "SUPER, mouse_down, workspace, e+1"
         "SUPER, mouse_up, workspace, e-1"
-
-        # Plugins
-        "SUPER, K, hyprexpo:expo, toggle"
       ];
 
+      # Move/resize windows with mainMod + LMB/RMB and dragging
       bindm = [
         "SUPER, mouse:272, movewindow"
         "SUPER, mouse:273, resizewindow"
       ];
 
-      windowrulev2 = "suppressevent maximize, class:.*";
-
-      env = [
-        "XCURSOR_SIZE,24"
-        "WLR_NO_HARDWARE_CURSORS,1"
-        "LIBVA_DRIVER_NAME,nvidia"
-        "WLR_DRM_DEVICES,/dev/dri/card1:/dev/dri/card0"
-        "XDG_SESSION_TYPE,wayland"
-        "GBM_BACKEND,nvidia-drm"
-        "__GLX_VENDOR_LIBRARY_NAME,nvidia"
-        "ELECTRON_OZONE_PLATFORM_HINT,auto"
-        "__GL_GSYNC_ALLOWED,1"
+      # Laptop multimedia keys for volume and LCD brightness
+      bindel = [
+        ",XF86AudioRaiseVolume, exec, swayosd-client --output-volume +5 raise"
+        ",XF86AudioLowerVolume, exec, swayosd-client --output-volume -5 lower"
+        ",XF86AudioMute, exec, swayosd-client --output-volume mute-toggle"
+        ",XF86AudioMicMute, exec, swayosd-client --output-volume mute-toggle" # wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle 
+        ",XF86MonBrightnessUp, exec, swayosd-client --brightness +10" #brightnessctl s 10%+ 
+        ",XF86MonBrightnessDown, exec, swayosd-client --brightness -10" #  brightnessctl s 10%- 
       ];
+
+      # Requires playerctl
+      bindl = [
+        ",XF86AudioNext, exec, playerctl next"
+        ",XF86AudioPause, exec, playerctl play-pause"
+        ",XF86AudioPlay, exec, playerctl play-pause"
+        ",XF86AudioPrev, exec, playerctl previous"
+      ];
+
+
+      # See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
+      # See https://wiki.hyprland.org/Configuring/Workspace-Rules/ for workspace rules
+      windowrulev2 = "suppressevent maximize, class:.*";
 
       plugin = {
         hyprexpo = {

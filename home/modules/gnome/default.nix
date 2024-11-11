@@ -5,6 +5,7 @@
   home.packages = with pkgs; [
     # gnomeExtensions.tray-icons-reloaded
     # gnomeExtensions.dash-to-dock
+
     gnomeExtensions.appindicator # appindicatorsupport@rgcjonas.gmail.com
     gnomeExtensions.dash2dock-lite # dash2dock-lite@icedman.github.com
     gnomeExtensions.mpris-label # "mprisLabel@moon-0xff.github.com"
@@ -13,6 +14,13 @@
     gnomeExtensions.blur-my-shell # "blur-my-shell@aunetx"
     gnome.adwaita-icon-theme
   ];
+
+  home.pointerCursor = {
+    name = "phinger-cursors-dark";
+    package = pkgs.phinger-cursors;
+    size = 28;
+    gtk.enable = true;
+  };
 
   gtk = {
     enable = true;
