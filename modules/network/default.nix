@@ -20,6 +20,16 @@ in
     # Enable networking
     networking.networkmanager.enable = true;
 
+    security.pki.certificateFiles = [
+      ./certs/nas.crt
+    ];
+
+    # Disable warp calling home and prevent showing update banner (https://github.com/warpdotdev/Warp/issues/1991)
+    networking.extraHosts =
+      ''
+        127.0.0.1 releases.warp.dev
+        127.0.0.1 app.warp.dev
+      '';
     # Open ports in the firewall.
     # networking.firewall.allowedTCPPorts = [ ... ];
     # networking.firewall.allowedUDPPorts = [ ... ];

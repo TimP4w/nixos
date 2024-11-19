@@ -80,6 +80,8 @@
     oh-my-posh
     slack
     postman
+    synology-drive-client
+    beekeeper-studio
   ] ++ (with pkgs-unstable; [
     zed-editor
   ]);

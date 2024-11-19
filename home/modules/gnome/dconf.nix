@@ -167,7 +167,7 @@ with lib.hm.gvariant;
       animation-time = 125;
       monitor-screen = 1;
       render-on-current-monitor = true;
-      terminal-id = "kitty.desktop";
+      terminal-id = "dev.warp.Warp.desktop";
       terminal-shortcut = "<Super>Return";
       vertical-size = 60;
     };
