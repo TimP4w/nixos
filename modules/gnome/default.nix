@@ -24,44 +24,61 @@ in
       };
     };
 
+    # Causes login to crash. Then it's impossible to use custom ENVs.
+    # services.displayManager.autoLogin.user = "timp4w"; # TODO: get from VARS
+
+
     services.libinput.enable = true;
 
-    environment.variables = {
-      QT_QPA_PLATFORM = "wayland";
-      GTK_THEME = "WhiteSur-Dark";
+    programs = {
+      dconf.enable = true;
+      nautilus-open-any-terminal = {
+        enable = true;
+        terminal = "kitty"; # TODO: change to warp?
+      };
     };
 
-    environment.systemPackages = with pkgs; [
-      gnome.gnome-tweaks
-      wl-clipboard
-      gnome.nautilus-python
-      turtle
-    ];
+    environment = {
+      variables = {
+        QT_QPA_PLATFORM = "wayland";
+        GTK_THEME = "WhiteSur-Dark";
+        MUTTER_DEBUG_FORCE_KMS_MODE = "simple"; # https://gitlab.gnome.org/GNOME/mutter/-/issues/3352 Mouse stuttering in browser with VRR active (gnome)
+        # MUTTER_DEBUG_DISABLE_HW_CURSORS = 1;
+      };
 
-    programs.dconf.enable = true;
+      pathsToLink = [
+        "/share/nautilus-python/extensions"
+      ];
 
-    environment.gnome.excludePackages = (with pkgs;
-      [
-        gnome-photos
-        gnome-tour
-      ]) ++ (with pkgs.gnome;
-      [
-        cheese # webcam tool
-        gnome-music
-        epiphany # web browser
-        # geary # email reader
-        tali # poker game
-        iagno # go game
-        hitori # sudoku game
-        atomix # puzzle game
-        yelp # Help view
-        gnome-initial-setup
-        # gnome-contacts
-        # gnome-characters
-      ]);
+      systemPackages = with pkgs; [
+        gnome.gnome-tweaks
+        wl-clipboard
+        gnome.nautilus-python
+        turtle
+      ];
+
+      gnome.excludePackages = (with pkgs;
+        [
+          gnome-photos
+          gnome-tour
+        ]) ++ (with pkgs.gnome;
+        [
+          cheese # webcam tool
+          gnome-music
+          epiphany # web browser
+          # geary # email reader
+          tali # poker game
+          iagno # go game
+          hitori # sudoku game
+          atomix # puzzle game
+          yelp # Help view
+          gnome-initial-setup
+          # gnome-contacts
+          # gnome-characters
+        ]);
+    };
 
     #Enable touchpad support (enabled default in most desktopManager).
     # services.xserver.libinput.enable = true;
-
   };
 }
