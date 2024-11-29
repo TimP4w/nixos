@@ -22,11 +22,11 @@ in
       # __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     };
 
-    # Enable OpenGL
-    hardware.opengl = {
+    # Enable HW accelerated graphics driver
+    hardware.graphics = {
       enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
+      enable32Bit = true;
+      # vaapiDriver = "nvidia";
     };
 
     # Load nvidia driver for Xorg and Wayland

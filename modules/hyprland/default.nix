@@ -40,8 +40,8 @@ in
 
     environment.systemPackages = with pkgs; [
       wl-clipboard
-      gnome.nautilus-python
-      gnome.nautilus
+      nautilus-python
+      nautilus
       pavucontrol
       brightnessctl
       anyrun

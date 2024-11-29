@@ -6,7 +6,7 @@
     ];
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages;
     kernelParams = [ "quiet" ]; # "splash" is breaking stuf...
     initrd.systemd.enable = false; # Breaks a lot of things (login crash, keyring not unlocking, etc.)
     plymouth.enable = false;

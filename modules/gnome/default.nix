@@ -51,9 +51,9 @@ in
       ];
 
       systemPackages = with pkgs; [
-        gnome.gnome-tweaks
+        gnome-tweaks
         wl-clipboard
-        gnome.nautilus-python
+        nautilus-python
         turtle
       ];
 
@@ -61,7 +61,7 @@ in
         [
           gnome-photos
           gnome-tour
-        ]) ++ (with pkgs.gnome;
+        ]) ++ (with pkgs;
         [
           cheese # webcam tool
           gnome-music
