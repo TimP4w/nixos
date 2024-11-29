@@ -22,6 +22,7 @@ in
 
     security.pki.certificateFiles = [
       ./certs/nas.crt
+      ./certs/proxmox.crt
     ];
 
     # Disable warp calling home and prevent showing update banner (https://github.com/warpdotdev/Warp/issues/1991)
