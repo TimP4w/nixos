@@ -15,13 +15,11 @@ in
     ];
 
     environment.sessionVariables = {
-      NIXOS_OZONE_WL = "1"; # Workaround for electron apps
+      NIXOS_OZONE_WL = 1; # Workaround for electron apps
       # WLR_NO_HARDWARE_CURSORS = 1;
       # QT_QPA_PLATFORM = "wayland";
       # GBM_BACKEND = "nvidia-drm";
       # __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-      # MUTTER_DEBUG_FORCE_KMS_MODE = "simple"; # Mouse stuttering in browser with VRR active (gnome)
-      # MUTTER_DEBUG_DISABLE_HW_CURSORS = 1;
     };
 
     # Enable OpenGL

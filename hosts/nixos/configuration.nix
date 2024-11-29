@@ -8,6 +8,8 @@
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [ "quiet" ]; # "splash" is breaking stuf...
+    initrd.systemd.enable = false; # Breaks a lot of things (login crash, keyring not unlocking, etc.)
+    plymouth.enable = false;
   };
 
   ## Backup Disks RAID
@@ -43,6 +45,9 @@
     gnupg
     pinentry
     pinentry-tty
+    xclip
+    #cnspec # security (mondoo)
+    #cnquery
     # xwaylandvideobridge
   ];
 
@@ -86,6 +91,10 @@
       Experimental = true;
     };
   };
+
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{power/control}="on"
+  '';
 
   /*
 

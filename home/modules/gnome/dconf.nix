@@ -11,6 +11,9 @@ with lib.hm.gvariant;
   # $ cat dconf.settings | dconf2nix > dconf.nix
   ###
 
+  # TODO: Gnome 47 
+  # gsettings set org.gnome.mutter experimental-features '["scale-monitor-framebuffer", "xwayland-native-scaling"]'
+
   dconf.settings = {
     "org/gnome/Geary" = {
       run-in-background = true;
