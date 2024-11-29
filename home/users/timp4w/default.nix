@@ -82,6 +82,7 @@
     postman
     synology-drive-client
     beekeeper-studio
+    obsidian
   ] ++ (with pkgs-unstable; [
     zed-editor
   ]);
