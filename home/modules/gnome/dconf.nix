@@ -22,7 +22,7 @@ with lib.hm.gvariant;
     };
 
     "org/gnome/mutter" = {
-      experimental-features = [ "variable-refresh-rate" "scale-monitor-framebuffer" "xwayland-native-scaling" ];
+      experimental-features = [ "xwayland-native-scaling" "variable-refresh-rate" "scale-monitor-framebuffer"  ];
     };
 
     "org/gnome/settings-daemon/plugins/media-keys" = {
@@ -40,16 +40,22 @@ with lib.hm.gvariant;
       enabled-extensions = [
         "appindicatorsupport@rgcjonas.gmail.com"
         "user-theme@gnome-shell-extensions.gcampax.github.com"
-        "dash2dock-lite@icedman.github.com"
         "mprisLabel@moon-0xff.github.com"
+        "clipboard-history@alexsaveau.dev"
+        # "executor@raujonas.github.io"
+        "dash2dock-lite@icedman.github.com"
         "quake-terminal@diegodario88.github.io"
         "blur-my-shell@aunetx"
         "tiling-assistant@leleat-on-github"
+        "solaar-extension@sidevesh"
       ];
       favorite-apps = [
         "brave-browser.desktop"
         "code.desktop"
+        "beekeeper-studio.desktop"
         "org.telegram.desktop.desktop"
+        "page.kramo.Cartridges.desktop"
+        "slack.desktop"
         "discord.desktop"
         "spotify.desktop"
         "plexmediaplayer.desktop"
@@ -59,10 +65,10 @@ with lib.hm.gvariant;
     };
 
     "org/gnome/shell/extensions/appindicator" = {
-      icon-brightness = 0.10000000000000003;
-      icon-contrast = 0.10000000000000003;
+      icon-brightness = 0.1;
+      icon-contrast = 0.1;
       icon-opacity = 240;
-      icon-saturation = 2.7755575615628914e-17;
+      # icon-saturation = 2.7755575615628914e-17;
       legacy-tray-enabled = true;
       tray-pos = "right";
     };
@@ -99,10 +105,10 @@ with lib.hm.gvariant;
       apps-icon-front = true;
       autohide-dash = true;
       autohide-speed = 0;
-      background-color = mkTuple [ 1.0 1.0 1.0 0.16326530277729034 ];
-      blur-background = true;
+      background-color = mkTuple [ 0.0 0.0 0.0 0.0 ];
+      blur-background = false;
       blur-resolution = 0;
-      border-color = mkTuple [ 6.666666828095913e-3 6.666666828095913e-3 6.666666828095913e-3 1.0 ];
+      # border-color = mkTuple [ 6.666666828095913e-3 6.666666828095913e-3 6.666666828095913e-3 1.0 ];
       border-radius = 3;
       border-thickness = 0;
       calendar-icon = false;
@@ -111,9 +117,9 @@ with lib.hm.gvariant;
       customize-label = true;
       customize-topbar = true;
       debug-visual = false;
-      dock-padding = 0.174419;
+      dock-padding = 0.18;
       downloads-icon = true;
-      edge-distance = 0.541463;
+      edge-distance = 0.55;
       favorites-only = false;
       icon-effect = 0;
       icon-resolution = 0;
@@ -127,7 +133,7 @@ with lib.hm.gvariant;
       mounted-icon = true;
       msg-to-ext = "";
       multi-monitor-preference = 1;
-      notification-badge-color = mkTuple [ 0.6933333277702332 2.3111088667064905e-3 2.3111088667064905e-3 1.0 ];
+      # notification-badge-color = mkTuple [ 0.6933333277702332 2.3111088667064905e-3 2.3111088667064905e-3 1.0 ];
       notification-badge-size = 0;
       notification-badge-style = 0;
       open-app-animation = true;

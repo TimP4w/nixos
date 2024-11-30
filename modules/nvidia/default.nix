@@ -8,7 +8,10 @@ in
   };
 
   config = mkIf cfg.enable {
-    boot.kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
+
+    # "still experimental" interface enables saving all video memory (given enough space on disk or RAM).
+    # nvidia-suspend, nvidia-hibernate, nvidia-resume systemd services must be enabled
+    boot.kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" "nvidia.NVreg_TemporaryFilePath=/var/tmp" ];
 
     environment.systemPackages = with pkgs; [
       nvitop
@@ -22,6 +25,8 @@ in
     # Enable HW accelerated graphics driver
     hardware.graphics = {
       enable = true;
+      #extraPackages = with pkgs; [ intel-media-driver intel-ocl intel-vaapi-driver ];
+      enable32Bit = true;
     };
 
     # Load nvidia driver for Xorg and Wayland
@@ -33,7 +38,7 @@ in
       powerManagement.finegrained = false; # Experimental. Fine-grained power management. Turns off GPU when not in use.
       open = false; # alpha open source kernel module (https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus )
       nvidiaSettings = true;
-      # forceFullCompositionPipeline = true;
+      # forceFullCompositionPipeline = true; # Issues during boot
       
       #package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
       #  version = "565.57.01";

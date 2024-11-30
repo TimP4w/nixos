@@ -13,7 +13,7 @@ in
 
       # Configure keymap in X11
       xkb.layout = "ch";
-      xkb.variant = "de";
+      # xkb.variant = "de";
 
       displayManager = {
         gdm.enable = true;
@@ -34,15 +34,18 @@ in
 
     programs = {
       dconf.enable = true;
-      nautilus-open-any-terminal = {
-        enable = true;
-        terminal = "kitty"; # TODO: change to warp?
-      };
+      # nautilus-open-any-terminal = {
+      #   enable = true;
+      #   terminal = "warp-terminal";
+      # };
     };
 
     environment = {
       variables = {
         GTK_THEME = "WhiteSur-Dark";
+        MUTTER_DEBUG_KMS_THREAD_TYPE="user"; # https://bbs.archlinux.org/viewtopic.php?pid=2126478 Fixes immediate logout on GDM after login
+        MUTTER_DEBUG_FORCE_KMS_MODE = "simple"; # https://gitlab.gnome.org/GNOME/mutter/-/issues/3352 Mouse stuttering in browser with VRR active (gnome)
+        # MUTTER_DEBUG_DISABLE_HW_CURSORS = 1;
       };
 
       pathsToLink = [
@@ -53,7 +56,14 @@ in
         gnome-tweaks
         nautilus-python
         turtle
-        evolution-ews # Evolution Connector for Exchange Web Services (i.e. contacts, email, calendar)
+        cartridges 
+        junction # select app to open file
+        video-trimmer
+        collision
+        deja-dup
+        gnome-decoder
+        impression
+        imagemagick
       ];
 
       gnome.excludePackages = with pkgs; [
