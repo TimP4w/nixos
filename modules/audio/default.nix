@@ -9,7 +9,6 @@ in
   };
   config = mkIf cfg.enable
     {
-      # hardware.alsa.enablePersistence = true;
       hardware.pulseaudio.enable = false;
       #hardware.pulseaudio.support32Bit = true;
 
