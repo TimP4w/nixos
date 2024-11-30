@@ -19,7 +19,7 @@ in
           efiSupport = true;
           useOSProber = true;
           theme = (pkgs.sleek-grub-theme.override { withStyle = "dark"; });
-          gfxmodeEfi = "2560x1440";
+          gfxmodeEfi = "1920x1200";
         };
       };
     };
