@@ -52,8 +52,8 @@
     password-manager.enable = true;
     logitech.enable = true;
     bluetooth.enable = true;
-    wayland.enable = false;
-    plymouth.enable = true;
+    wayland.enable = true;
+    plymouth.enable = false;
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
