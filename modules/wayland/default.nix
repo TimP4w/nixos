@@ -31,7 +31,7 @@ in
         systemPackages = with pkgs; [
           wl-clipboard
           # xwaylandvideobridge
-          ];
+        ];
       };
   };
 }

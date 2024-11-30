@@ -15,9 +15,6 @@ in
     ];
 
     environment.sessionVariables = {
-      NIXOS_OZONE_WL = 1; # Workaround for electron apps
-      # WLR_NO_HARDWARE_CURSORS = 1;
-      # QT_QPA_PLATFORM = "wayland";
       # GBM_BACKEND = "nvidia-drm";
       # __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     };
@@ -25,11 +22,6 @@ in
     # Enable HW accelerated graphics driver
     hardware.graphics = {
       enable = true;
-      #enable32Bit = true;
-    
-      extraPackages = [
-        pkgs.intel-media-driver
-      ];
     };
 
     # Load nvidia driver for Xorg and Wayland
