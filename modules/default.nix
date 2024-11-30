@@ -15,4 +15,5 @@
   hyprland = import ./hyprland;
   bluetooth = import ./bluetooth;
   wayland = import ./wayland;
+  plymouth = import ./plymouth;
 }
