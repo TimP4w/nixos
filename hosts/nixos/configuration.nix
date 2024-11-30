@@ -46,7 +46,6 @@
     xclip
     #cnspec # security (mondoo)
     #cnquery
-    # xwaylandvideobridge
   ];
 
   virtualisation.waydroid.enable = true;
@@ -73,6 +72,7 @@
     password-manager.enable = true;
     logitech.enable = true;
     bluetooth.enable = true;
+    wayland.enable = false;
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.

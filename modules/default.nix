@@ -14,4 +14,5 @@
   logitech = import ./logitech;
   hyprland = import ./hyprland;
   bluetooth = import ./bluetooth;
+  wayland = import ./wayland;
 }

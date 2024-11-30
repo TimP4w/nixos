@@ -17,7 +17,6 @@ in
 
       displayManager = {
         gdm.enable = true;
-        gdm.wayland = false;
       };
 
       desktopManager = {
@@ -43,12 +42,7 @@ in
 
     environment = {
       variables = {
-        # QT_QPA_PLATFORM = "wayland";
         GTK_THEME = "WhiteSur-Dark";
-        MUTTER_DEBUG_FORCE_KMS_MODE = "simple"; # https://gitlab.gnome.org/GNOME/mutter/-/issues/3352 Mouse stuttering in browser with VRR active (gnome)
-        # MUTTER_DEBUG_DISABLE_HW_CURSORS = 1;
-        # MUTTER_DEBUG_KMS_THREAD_TYPE=user; # https://bbs.archlinux.org/viewtopic.php?pid=2126478
-
       };
 
       pathsToLink = [
@@ -57,7 +51,6 @@ in
 
       systemPackages = with pkgs; [
         gnome-tweaks
-        wl-clipboard
         nautilus-python
         turtle
         evolution-ews # Evolution Connector for Exchange Web Services (i.e. contacts, email, calendar)
