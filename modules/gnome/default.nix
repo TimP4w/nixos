@@ -17,15 +17,18 @@ in
 
       displayManager = {
         gdm.enable = true;
+        gdm.wayland = true;
       };
 
       desktopManager = {
         gnome.enable = true;
       };
+      
+      # videoDrivers = ["nvidia"];
     };
 
     # Causes login to crash. Then it's impossible to use custom ENVs.
-    # services.displayManager.autoLogin.user = "timp4w"; # TODO: get from VARS
+     services.displayManager.autoLogin.user = "timp4w"; # TODO: get from VARS
 
 
     services.libinput.enable = true;
@@ -55,14 +58,12 @@ in
         wl-clipboard
         nautilus-python
         turtle
+        evolution-ews # Evolution Connector for Exchange Web Services (i.e. contacts, email, calendar)
       ];
 
-      gnome.excludePackages = (with pkgs;
-        [
+      gnome.excludePackages = with pkgs; [
           gnome-photos
           gnome-tour
-        ]) ++ (with pkgs;
-        [
           cheese # webcam tool
           gnome-music
           epiphany # web browser
@@ -75,7 +76,7 @@ in
           gnome-initial-setup
           # gnome-contacts
           # gnome-characters
-        ]);
+      ];
     };
 
     #Enable touchpad support (enabled default in most desktopManager).

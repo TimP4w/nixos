@@ -11,8 +11,6 @@ with lib.hm.gvariant;
   # $ cat dconf.settings | dconf2nix > dconf.nix
   ###
 
-  # TODO: Gnome 47 
-  # gsettings set org.gnome.mutter experimental-features '["scale-monitor-framebuffer", "xwayland-native-scaling"]'
 
   dconf.settings = {
     "org/gnome/Geary" = {
@@ -24,7 +22,7 @@ with lib.hm.gvariant;
     };
 
     "org/gnome/mutter" = {
-      experimental-features = [ "variable-refresh-rate" "scale-monitor-framebuffer" ];
+      experimental-features = [ "variable-refresh-rate" "scale-monitor-framebuffer" "xwayland-native-scaling" ];
     };
 
     "org/gnome/settings-daemon/plugins/media-keys" = {
