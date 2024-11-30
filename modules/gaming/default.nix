@@ -14,16 +14,24 @@ in
         enable = true;
         remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
         dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-        package = pkgs.steam.override {
-          extraLibraries = pkgs: [ pkgs.pkgsi686Linux.pipewire.jack ]; # Needed by Rocksmith2014
-          extraPkgs = pkgs: [ pkgs.wineasio ]; # Needed by Rocksmith2014
-        };
+        # protontricks.enable = false;
+        # package = pkgs.steam.override {
+        #   extraLibraries = pkgs: [ 
+        #     # pkgs.pkgsi686Linux.pipewire.jack 
+        #   ]; # Needed by Rocksmith2014
+        #   extraPkgs = pkgs: [ pkgs.wineasio ];
+        # };
+        extraPackages = [ pkgs.wineasio pkgs.pkgsi686Linux.pipewire.jack pkgs.pkgsi686Linux.libdrm ]; # Needed by Rocksmith2014
       };
+
+      environment.sessionVariables.JACK_32_BIT =[ "${pkgs.pkgsi686Linux.pipewire.jack}/lib" ];
+
 
       modules.nixos.audio = mkIf cfg.enableRocksmith2014 {
         enable = true;
         enableRealTime = true;
       };
-
+      
+      # LD_PRELOAD=/nix/store/l591nwchhgrm8lnzqrxfjvp1zzdp4jyc-pipewire-1.2.6-jack/lib/libjack.so PIPEWIRE_LATENCY=256/48000 %command%
     };
 }

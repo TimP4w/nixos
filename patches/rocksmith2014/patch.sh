@@ -6,7 +6,8 @@ set -e
 USER=$(whoami)
 
 # Constants (these shouldn't change!)
-WINEASIOPATH="/lib/wine" 
+WINEASIOPATH="/nix/store/v2r937mrln65z0dah62a8jqs6n13yrzx-wineasio-1.2.0/lib/wine" 
+#WINEASIOPATH="/lib/wine" 
 WINEASIODLLS=(
     "/i386-unix/wineasio32.dll.so" 
     "/i386-windows/wineasio32.dll" 
@@ -15,7 +16,10 @@ WINEASIODLLS=(
 )
 STEAMPATH="/home/${USER}/.steam/steam"
 WINEPREFIX="${STEAMPATH}/steamapps/compatdata/221680/pfx/"
+#WINEPREFIX="/home/${USER}/.wine/"
+
 LAUNCH_OPTIONS="LD_PRELOAD=/lib/libjack.so PIPEWIRE_LATENCY=256/48000 %command%"
+      # LD_PRELOAD=/nix/store/l591nwchhgrm8lnzqrxfjvp1zzdp4jyc-pipewire-1.2.6-jack/lib/libjack.so PIPEWIRE_LATENCY=256/48000 %command%
 
 # Defaults
 RSASIOVER="0.7.1"
@@ -75,7 +79,7 @@ choose_proton() {
                 FILES_OR_DIST="files"
                 ;;
             1)
-                PROTONVER="Proton 9.0 (Beta)"
+                PROTONVER="Proton 9.0"
                 FILES_OR_DIST="files"  
                 ;;
             2)
@@ -179,7 +183,7 @@ check_and_prepare() {
 
     for path in "${CHECKPATHS[@]}"; do
         if [ ! -d "${path}" ]; then
-            echo "Directory ${path} ... $(print_red "NOT found!")"
+            echo "Directory ${path} ... $(print_red "NOT Found!")"
             check_passed=false
         else
             echo "Directory ${path} ... $(print_green OK)"
@@ -191,7 +195,7 @@ check_and_prepare() {
 
     for file in "${CHECKFILES[@]}"; do
         if [ ! -f "${file}" ]; then
-            echo "File ${file} ... $(print_red "NOT found!")"
+            echo "File ${file} ... $(print_red "NOT Found!")"
             check_passed=false
         else 
             echo "File ${file} ... $(print_green OK)"
@@ -200,11 +204,11 @@ check_and_prepare() {
 
     for dll in "${WINEASIODLLS[@]}"; do
         if [ ! -f "${WINEASIOPATH}${dll}" ]; then
-            echo "File ${dll} ... $(print_red NOT found!)"
+            echo "File "${WINEASIOPATH}${dll}"... $(print_red "Not Found!")"
             check_passed=false
 
         else 
-            echo "File ${dll} ... $(print_green OK)"
+            echo "File "${WINEASIOPATH}${dll}" ... $(print_green OK)"
         fi
     done
 

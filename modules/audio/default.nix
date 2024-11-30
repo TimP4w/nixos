@@ -11,15 +11,14 @@ in
     {
       # hardware.alsa.enablePersistence = true;
       hardware.pulseaudio.enable = false;
+      #hardware.pulseaudio.support32Bit = true;
 
       services.pipewire = {
         enable = true;
         alsa.enable = true;
         alsa.support32Bit = true;
         pulse.enable = true;
-        jack = mkIf cfg.enableRealTime {
-          enable = true;
-        };
+
       };
 
       environment.systemPackages = with pkgs; [
@@ -30,7 +29,6 @@ in
         helvum
         rtaudio
       ];
-
 
       #### Realtime configs (https://github.com/musnix/musnix)
       security.rtkit = mkIf cfg.enableRealTime {
