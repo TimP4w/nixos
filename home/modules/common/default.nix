@@ -45,9 +45,8 @@
     };
     ".local/bin/update" = {
       text = ''
-        nix flake update /home/${VARS.userSettings.username}/.nix
+        nix flake update --flake /home/${VARS.userSettings.username}/.nix
         sudo nixos-rebuild switch --flake "/home/${VARS.userSettings.username}/.nix?submodules=1#${VARS.hostSettings.hostname}" --upgrade
-
       '';
       executable = true;
     };

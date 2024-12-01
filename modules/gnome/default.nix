@@ -8,6 +8,13 @@ in
   };
 
   config = mkIf cfg.enable {
+    
+    # Several issues with gdm: https://github.com/NixOS/nixpkgs/issues/309190
+    # Also, without autologin but with plymouth, login fails the first time
+    # services.displayManager = {
+    #   autoLogin.user = "timp4w"; # TODO: get from VARS
+    # };
+    
     services.xserver = {
       enable = true;
 
@@ -25,10 +32,6 @@ in
       
       # videoDrivers = ["nvidia"];
     };
-
-    # Causes login to crash. Then it's impossible to use custom ENVs.
-    # services.displayManager.autoLogin.user = "timp4w"; # TODO: get from VARS
-
 
     services.libinput.enable = true;
 
@@ -55,6 +58,7 @@ in
       systemPackages = with pkgs; [
         gnome-tweaks
         nautilus-python
+        # sddm-astronaut
       ];
 
       gnome.excludePackages = with pkgs; [

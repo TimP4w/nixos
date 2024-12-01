@@ -19,7 +19,7 @@ in
           efiSupport = true;
           useOSProber = true;
           theme = (pkgs.sleek-grub-theme.override { withStyle = "dark"; });
-          gfxmodeEfi = "1920x1200";
+          gfxmodeEfi = "1920x1200"; # "2560x1440"; Setting the correct resolution (even if supported by grub with `videoinfo` causes both grub and plymouth to be extremely laggy)
         };
       };
     };

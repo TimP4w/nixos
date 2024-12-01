@@ -8,11 +8,11 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     musnix.url = "github:musnix/musnix";
     # Hyprland
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-    hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
-      inputs.hyprland.follows = "hyprland";
-    };
+    # hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    # hyprland-plugins = {
+    #   url = "github:hyprwm/hyprland-plugins";
+    #   inputs.hyprland.follows = "hyprland";
+    # };
     # Anyrun
     anyrun = {
       url = "github:anyrun-org/anyrun";

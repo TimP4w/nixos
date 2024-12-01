@@ -12,7 +12,7 @@
 
     ../../modules/gaming
 
-    ../../modules/hyprland
+    #../../modules/hyprland
 
     ../../modules/gnome
 
