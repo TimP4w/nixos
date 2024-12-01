@@ -25,21 +25,23 @@ in
     environment.systemPackages = with pkgs; [
       brave
       thunderbird # HW Acceleration makes it crash ):
-      resources
-      papers # PDF Reader
       nh # https://github.com/viperML/nh
       nixd # TODO: Move to dev module 
       nixpkgs-fmt
       onlyoffice-bin_latest
-      (mpv.override {
-        scripts = [
-          mpvScripts.modernx
-          mpvScripts.reload
-          mpvScripts.thumbfast
-          mpvScripts.mpris
-        ];
-      })
-      amberol
+      
+      papers # PDF Reader      
+      resources # Resource monitor
+      turtle # Git GUI
+      cartridges # Game launcher
+      junction # select app to open file
+      video-trimmer
+      collision # Calculate software hash
+      deja-dup # Backup
+      gnome-decoder # QR Codes
+      impression # Bootable USB writer
+      clapper # Video player
+      amberol # Audio player
     ];
   };
 }

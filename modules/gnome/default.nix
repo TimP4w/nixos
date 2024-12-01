@@ -42,7 +42,7 @@ in
 
     environment = {
       variables = {
-        GTK_THEME = "WhiteSur-Dark";
+        # GTK_THEME = "Adwaita-dark"; #"WhiteSur-Dark";
         MUTTER_DEBUG_KMS_THREAD_TYPE="user"; # https://bbs.archlinux.org/viewtopic.php?pid=2126478 Fixes immediate logout on GDM after login
         MUTTER_DEBUG_FORCE_KMS_MODE = "simple"; # https://gitlab.gnome.org/GNOME/mutter/-/issues/3352 Mouse stuttering in browser with VRR active (gnome)
         # MUTTER_DEBUG_DISABLE_HW_CURSORS = 1;
@@ -55,15 +55,6 @@ in
       systemPackages = with pkgs; [
         gnome-tweaks
         nautilus-python
-        turtle
-        cartridges 
-        junction # select app to open file
-        video-trimmer
-        collision
-        deja-dup
-        gnome-decoder
-        impression
-        imagemagick
       ];
 
       gnome.excludePackages = with pkgs; [
@@ -79,6 +70,8 @@ in
           atomix # puzzle game
           yelp # Help view
           gnome-initial-setup
+          totem # video player
+          evince # PDF reader (use papers instead)
           # gnome-contacts
           # gnome-characters
       ];

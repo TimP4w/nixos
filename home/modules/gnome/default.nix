@@ -15,6 +15,8 @@
     gnomeExtensions.solaar-extension # "solaar-extension@sidevesh"
     gnomeExtensions.clipboard-history 
     adwaita-icon-theme
+    gnome-themes-extra
+    imagemagick # Needed by dash2dock-lite
   ];
 
   home.pointerCursor = {
@@ -26,14 +28,13 @@
 
   gtk = {
     enable = true;
-    theme = {
-      # name = "Orchis-Dark-Nord";
-      # package = (pkgs-unstable.orchis-theme.override { tweaks = [ "solid" "nord" ]; });
-      name = "WhiteSur-Dark";
-      package = (pkgs.whitesur-gtk-theme.override { iconVariant = "gnome"; nautilusStyle = "glassy"; });
-    };
+    # theme = {
+    #   # name = "Orchis-Dark-Nord";
+    #   # package = (pkgs-unstable.orchis-theme.override { tweaks = [ "solid" "nord" ]; });
+    #   name = "WhiteSur-Dark";
+    #   package = (pkgs.whitesur-gtk-theme.override { iconVariant = "gnome"; nautilusStyle = "glassy"; });
+    # };
 
-    # Breaks some icons... ):
     iconTheme = {
       name = "kora";
       package = pkgs.kora-icon-theme;
@@ -44,9 +45,9 @@
     #  package = pkgs.gnome.adwaita-icon-theme;
     #};
 
-    # gtk3.extraConfig = {
-    #   gtk-application-prefer-dark-theme = "1";
-    # };
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = "1";
+    };
 
     # gtk4.extraConfig = {
     #   gtk-application-prefer-dark-theme = "1";
