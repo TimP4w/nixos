@@ -32,6 +32,12 @@ in
     networking.useDHCP = lib.mkDefault true;
     # networking.interfaces.eno1.useDHCP = lib.mkDefault true;
 
+    
+    networking.firewall = rec {
+      allowedTCPPortRanges = [ { from = 1714; to = 1764; } ]; # KDE Connect
+      allowedUDPPortRanges = allowedTCPPortRanges; # KDE Connect
+    };
+
     # Disable warp calling home and prevent showing update banner (https://github.com/warpdotdev/Warp/issues/1991)
     #networking.extraHosts =
     #  ''
