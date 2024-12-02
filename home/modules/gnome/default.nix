@@ -14,6 +14,8 @@
     gnomeExtensions.blur-my-shell # "blur-my-shell@aunetx"
     gnomeExtensions.solaar-extension # "solaar-extension@sidevesh"
     gnomeExtensions.clipboard-history 
+    gnomeExtensions.compiz-alike-magic-lamp-effect
+    gnomeExtensions.gsconnect
     adwaita-icon-theme
     gnome-themes-extra
     imagemagick # Needed by dash2dock-lite
