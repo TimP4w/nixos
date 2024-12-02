@@ -48,6 +48,8 @@ with lib.hm.gvariant;
         "blur-my-shell@aunetx"
         "tiling-assistant@leleat-on-github"
         "solaar-extension@sidevesh"
+        "gsconnect@andyholmes.github.io" 
+        "compiz-alike-magic-lamp-effect@hermes83.github.com"
       ];
       favorite-apps = [
         "brave-browser.desktop"
