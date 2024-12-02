@@ -8,13 +8,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    
-    # Several issues with gdm: https://github.com/NixOS/nixpkgs/issues/309190
-    # Also, without autologin but with plymouth, login fails the first time
-    # services.displayManager = {
-    #   autoLogin.user = "timp4w"; # TODO: get from VARS
-    # };
-    
+       
     services.xserver = {
       enable = true;
 

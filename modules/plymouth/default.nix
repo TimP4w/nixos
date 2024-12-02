@@ -32,5 +32,15 @@ in
         systemd.enable = true;
       };
     };
+
+    # TODO: Observe this 
+    # Several issues with gdm: https://github.com/NixOS/nixpkgs/issues/309190
+    # Also, without autologin but with plymouth, login fails the first time
+    # Workaround is to disable systemd services getty@tty1 and autovt@tty1 (https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229)
+    systemd.services."getty@tty1".enable = false;
+    systemd.services."autovt@tty1".enable = false;
+    services.displayManager = {
+      autoLogin.user = VARS.userSettings.username;
+    };
   };
 }
