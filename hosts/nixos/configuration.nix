@@ -7,7 +7,7 @@
 
   boot = {
     kernelPackages = pkgs.linuxPackages;
-    kernelParams = [ "quiet" ];
+    kernelParams = [ "quiet" ]; # "video=DP-2:5120x1440@138"
     #initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_drm" "nvidia_uvm" ];
   };
 

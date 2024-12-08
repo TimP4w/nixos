@@ -29,7 +29,7 @@ in
       nixd # TODO: Move to dev module 
       nixpkgs-fmt
       onlyoffice-bin_latest
-      
+      protonvpn-gui
       papers # PDF Reader      
       resources # Resource monitor
       turtle # Git GUI

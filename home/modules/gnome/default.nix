@@ -16,6 +16,7 @@
     gnomeExtensions.clipboard-history 
     gnomeExtensions.compiz-alike-magic-lamp-effect
     gnomeExtensions.gsconnect
+    gnomeExtensions.hide-top-bar
     adwaita-icon-theme
     gnome-themes-extra
     imagemagick # Needed by dash2dock-lite

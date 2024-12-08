@@ -23,10 +23,8 @@ in
       desktopManager = {
         gnome.enable = true;
       };
-      
-      # videoDrivers = ["nvidia"];
     };
-
+    
     services.libinput.enable = true;
 
     programs = {

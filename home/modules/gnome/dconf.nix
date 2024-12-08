@@ -49,7 +49,8 @@ with lib.hm.gvariant;
         "tiling-assistant@leleat-on-github"
         "solaar-extension@sidevesh"
         "gsconnect@andyholmes.github.io" 
-        "compiz-alike-magic-lamp-effect@hermes83.github.com"
+        # "compiz-alike-magic-lamp-effect@hermes83.github.com" # Looks nice, breaks a lot of stuff
+        "hidetopbar@mathieu.bidon.ca"
       ];
       favorite-apps = [
         "brave-browser.desktop"
@@ -58,7 +59,7 @@ with lib.hm.gvariant;
         "org.telegram.desktop.desktop"
         "page.kramo.Cartridges.desktop"
         "slack.desktop"
-        "discord.desktop"
+        "dev.vencord.Vesktop.desktop"
         "spotify.desktop"
         "plexmediaplayer.desktop"
         "org.gnome.Nautilus.desktop"

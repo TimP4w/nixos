@@ -10,10 +10,14 @@ in
 
   config = mkIf cfg.enable
     {
+      programs.gamescope.enable = true;
       programs.steam = {
         enable = true;
         remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
         dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+        gamescopeSession = {
+          enable = true;
+        };
         # protontricks.enable = false;
         # package = pkgs.steam.override {
         #   extraLibraries = pkgs: [ 
@@ -31,6 +35,10 @@ in
         __GL_SHADER_DISK_CACHE_SIZE = 100000000000;
       };
 
+
+       environment.systemPackages = with pkgs; [
+        gamemode
+       ];
 
       modules.nixos.audio = mkIf cfg.enableRocksmith2014 {
         enable = true;
