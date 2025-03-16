@@ -6,7 +6,7 @@
     ];
 
   boot = {
-    kernelPackages = pkgs.linuxPackages;
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [ "quiet" ]; # "video=DP-2:5120x1440@138"
     #initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_drm" "nvidia_uvm" ];
   };
@@ -60,7 +60,7 @@
   users.users.${VARS.userSettings.username} = {
     isNormalUser = true;
     description = VARS.userSettings.username;
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "dialout" ];
   };
 
   # TODO Failed to write ATTR{/sys/devices/pci0000:00/0000:00:14.0/usb1/1-3/1-3:1.3/power/control}="on", ignoring: No such file or directory

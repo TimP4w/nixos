@@ -46,11 +46,12 @@ with lib.hm.gvariant;
         "dash2dock-lite@icedman.github.com"
         "quake-terminal@diegodario88.github.io"
         "blur-my-shell@aunetx"
-        "tiling-assistant@leleat-on-github"
+        # "tiling-assistant@leleat-on-github"
         "solaar-extension@sidevesh"
         "gsconnect@andyholmes.github.io" 
         # "compiz-alike-magic-lamp-effect@hermes83.github.com" # Looks nice, breaks a lot of stuff
         "hidetopbar@mathieu.bidon.ca"
+        "tilingshell@ferrarodomenico.com"
       ];
       favorite-apps = [
         "brave-browser.desktop"
