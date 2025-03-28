@@ -24,6 +24,8 @@
     pinentry
     pinentry-tty
     xclip
+    wineWowPackages.stable
+    winetricks
     #cnspec # security (mondoo)
     #cnquery
   ];
