@@ -19,7 +19,7 @@ in
       environment = {
         variables = {
           QT_QPA_PLATFORM = "wayland";
-          NIXOS_OZONE_WL = 1; # Workaround for electron apps
+          # NIXOS_OZONE_WL = 1; # Workaround for electron apps (TODO: Does not work on new PC)
           # WLR_NO_HARDWARE_CURSORS = 1;
         };
 

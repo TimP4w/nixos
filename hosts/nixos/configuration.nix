@@ -6,7 +6,7 @@
     ];
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_6_13;
     kernelParams = [ "quiet" ]; # "video=DP-2:5120x1440@138"
     #initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_drm" "nvidia_uvm" ];
   };
@@ -28,7 +28,15 @@
     winetricks
     #cnspec # security (mondoo)
     #cnquery
+    # pkgs-unstable.liquidctl ## TODO Move to another "RGB" module
+    #coolercontrol.coolercontrol-liqctld
+    #coolercontrol.coolercontrold
+    #coolercontrol.coolercontrol-gui
+    # openrgb
   ];
+
+  # services.udev.packages = [ pkgs-unstable.liquidctl pkgs.openrgb ];
+
 
   virtualisation.waydroid.enable = true;
 
@@ -59,39 +67,15 @@
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.groups.${VARS.userSettings.username} = {};
+
   users.users.${VARS.userSettings.username} = {
     isNormalUser = true;
     description = VARS.userSettings.username;
-    extraGroups = [ "networkmanager" "wheel" "dialout" ];
+    extraGroups = [ "networkmanager" "wheel" "dialout" VARS.userSettings.username ];
   };
 
-  # TODO Failed to write ATTR{/sys/devices/pci0000:00/0000:00:14.0/usb1/1-3/1-3:1.3/power/control}="on", ignoring: No such file or directory
-  #services.udev.extraRules = ''
-  #  ACTION=="add", SUBSYSTEM=="usb", ATTR{power/control}="on"
-  #'';
-
-  ## Backup Disks RAID
-  #
-  # `$ sudo mdadm --assemble --scan`
-  # `$ sudo mdadm --detail --scan | sudo tee -a /etc/mdadm/mdadm.conf`
-  #
-  # fileSystems."/mnt/raid" = {
-  #   device = "/dev/md0";
-  #   fsType = "ext4";
-  #   options = [ "defaults" ];
-  # };
-  # systemd.services.mdadm = {
-  #   description = "MDADM RAID arrays";
-  #   wantedBy = [ "multi-user.target" ];
-  #   after = [ "local-fs.target" ];
-  #   serviceConfig = {
-  #     ExecStart = "${pkgs.mdadm}/bin/mdadm --assemble --scan";
-  #     ExecStop = "${pkgs.mdadm}/bin/mdadm --stop --scan";
-  #     RemainAfterExit = true;
-  #   };
-  # };
-
-    /*
+      /*
 
     fileSystems."/mnt/k3s" = {
     device = "192.168.1.3:/volume1/k3s";

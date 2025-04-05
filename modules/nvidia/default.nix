@@ -38,7 +38,7 @@ in
       powerManagement.finegrained = false; # Experimental. Fine-grained power management. Turns off GPU when not in use.
       open = true; # alpha open source kernel module (https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus )
       nvidiaSettings = true;
-      forceFullCompositionPipeline = true; # Issues during boot
+      forceFullCompositionPipeline = false; # Issues during boot
       #package = config.boot.kernelPackages.nvidiaPackages.beta;
 
       package = config.boot.kernelPackages.nvidiaPackages.mkDriver {

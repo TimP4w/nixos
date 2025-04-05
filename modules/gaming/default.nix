@@ -38,6 +38,7 @@ in
 
        environment.systemPackages = with pkgs; [
         gamemode
+        discord
        ];
 
       modules.nixos.audio = mkIf cfg.enableRocksmith2014 {
