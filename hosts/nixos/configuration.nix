@@ -7,7 +7,7 @@
 
   boot = {
     kernelPackages = pkgs.linuxPackages_6_13;
-    kernelParams = [ "quiet" ]; # "video=DP-2:5120x1440@138"
+    kernelParams = [ "quiet" ];
     #initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_drm" "nvidia_uvm" ];
   };
 
@@ -26,13 +26,14 @@
     xclip
     wineWowPackages.stable
     winetricks
+    binutils
     #cnspec # security (mondoo)
     #cnquery
     # pkgs-unstable.liquidctl ## TODO Move to another "RGB" module
     #coolercontrol.coolercontrol-liqctld
     #coolercontrol.coolercontrold
     #coolercontrol.coolercontrol-gui
-    # openrgb
+    openrgb
   ];
 
   # services.udev.packages = [ pkgs-unstable.liquidctl pkgs.openrgb ];
