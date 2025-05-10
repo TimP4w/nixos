@@ -74,14 +74,15 @@
     plex-media-player
     spotify
     telegram-desktop
+    whatsapp-for-linux
     discord
     go-task
     guitarix
     oh-my-posh
     slack
     postman
-    synology-drive-client
-    beekeeper-studio
+    synology-drive-client # TODO: move to synology / nas module
+    # beekeeper-studio
     obsidian
   ] ++ (with pkgs-unstable; [
     zed-editor

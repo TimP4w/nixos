@@ -9,8 +9,10 @@ in
   };
   config = mkIf cfg.enable
     {
-      hardware.pulseaudio.enable = false;
-      #hardware.pulseaudio.support32Bit = true;
+      services.pulseaudio = {
+        enable = false;
+        # support32Bit = true;
+      };
 
       services.pipewire = {
         enable = true;
@@ -62,11 +64,11 @@ in
       #     DEVPATH=="/devices/virtual/misc/cpu_dma_latency", OWNER="root", GROUP="audio", MODE="0660"
       #   '';
       # };
-      # 
+      #
       # Adds the things above, however we don't want them all
       #
       # musnix = mkIf cfg.enableRealTime {
-      #  # https://github.com/musnix/musnix 
+      #  # https://github.com/musnix/musnix
       #  enable = true;
       #  kernel = {
       #    #realtime = true;

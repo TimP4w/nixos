@@ -8,6 +8,7 @@
   boot = {
     kernelPackages = pkgs.linuxPackages_6_13;
     kernelParams = [ "quiet" ];
+    blacklistedKernelModules = [ "amdgpu" ];
     #initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_drm" "nvidia_uvm" ];
   };
 
@@ -37,7 +38,6 @@
   ];
 
   # services.udev.packages = [ pkgs-unstable.liquidctl pkgs.openrgb ];
-
 
   virtualisation.waydroid.enable = true;
 
@@ -86,7 +86,7 @@
   */
 
 
-  # Hack to avoid a suspending loop after waking up. Mind that this system is NOT a laptop and doesn't have a lid... 
+  # Hack to avoid a suspending loop after waking up. Mind that this system is NOT a laptop and doesn't have a lid...
   services.logind.lidSwitchExternalPower = "ignore";
 
   # Before changing this value read the documentation for this option

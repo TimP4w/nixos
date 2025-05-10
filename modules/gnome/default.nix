@@ -50,7 +50,7 @@ in
       systemPackages = with pkgs; [
         gnome-tweaks
         nautilus-python
-        # sddm-astronaut
+        gnome-software
       ];
 
       gnome.excludePackages = with pkgs; [
@@ -68,6 +68,7 @@ in
           gnome-initial-setup
           totem # video player
           evince # PDF reader (use papers instead)
+
           # gnome-contacts
           # gnome-characters
       ];

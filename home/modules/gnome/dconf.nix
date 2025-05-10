@@ -7,7 +7,7 @@ with lib.hm.gvariant;
 
   ###
   # $  dconf dump / > dconf.settings
-  # $ nix-run dconf2nix 
+  # $ nix-run dconf2nix
   # $ cat dconf.settings | dconf2nix > dconf.nix
   ###
 
@@ -48,7 +48,7 @@ with lib.hm.gvariant;
         "blur-my-shell@aunetx"
         # "tiling-assistant@leleat-on-github"
         "solaar-extension@sidevesh"
-        "gsconnect@andyholmes.github.io" 
+        "gsconnect@andyholmes.github.io"
         # "compiz-alike-magic-lamp-effect@hermes83.github.com" # Looks nice, breaks a lot of stuff
         "hidetopbar@mathieu.bidon.ca"
         "tilingshell@ferrarodomenico.com"
@@ -56,8 +56,9 @@ with lib.hm.gvariant;
       favorite-apps = [
         "brave-browser.desktop"
         "code.desktop"
-        "beekeeper-studio.desktop"
+        # "beekeeper-studio.desktop"
         "org.telegram.desktop.desktop"
+        "discord.desktop"
         "page.kramo.Cartridges.desktop"
         "slack.desktop"
         "dev.vencord.Vesktop.desktop"
