@@ -50,7 +50,7 @@ in
       systemPackages = with pkgs; [
         gnome-tweaks
         nautilus-python
-        gnome-software
+        sushi # Nautilus file previewer
       ];
 
       gnome.excludePackages = with pkgs; [

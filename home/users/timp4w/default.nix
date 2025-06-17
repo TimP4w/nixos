@@ -71,7 +71,7 @@
   };
 
   home.packages = with pkgs; [
-    plex-media-player
+    plex-desktop
     spotify
     telegram-desktop
     whatsapp-for-linux
