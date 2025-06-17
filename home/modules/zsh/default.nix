@@ -2,7 +2,6 @@
 
 {
   home.packages = with pkgs; [
-    thefuck
     bat
     tldr
     zoxide
@@ -189,7 +188,6 @@
         "systemadmin"
         # "vi-mode"
         "git"
-        "thefuck"
         "fzf"
         # "autoenv"
         "direnv"
@@ -203,7 +201,7 @@
       nix-run = "nix-shell --run $SHELL -p";
     };
 
-    initExtra = ''
+    initContent = ''
       export NIX_LD=$(nix eval --impure --raw --expr 'let pkgs = import <nixpkgs> {}; NIX_LD = pkgs.lib.fileContents "${pkgs.stdenv.cc}/nix-support/dynamic-linker"; in NIX_LD')
       eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/theme.omp.json)"
       eval "$(fzf --zsh)"
