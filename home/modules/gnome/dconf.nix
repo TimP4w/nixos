@@ -1,4 +1,3 @@
-# Generated via dconf2nix: https://github.com/gvolpe/dconf2nix
 { lib, ... }:
 
 with lib.hm.gvariant;
@@ -6,11 +5,11 @@ with lib.hm.gvariant;
 {
 
   ###
-  # $  dconf dump / > dconf.settings
+  # https://github.com/gvolpe/dconf2nix
+  # $  dconf dump / > dconf.settings 
   # $ nix-run dconf2nix
   # $ cat dconf.settings | dconf2nix > dconf.nix
   ###
-
 
   dconf.settings = {
     "org/gnome/Geary" = {
@@ -30,9 +29,23 @@ with lib.hm.gvariant;
     };
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/resources" = {
-      binding = "<Control><Alt>Delete";
+      binding = "<Control><Shift>Delete";
       command = "resources";
       name = "Resources";
+    };
+
+    "org/gnome/desktop/break-reminders" = {
+      selected-breaks = [];
+    };
+
+    "org/gnome/desktop/break-reminders/eyesight" = {
+      play-sound = true;
+    };
+
+    "org/gnome/desktop/break-reminders/movement" = {
+      duration-seconds = mkUint32 300;
+      interval-seconds = mkUint32 1800;
+      play-sound = true;
     };
 
     "org/gnome/shell" = {
@@ -56,8 +69,9 @@ with lib.hm.gvariant;
       favorite-apps = [
         "brave-browser.desktop"
         "code.desktop"
-        # "beekeeper-studio.desktop"
+        "lens-desktop.desktop"
         "org.telegram.desktop.desktop"
+        "com.rtosta.zapzap.desktop"
         "discord.desktop"
         "page.kramo.Cartridges.desktop"
         "slack.desktop"
@@ -236,6 +250,16 @@ with lib.hm.gvariant;
       toggle-always-on-top = [ ];
       toggle-tiling-popup = [ ];
       window-gap = 8;
+    };
+
+    "org/gnome/shell/extensions/tilingshell" = {
+      enable-screen-edges-windows-suggestions = true;
+      enable-snap-assistant-windows-suggestions = true;
+      enable-tiling-system-windows-suggestions = true;
+      last-version-name-installed = "16.4";
+      layouts-json = "[{\"id\":\"Layout 1\",\"tiles\":[{\"x\":0,\"y\":0,\"width\":0.22,\"height\":0.5,\"groups\":[1,2]},{\"x\":0,\"y\":0.5,\"width\":0.22,\"height\":0.5,\"groups\":[1,2]},{\"x\":0.22,\"y\":0,\"width\":0.56,\"height\":1,\"groups\":[2,3]},{\"x\":0.78,\"y\":0,\"width\":0.22,\"height\":0.5,\"groups\":[3,4]},{\"x\":0.78,\"y\":0.5,\"width\":0.22,\"height\":0.5,\"groups\":[3,4]}]},{\"id\":\"Layout 2\",\"tiles\":[{\"x\":0,\"y\":0,\"width\":0.22,\"height\":1,\"groups\":[1]},{\"x\":0.22,\"y\":0,\"width\":0.56,\"height\":1,\"groups\":[1,2]},{\"x\":0.78,\"y\":0,\"width\":0.22,\"height\":1,\"groups\":[2]}]},{\"id\":\"Layout 3\",\"tiles\":[{\"x\":0,\"y\":0,\"width\":0.33,\"height\":1,\"groups\":[1]},{\"x\":0.33,\"y\":0,\"width\":0.67,\"height\":1,\"groups\":[1]}]},{\"id\":\"Layout 4\",\"tiles\":[{\"x\":0,\"y\":0,\"width\":0.67,\"height\":1,\"groups\":[1]},{\"x\":0.67,\"y\":0,\"width\":0.33,\"height\":1,\"groups\":[1]}]},{\"id\":\"1451752\",\"tiles\":[{\"x\":0,\"y\":0,\"width\":0.5001953125,\"height\":1,\"groups\":[1]},{\"x\":0.5001953125,\"y\":0,\"width\":0.4998046874999929,\"height\":1,\"groups\":[1]}]},{\"id\":\"118070\",\"tiles\":[{\"x\":0,\"y\":0,\"width\":1,\"height\":0.5013888888888889,\"groups\":[1]},{\"x\":0,\"y\":0.5013888888888889,\"width\":1,\"height\":0.4986111111111111,\"groups\":[1]}]}]";
+      overridden-settings = "{\"org.gnome.mutter.keybindings\":{\"toggle-tiled-right\":\"['<Super>Right']\",\"toggle-tiled-left\":\"['<Super>Left']\"},\"org.gnome.desktop.wm.keybindings\":{\"maximize\":\"['<Super>Up']\",\"unmaximize\":\"['<Super>Down', '<Alt>F5']\"},\"org.gnome.mutter\":{\"edge-tiling\":\"false\"}}";
+      selected-layouts = [ [ "Layout 1" "Layout 1" ] [ "Layout 1" "Layout 1" ] ];
     };
   };
 }
