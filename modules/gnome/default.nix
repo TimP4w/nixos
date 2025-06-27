@@ -8,24 +8,37 @@ in
   };
 
   config = mkIf cfg.enable {
-       
-    services.xserver = {
-      enable = true;
 
-      # Configure keymap in X11
-      xkb.layout = "ch";
-      # xkb.variant = "de";
+    services = {
+      xserver = {
+        enable = true;
 
-      displayManager = {
-        gdm.enable = true;
+        # Configure keymap in X11
+        xkb.layout = "ch";
+        # xkb.variant = "de";
+
+        desktopManager = {
+          gnome.enable = true;
+        };
+
+        displayManager = {
+          gdm.enable = true;
+        };
       };
 
+      /* Next version will be like this
       desktopManager = {
         gnome.enable = true;
       };
+
+      displayManager = {
+        gdm.enable = true;
+      };*/
+
+      libinput.enable = true;
     };
-    
-    services.libinput.enable = true;
+       
+
 
     programs = {
       dconf.enable = true;
@@ -39,7 +52,7 @@ in
       variables = {
         # GTK_THEME = "Adwaita-dark"; #"WhiteSur-Dark";
         MUTTER_DEBUG_KMS_THREAD_TYPE="user"; # https://bbs.archlinux.org/viewtopic.php?pid=2126478 Fixes immediate logout on GDM after login
-        MUTTER_DEBUG_FORCE_KMS_MODE = "simple"; # https://gitlab.gnome.org/GNOME/mutter/-/issues/3352 Mouse stuttering in browser with VRR active (gnome)
+        # MUTTER_DEBUG_FORCE_KMS_MODE = "simple"; # https://gitlab.gnome.org/GNOME/mutter/-/issues/3352 Mouse stuttering in browser with VRR active (gnome). This doesn't work anymore, and now disables HDR support...
         # MUTTER_DEBUG_DISABLE_HW_CURSORS = 1;
       };
 

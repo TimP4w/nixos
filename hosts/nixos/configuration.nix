@@ -6,7 +6,7 @@
     ];
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_6_13;
+    kernelPackages = pkgs.linuxPackages_6_15;
     kernelParams = [ "quiet" ];
     blacklistedKernelModules = [ "amdgpu" ];
     #initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_drm" "nvidia_uvm" ];

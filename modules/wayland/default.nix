@@ -15,6 +15,11 @@ in
           gdm.wayland = true;
         };
       };
+
+      /* 25.11 
+      services.displayManager = {
+        gdm.wayland = true;
+      };*/
       
       environment = {
         variables = {

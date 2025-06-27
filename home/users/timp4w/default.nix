@@ -70,11 +70,11 @@
     homeDirectory = "/home/${VARS.userSettings.username}";
   };
 
+
   home.packages = with pkgs; [
     plex-desktop
     spotify
     telegram-desktop
-    whatsapp-for-linux
     discord
     go-task
     guitarix

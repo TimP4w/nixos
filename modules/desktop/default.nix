@@ -38,7 +38,7 @@ in
       junction # select app to open file
       video-trimmer
       collision # Calculate software hash
-      deja-dup # Backup
+      # deja-dup # Backup
       gnome-decoder # QR Codes
       impression # Bootable USB writer
       amberol # Audio player
