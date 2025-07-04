@@ -15,11 +15,9 @@
   environment.systemPackages = with pkgs; [
     python3
     nodejs
-    python3
     nodejs
     gparted
     vscode
-    warp-terminal
     mdadm # raid
     gnupg
     pinentry
@@ -30,14 +28,18 @@
     binutils
     #cnspec # security (mondoo)
     #cnquery
-    # pkgs-unstable.liquidctl ## TODO Move to another "RGB" module
-    #coolercontrol.coolercontrol-liqctld
-    #coolercontrol.coolercontrold
-    #coolercontrol.coolercontrol-gui
     openrgb
-  ];
+  ] ++ (with pkgs-unstable; [
+    warp-terminal
+    liquidctl
+    lm_sensors
+  ]);
 
-  # services.udev.packages = [ pkgs-unstable.liquidctl pkgs.openrgb ];
+  programs.coolercontrol = {
+    enable = true;
+    nvidiaSupport = true;
+  };
+  services.udev.packages = [ pkgs-unstable.liquidctl pkgs.openrgb ];
 
   virtualisation.waydroid.enable = true;
 
@@ -76,19 +78,14 @@
     extraGroups = [ "networkmanager" "wheel" "dialout" VARS.userSettings.username ];
   };
 
-      /*
-
-    fileSystems."/mnt/k3s" = {
-    device = "192.168.1.3:/volume1/k3s";
-    fsType = "nfs";
-    options = [ "nfsvers=4.1" ];
-    };
-  */
-
-
   # Hack to avoid a suspending loop after waking up. Mind that this system is NOT a laptop and doesn't have a lid...
   services.logind.lidSwitchExternalPower = "ignore";
-
+  services.logind.extraConfig = ''
+    HandleLidSwitch=ignore
+    HandleLidSwitchDocked=ignore
+    HandleSuspendKey=ignore
+    HandleHibernateKey=ignore
+  '';
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11";
