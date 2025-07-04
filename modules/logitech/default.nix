@@ -12,6 +12,7 @@ in
     environment.systemPackages = with pkgs; [
       usbutils
       logitech-udev-rules
+      headsetcontrol
     ];
   };
 }

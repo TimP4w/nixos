@@ -34,6 +34,8 @@ in
       protonvpn-gui
       papers # PDF Reader
       resources # Resource monitor
+      mission-center
+      warehouse # Manage flatpak
       cartridges # Game launcher
       junction # select app to open file
       video-trimmer

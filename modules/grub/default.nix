@@ -24,6 +24,6 @@ in
       };
     };
 
-    time.hardwareClockInLocalTime = true; # Fix for windows time
+    time.hardwareClockInLocalTime = false; # Fix for windows time (set to true, but maybe causing problems)
   };
 }

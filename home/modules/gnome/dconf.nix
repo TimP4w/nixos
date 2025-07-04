@@ -6,7 +6,7 @@ with lib.hm.gvariant;
 
   ###
   # https://github.com/gvolpe/dconf2nix
-  # $  dconf dump / > dconf.settings 
+  # $  dconf dump / > dconf.settings
   # $ nix-run dconf2nix
   # $ cat dconf.settings | dconf2nix > dconf.nix
   ###
@@ -29,7 +29,7 @@ with lib.hm.gvariant;
     };
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/resources" = {
-      binding = "<Control><Shift>Delete";
+      binding = "<Control><Shift>Escape";
       command = "resources";
       name = "Resources";
     };
@@ -193,7 +193,7 @@ with lib.hm.gvariant;
       animation-time = 125;
       monitor-screen = 1;
       render-on-current-monitor = true;
-      terminal-id = "dev.warp.Warp.desktop";
+      terminal-id = "kitty.desktop";
       terminal-shortcut = "<Super>Return";
       vertical-size = 60;
     };
