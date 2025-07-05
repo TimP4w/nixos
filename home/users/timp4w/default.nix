@@ -1,33 +1,9 @@
 { config, pkgs, pkgs-unstable, lib, inputs, outputs, VARS, ... }:
+let
+  modules = import ../../modules;
+in
 {
-  imports = [
-    ../../modules/common
-
-    ../../modules/browsers/brave.nix
-
-    ../../modules/development
-    ../../modules/development/kubernetes.nix
-    ../../modules/development/terraform.nix
-    ../../modules/development/go.nix
-
-    ../../modules/gaming
-
-    #../../modules/hyprland
-
-    ../../modules/gnome
-
-    ../../modules/kitty
-
-    ../../modules/nvim
-
-    ../../modules/ssh
-
-    ../../modules/zsh
-
-    ../../modules/git
-
-    ../../modules/rclone
-  ];
+  imports = builtins.attrValues modules;
 
   accounts.email.accounts = {
     timMain = {
@@ -70,6 +46,9 @@
     homeDirectory = "/home/${VARS.userSettings.username}";
   };
 
+  modules.home = {
+    gnome.enable = true;
+  };
 
   home.packages = with pkgs; [
     plex-desktop

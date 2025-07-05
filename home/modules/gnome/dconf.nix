@@ -1,7 +1,6 @@
 { lib, ... }:
 
 with lib.hm.gvariant;
-
 {
 
   ###
@@ -12,8 +11,10 @@ with lib.hm.gvariant;
   ###
 
   dconf.settings = {
-    "org/gnome/Geary" = {
-      run-in-background = true;
+
+    "org/gnome/desktop/background" = {
+      picture-uri = "file:///home/timp4w/.nix/home/modules/gnome/background.png";
+      picture-uri-dark = "file:///home/timp4w/.nix/home/modules/gnome/background-dark.png";
     };
 
     "org/gnome/desktop/interface" = {

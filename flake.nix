@@ -83,28 +83,6 @@
           ]
           ++ (builtins.attrValues outputs.nixosModules);
         };
-        tpad-lu-77 = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs pkgs-unstable VARS; };
-          modules = [
-            inputs.musnix.nixosModules.musnix
-            solaar.nixosModules.default
-            nixos-wsl.nixosModules.default
-            inputs.home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                extraSpecialArgs = {
-                  inherit inputs outputs pkgs-unstable VARS;
-                  vars = {
-                    hostName = "tpad-lu-77";
-                  };
-                };
-                users.${VARS.userSettings.username} = import ../../home/users/${VARS.userSettings.username};
-              };
-            }
-            ./hosts/tpad-lu-77/configuration.nix
-          ]
-          ++ (builtins.attrValues outputs.nixosModules);
-        };
       };
     };
 }

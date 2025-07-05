@@ -26,7 +26,7 @@ in
     services.flatpak.enable = true;
     environment.systemPackages = with pkgs; [
       brave
-      thunderbird # HW Acceleration makes it crash ):
+      thunderbird 
       nh # https://github.com/viperML/nh
       nixd # TODO: Move to dev module
       nixpkgs-fmt

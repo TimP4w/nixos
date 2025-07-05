@@ -72,7 +72,7 @@ in
           cheese # webcam tool
           gnome-music
           epiphany # web browser
-          # geary # email reader
+          geary # email reader
           tali # poker game
           iagno # go game
           hitori # sudoku game

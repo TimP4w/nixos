@@ -15,7 +15,6 @@
   environment.systemPackages = with pkgs; [
     python3
     nodejs
-    nodejs
     gparted
     vscode
     mdadm # raid
