@@ -75,7 +75,7 @@
                     hostName = "nixos";
                   };
                 };
-                users.${VARS.userSettings.username} = import ./home/users/${VARS.userSettings.username};
+                users.${VARS.userSettings.username} = import ./home/users/timp4w;
               };
             }
             ./hosts/nixos/configuration.nix

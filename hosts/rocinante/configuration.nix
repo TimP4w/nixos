@@ -8,7 +8,7 @@
   boot = {
     kernelPackages = pkgs.linuxPackages_6_15;
     kernelParams = [ "quiet" ];
-    blacklistedKernelModules = [ "amdgpu" ];
+    # blacklistedKernelModules = [  ];
     #initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_drm" "nvidia_uvm" ];
   };
 
@@ -17,34 +17,14 @@
     nodejs
     gparted
     vscode
-    mdadm # raid
     gnupg
     pinentry
     pinentry-tty
     xclip
-    wineWowPackages.stable
-    winetricks
     binutils
-    #cnspec # security (mondoo)
-    #cnquery
-    openrgb # Move to rgb / hw module
   ] ++ (with pkgs-unstable; [
     warp-terminal
-    liquidctl # Move to rgb / hw module
-    lm_sensors # Move to rgb / hw module
   ]);
-
-  programs.coolercontrol = {
-    enable = true;
-    nvidiaSupport = true;
-  };
-  services.udev.packages = [ pkgs-unstable.liquidctl pkgs.openrgb ];
-
-  services.udev.extraRules = ''
-    # Logitech PRO X Wireless Gaming Headset
-    SUBSYSTEM=="usb", ATTR{idVendor}=="046d", ATTR{idProduct}=="0aba", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl"
-    KERNEL=="hidraw*", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="0aba", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl"
-  '';
 
   virtualisation.waydroid.enable = true;
 
@@ -57,8 +37,8 @@
     };
     desktop.enable = true;
     gaming = {
-      enable = true;
-      enableRocksmith2014 = true; # Needs reboot if toggled
+      enable = false;
+      enableRocksmith2014 = false; # Needs reboot if toggled
     };
     gnome.enable = true;
     plasma.enable = false;
@@ -66,7 +46,7 @@
     grub.enable = true;
     ld.enable = true;
     network.enable = true;
-    nvidia.enable = true;
+    nvidia.enable = false;
     zsh.enable = true;
     password-manager.enable = true;
     logitech.enable = true;
@@ -84,14 +64,6 @@
     extraGroups = [ "networkmanager" "wheel" "dialout" VARS.userSettings.username ];
   };
 
-  # Hack to avoid a suspending loop after waking up. Mind that this system is NOT a laptop and doesn't have a lid...
-  services.logind.lidSwitchExternalPower = "ignore";
-  services.logind.extraConfig = ''
-    HandleLidSwitch=ignore
-    HandleLidSwitchDocked=ignore
-    HandleSuspendKey=ignore
-    HandleHibernateKey=ignore
-  '';
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11";
