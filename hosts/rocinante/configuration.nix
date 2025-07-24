@@ -9,7 +9,7 @@
     kernelPackages = pkgs.linuxPackages_6_15;
     kernelParams = [ "quiet" ];
     # blacklistedKernelModules = [  ];
-    #initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_drm" "nvidia_uvm" ];
+    #initrd.kernelModules = [ ];
   };
 
   environment.systemPackages = with pkgs; [
@@ -25,6 +25,25 @@
   ] ++ (with pkgs-unstable; [
     warp-terminal
   ]);
+
+  # Fingerprint Sensor
+  services.fprintd = {
+    enable = true;
+  };
+  #security.pam.services.login.fprintAuth = true;
+  security.pam.services.gdm.fprintAuth = true;
+
+  # Intel video drivers
+  services.xserver.videoDrivers = [ "modesetting" ];
+  hardware.graphics = {
+    enable = true;
+    extraPackages = [
+      pkgs.intel-media-driver
+    ];
+  };
+  environment.sessionVariables = {
+    LIBVA_DRIVER_NAME = "iHD";
+  };
 
   virtualisation.waydroid.enable = true;
 
@@ -43,7 +62,10 @@
     gnome.enable = true;
     plasma.enable = false;
     # hyprland.enable = false;
-    grub.enable = true;
+    grub = {
+      enable = true;
+      resolution = "2880x1800";
+    };
     ld.enable = true;
     network.enable = true;
     nvidia.enable = false;
@@ -55,13 +77,18 @@
     plymouth.enable = true;
   };
 
+  #   services.xserver.xkb = {
+  #  layout = "ch";
+   # variant = "de_nodeadkeys";
+  #};
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.groups.${VARS.userSettings.username} = {};
 
   users.users.${VARS.userSettings.username} = {
     isNormalUser = true;
     description = VARS.userSettings.username;
-    extraGroups = [ "networkmanager" "wheel" "dialout" VARS.userSettings.username ];
+    extraGroups = [ "networkmanager" "wheel" "dialout" "video" VARS.userSettings.username ];
   };
 
   # Before changing this value read the documentation for this option

@@ -63,7 +63,10 @@
     gnome.enable = true;
     plasma.enable = false;
     # hyprland.enable = false;
-    grub.enable = true;
+    grub = {
+      enable = true;
+      resolution = "5120x1440";
+    };
     ld.enable = true;
     network.enable = true;
     nvidia.enable = true;

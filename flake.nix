@@ -83,6 +83,29 @@
           ]
           ++ (builtins.attrValues outputs.nixosModules);
         };
+
+        rocinante = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs pkgs-unstable VARS; };
+          modules = [
+            inputs.musnix.nixosModules.musnix
+            solaar.nixosModules.default
+            inputs.home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                extraSpecialArgs = {
+                  inherit inputs outputs pkgs-unstable VARS;
+                  vars = {
+                    hostName = "rocinante";
+                  };
+                };
+                users.${VARS.userSettings.username} = import ./home/users/timp4w;
+              };
+            }
+            ./hosts/rocinante/configuration.nix
+
+          ]
+          ++ (builtins.attrValues outputs.nixosModules);
+        };
       };
     };
 }

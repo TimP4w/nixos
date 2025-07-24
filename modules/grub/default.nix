@@ -5,6 +5,10 @@ in
 {
   options.modules.nixos.grub = {
     enable = mkEnableOption "Enable Grub";
+    resolution = mkOption {
+      type = types.str;
+      description = "Supported screen resolution for gfxmodeEfi";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -19,7 +23,7 @@ in
           efiSupport = true;
           useOSProber = true;
           theme = (pkgs.sleek-grub-theme.override { withStyle = "dark"; });
-          gfxmodeEfi = "5120x1440";
+          gfxmodeEfi =  cfg.resolution; # "5120x1440";
         };
       };
     };
