@@ -1,0 +1,114 @@
+/* Panel */
+
+#panel {
+  /* EDITED */
+  background-color: rgba(3, 2, 2, 0.8);
+  height: 32px;
+  font-size: 14px;
+  box-shadow: none;
+  font-weight: bold;
+  border-radius: 14px;
+  margin: 6px;
+  transition-duration: 250ms;
+}
+
+/* panel in overview, lock screen */
+#panel:overview,
+#panel.unlock-screen,
+#panel.login-screen {
+  /* EDITED */
+  background-color: transparent;
+  transition-duration: 500ms;
+}
+
+/* i know margin are not used cuz hitboxes of buttons don't expand to screen edges */
+/* however with this trick i cannot paint button borders */
+.panel-button {
+  margin: 4px 3px;
+}
+
+/* allows to shrink horizontal padding for app icons */
+.panel-button {
+  -natural-hpadding: 6px !important;
+}
+.panel-status-indicators-box:first-child {
+  padding-left: 3px;
+}
+.panel-status-indicators-box:last-child {
+  padding-right: 3px;
+}
+.panel-status-indicators-box:first-child:last-child {
+  padding: 0;
+}
+.panel-button#panelActivities {
+  -natural-hpadding: 10px !important;
+}
+
+/* panel buttons */
+.panel-button,
+.panel-button .clock {
+  /* DND / new messages icon */ /* EDITED */
+  color: #fafafa;
+  border-radius: 12px;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.panel-button:hover,
+.panel-button:hover .clock,
+.panel-button:active,
+.panel-button:active .clock {
+  background-color: #0f0f0e;
+}
+
+/* workspaces indicator in activities button (45+) */
+#panel .workspace-dot {
+  background-color: #fafafa;
+  border-radius: 99px;
+}
+
+/*  indicator for active */
+#panel .screencast-indicator,
+#panel .remote-access-indicator,
+#panel .panel-button.screen-sharing-indicator {
+  /* when sharing screen */
+  background: #cd9309;
+}
+
+#panel .panel-button.screen-sharing-indicator:hover {
+  background: rgba(205, 147, 9, 0.9);
+}
+
+/* indicator when recording screen */
+#panel .panel-button.screen-recording-indicator {
+  background: #c01c28;
+}
+
+#panel .panel-button.screen-recording-indicator:hover {
+  background: rgba(192, 28, 40, 0.9);
+}
+
+/* battery percentage */
+#panel .power-status.panel-status-indicators-box {
+  font-size: 12px;
+}
+
+/* panel buttons in lock screen / overview */
+#panel.unlock-screen .panel-button,
+#panel.login-screen .panel-button,
+#panel:overview .panel-button {
+  color: #fafafa !important;
+}
+
+/* panel clock fix. remove additional background */
+.clock-display {
+  background-color: transparent !important;
+  box-shadow: none;
+  border: none !important;
+}
+
+/* additional background for DND / new messages icon */
+.clock-display StIcon {
+  padding: 8px;
+  margin: 0;
+}

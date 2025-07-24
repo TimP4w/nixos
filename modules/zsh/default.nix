@@ -13,6 +13,7 @@ in
       ll = "ls -l";
       nix-rebuild = "$NIXOS_CONFIG_DIR/scripts/rebuild";
       nix-run = "nix-shell --run $SHELL -p";
+      network-restart = "nmcli networking off && sleep 2 && nmcli networking on";
     };
 
     users.defaultUserShell = pkgs.zsh;

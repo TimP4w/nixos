@@ -40,6 +40,12 @@
   };
   services.udev.packages = [ pkgs-unstable.liquidctl pkgs.openrgb ];
 
+  services.udev.extraRules = ''
+    # Logitech PRO X Wireless Gaming Headset
+    SUBSYSTEM=="usb", ATTR{idVendor}=="046d", ATTR{idProduct}=="0aba", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl"
+    KERNEL=="hidraw*", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="0aba", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl"
+  '';
+
   virtualisation.waydroid.enable = true;
 
   modules.nixos = {
@@ -55,6 +61,7 @@
       enableRocksmith2014 = true; # Needs reboot if toggled
     };
     gnome.enable = true;
+    plasma.enable = false;
     # hyprland.enable = false;
     grub.enable = true;
     ld.enable = true;

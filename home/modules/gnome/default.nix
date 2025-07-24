@@ -14,7 +14,7 @@ in {
     home.packages = with pkgs; [
       # gnomeExtensions.tray-icons-reloaded
       # gnomeExtensions.dash-to-dock
-
+      gnomeExtensions.user-themes
       gnomeExtensions.appindicator # appindicatorsupport@rgcjonas.gmail.com
       gnomeExtensions.dash2dock-lite # dash2dock-lite@icedman.github.com
       gnomeExtensions.mpris-label # "mprisLabel@moon-0xff.github.com"

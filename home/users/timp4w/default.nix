@@ -51,7 +51,7 @@ in
   };
 
   home.packages = with pkgs; [
-    plex-desktop
+    plex-media-player
     spotify
     telegram-desktop
     discord

@@ -12,6 +12,7 @@
       font_size = "11.0";
 
       background_opacity = "0.95";
+      background_blur = "1";
 
       hide_window_decorations = "yes";
 
@@ -24,10 +25,12 @@
       remote_kitty = "if-needed";
       share_connections = "yes";
       enabled_layouts = "splits,stack";
+
+      font_family = "FiraCode Nerd Font";
     };
 
     font = {
-      # package = (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; });
+      #package = (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; });
       package = pkgs.nerd-fonts.fira-code;
       name = "FiraCode";
     };

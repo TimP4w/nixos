@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 with lib.hm.gvariant;
 {
@@ -9,8 +9,24 @@ with lib.hm.gvariant;
   # $ nix-run dconf2nix
   # $ cat dconf.settings | dconf2nix > dconf.nix
   ###
+  home.file.".local/share/themes/CustomShell/gnome-shell/gnome-shell.css".source = ./theme.css;
+
+    home.file.".local/share/themes/CustomShell/index.theme".text = ''
+    [Shell]
+    Name=CustomShell
+    Comment=Custom GNOME Shell Theme
+  '';
 
   dconf.settings = {
+
+     "org/gnome/shell/extensions/user-theme" = {
+      name = "CustomShell";
+    };
+
+
+    "org/gnome/settings-daemon/plugins/power" = {
+      sleep-inactive-ac-type = "nothing"; # Do not suspend on AC
+    };
 
     "org/gnome/desktop/background" = {
       picture-uri = "file:///home/timp4w/.nix/home/modules/gnome/background.png";
@@ -52,20 +68,18 @@ with lib.hm.gvariant;
     "org/gnome/shell" = {
       disable-user-extensions = false;
       enabled-extensions = [
-        "appindicatorsupport@rgcjonas.gmail.com"
-        "user-theme@gnome-shell-extensions.gcampax.github.com"
-        "mprisLabel@moon-0xff.github.com"
-        "clipboard-history@alexsaveau.dev"
-        # "executor@raujonas.github.io"
-        "dash2dock-lite@icedman.github.com"
-        "quake-terminal@diegodario88.github.io"
-        "blur-my-shell@aunetx"
-        # "tiling-assistant@leleat-on-github"
-        "solaar-extension@sidevesh"
-        "gsconnect@andyholmes.github.io"
-        # "compiz-alike-magic-lamp-effect@hermes83.github.com" # Looks nice, breaks a lot of stuff
-        "hidetopbar@mathieu.bidon.ca"
-        "tilingshell@ferrarodomenico.com"
+        pkgs.gnomeExtensions.user-themes.extensionUuid
+        pkgs.gnomeExtensions.appindicator.extensionUuid # appindicatorsupport@rgcjonas.gmail.com
+        pkgs.gnomeExtensions.dash2dock-lite.extensionUuid # dash2dock-lite@icedman.github.com
+        pkgs.gnomeExtensions.mpris-label.extensionUuid # "mprisLabel@moon-0xff.github.com"
+        pkgs.gnomeExtensions.quake-terminal.extensionUuid # "quake-terminal@diegodario88.github.io"
+        pkgs.gnomeExtensions.blur-my-shell.extensionUuid # "blur-my-shell@aunetx"
+        pkgs.gnomeExtensions.solaar-extension.extensionUuid # "solaar-extension@sidevesh"
+        pkgs.gnomeExtensions.clipboard-history.extensionUuid
+        #pkgs.gnomeExtensions.compiz-alike-magic-lamp-effect # Looks nice, breaks a lot of stuff
+        #pkgs.gnomeExtensions.gsconnect
+        pkgs.gnomeExtensions.hide-top-bar.extensionUuid
+        pkgs.gnomeExtensions.tiling-shell.extensionUuid
       ];
       favorite-apps = [
         "brave-browser.desktop"
@@ -112,6 +126,20 @@ with lib.hm.gvariant;
       preview-size-scale = 0.0;
       running-indicator-style = "DEFAULT";
       transparency-mode = "DEFAULT";
+    };
+
+    "org/gnome/shell/extensions/hidetopbar" = {
+      enable-active-window = true;
+      enable-intellihide = true;
+      hot-corner = true;
+      mouse-sensitive = true;
+      pressure-threshold = 100;
+      pressure-timeout = 1000;
+      show-in-overview = false;
+    };
+
+    "org/gnome/shell/extensions/blur-my-shell/panel" = {
+      blur = false;
     };
 
     "org/gnome/shell/extensions/dash2dock-lite" = {

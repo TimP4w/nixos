@@ -5,6 +5,8 @@
   desktop = import ./desktop;
   gaming = import ./gaming;
   gnome = import ./gnome;
+  plasma = import ./plasma;
+
   grub = import ./grub;
   ld = import ./ld;
   network = import ./network;
