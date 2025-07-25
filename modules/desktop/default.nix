@@ -1,5 +1,11 @@
-{ config, pkgs, lib, ... }:
-with lib; let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+with lib;
+let
   cfg = config.modules.nixos.desktop;
 in
 {
@@ -9,8 +15,14 @@ in
 
   config = mkIf cfg.enable {
     # Printing
-    services.printing = { enable = true; drivers = [ pkgs.epson-escpr ]; };
-    services.avahi = { enable = true; nssmdns4 = true; };
+    services.printing = {
+      enable = true;
+      drivers = [ pkgs.epson-escpr ];
+    };
+    services.avahi = {
+      enable = true;
+      nssmdns4 = true;
+    };
 
     # Fonts
     fonts.packages = with pkgs; [
@@ -25,10 +37,10 @@ in
     services.flatpak.enable = true;
     environment.systemPackages = with pkgs; [
       brave
-      thunderbird 
+      thunderbird
       nh # https://github.com/viperML/nh
       nixd # TODO: Move to dev module
-      nixpkgs-fmt
+      nixfmt-rfc-style
       onlyoffice-bin_latest
       protonvpn-gui
       papers # PDF Reader
@@ -45,8 +57,8 @@ in
       amberol # Audio player
       showtime # Video player
       gnupg # gpg
-      pinentry# gpg
-      pinentry-tty# gpg
+      pinentry # gpg
+      pinentry-tty # gpg
     ];
   };
 }

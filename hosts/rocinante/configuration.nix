@@ -1,9 +1,13 @@
-{ pkgs, pkgs-unstable, VARS, ... }:
 {
-  imports =
-    [
-      ./hardware-configuration.nix # Include the results of the hardware scan.
-    ];
+  pkgs,
+  pkgs-unstable,
+  VARS,
+  ...
+}:
+{
+  imports = [
+    ./hardware-configuration.nix # Include the results of the hardware scan.
+  ];
 
   boot = {
     kernelPackages = pkgs.linuxPackages_6_15;
@@ -12,15 +16,18 @@
     #initrd.kernelModules = [ ];
   };
 
-  environment.systemPackages = with pkgs; [
-    python3
-    nodejs
-    gparted
-    vscode
-    binutils
-  ] ++ (with pkgs-unstable; [
-    warp-terminal
-  ]);
+  environment.systemPackages =
+    with pkgs;
+    [
+      python3
+      nodejs
+      gparted
+      vscode
+      binutils
+    ]
+    ++ (with pkgs-unstable; [
+      warp-terminal
+    ]);
 
   # Fingerprint Sensor
   services.fprintd = {
@@ -28,7 +35,6 @@
   };
   #security.pam.services.login.fprintAuth = true;
   security.pam.services.gdm.fprintAuth = true;
-
 
   virtualisation.waydroid.enable = true;
 
@@ -65,16 +71,21 @@
 
   #   services.xserver.xkb = {
   #  layout = "ch";
-   # variant = "de_nodeadkeys";
+  # variant = "de_nodeadkeys";
   #};
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.groups.${VARS.userSettings.username} = {};
+  users.groups.${VARS.userSettings.username} = { };
 
   users.users.${VARS.userSettings.username} = {
     isNormalUser = true;
     description = VARS.userSettings.username;
-    extraGroups = [ "networkmanager" "wheel" "dialout" VARS.userSettings.username ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "dialout"
+      VARS.userSettings.username
+    ];
   };
 
   # Before changing this value read the documentation for this option

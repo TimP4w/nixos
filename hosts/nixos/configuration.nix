@@ -1,9 +1,17 @@
-{ config, pkgs, lib, inputs, outputs, pkgs-unstable, VARS, ... }:
 {
-  imports =
-    [
-      ./hardware-configuration.nix # Include the results of the hardware scan.
-    ];
+  config,
+  pkgs,
+  lib,
+  inputs,
+  outputs,
+  pkgs-unstable,
+  VARS,
+  ...
+}:
+{
+  imports = [
+    ./hardware-configuration.nix # Include the results of the hardware scan.
+  ];
 
   boot = {
     kernelPackages = pkgs.linuxPackages_6_15;
@@ -12,29 +20,35 @@
     #initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_drm" "nvidia_uvm" ];
   };
 
-  environment.systemPackages = with pkgs; [
-    python3
-    nodejs
-    gparted
-    vscode
-    xclip
-    wineWowPackages.stable
-    winetricks
-    binutils
-    #cnspec # security (mondoo)
-    #cnquery
-    openrgb # Move to rgb / hw module
-  ] ++ (with pkgs-unstable; [
-    warp-terminal
-    liquidctl # Move to rgb / hw module
-    lm_sensors # Move to rgb / hw module
-  ]);
+  environment.systemPackages =
+    with pkgs;
+    [
+      python3
+      nodejs
+      gparted
+      vscode
+      xclip
+      wineWowPackages.stable
+      winetricks
+      binutils
+      #cnspec # security (mondoo)
+      #cnquery
+      openrgb # Move to rgb / hw module
+    ]
+    ++ (with pkgs-unstable; [
+      warp-terminal
+      liquidctl # Move to rgb / hw module
+      lm_sensors # Move to rgb / hw module
+    ]);
 
   programs.coolercontrol = {
     enable = true;
     nvidiaSupport = true;
   };
-  services.udev.packages = [ pkgs-unstable.liquidctl pkgs.openrgb ];
+  services.udev.packages = [
+    pkgs-unstable.liquidctl
+    pkgs.openrgb
+  ];
 
   services.udev.extraRules = ''
     # Logitech PRO X Wireless Gaming Headset
@@ -75,12 +89,17 @@
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.groups.${VARS.userSettings.username} = {};
+  users.groups.${VARS.userSettings.username} = { };
 
   users.users.${VARS.userSettings.username} = {
     isNormalUser = true;
     description = VARS.userSettings.username;
-    extraGroups = [ "networkmanager" "wheel" "dialout" VARS.userSettings.username ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "dialout"
+      VARS.userSettings.username
+    ];
   };
 
   # Hack to avoid a suspending loop after waking up. Mind that this system is NOT a laptop and doesn't have a lid...
