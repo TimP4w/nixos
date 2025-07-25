@@ -11,6 +11,7 @@
   ld = import ./ld;
   network = import ./network;
   nvidia = import ./nvidia;
+  intel-graphics = import ./intel-graphics;
   zsh = import ./zsh;
   password-manager = import ./password-manager;
   logitech = import ./logitech;
@@ -18,4 +19,5 @@
   bluetooth = import ./bluetooth;
   wayland = import ./wayland;
   plymouth = import ./plymouth;
+  wireguard = import ./wireguard;
 }

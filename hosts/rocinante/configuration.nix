@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, outputs, pkgs-unstable, VARS, ... }:
+{ pkgs, pkgs-unstable, VARS, ... }:
 {
   imports =
     [
@@ -8,7 +8,7 @@
   boot = {
     kernelPackages = pkgs.linuxPackages_6_15;
     kernelParams = [ "quiet" ];
-    # blacklistedKernelModules = [  ];
+    #blacklistedKernelModules = [  ];
     #initrd.kernelModules = [ ];
   };
 
@@ -17,10 +17,6 @@
     nodejs
     gparted
     vscode
-    gnupg
-    pinentry
-    pinentry-tty
-    xclip
     binutils
   ] ++ (with pkgs-unstable; [
     warp-terminal
@@ -33,17 +29,6 @@
   #security.pam.services.login.fprintAuth = true;
   security.pam.services.gdm.fprintAuth = true;
 
-  # Intel video drivers
-  services.xserver.videoDrivers = [ "modesetting" ];
-  hardware.graphics = {
-    enable = true;
-    extraPackages = [
-      pkgs.intel-media-driver
-    ];
-  };
-  environment.sessionVariables = {
-    LIBVA_DRIVER_NAME = "iHD";
-  };
 
   virtualisation.waydroid.enable = true;
 
@@ -52,7 +37,7 @@
     docker.enable = true;
     audio = {
       enable = true;
-      # enableRealTime = false;
+      enableRealTime = false;
     };
     desktop.enable = true;
     gaming = {
@@ -61,7 +46,6 @@
     };
     gnome.enable = true;
     plasma.enable = false;
-    # hyprland.enable = false;
     grub = {
       enable = true;
       resolution = "2880x1800";
@@ -69,12 +53,14 @@
     ld.enable = true;
     network.enable = true;
     nvidia.enable = false;
+    intel-graphics.enable = true;
     zsh.enable = true;
     password-manager.enable = true;
     logitech.enable = true;
     bluetooth.enable = true;
     wayland.enable = true;
     plymouth.enable = true;
+    wireguard.enable = true;
   };
 
   #   services.xserver.xkb = {
@@ -88,7 +74,7 @@
   users.users.${VARS.userSettings.username} = {
     isNormalUser = true;
     description = VARS.userSettings.username;
-    extraGroups = [ "networkmanager" "wheel" "dialout" "video" VARS.userSettings.username ];
+    extraGroups = [ "networkmanager" "wheel" "dialout" VARS.userSettings.username ];
   };
 
   # Before changing this value read the documentation for this option

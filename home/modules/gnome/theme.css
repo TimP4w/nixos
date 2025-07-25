@@ -2,13 +2,11 @@
 
 #panel {
   /* EDITED */
-  background-color: rgba(3, 2, 2, 0.8);
+  background-color: transparent;
   height: 32px;
   font-size: 14px;
   box-shadow: none;
   font-weight: bold;
-  border-radius: 14px;
-  margin: 6px;
   transition-duration: 250ms;
 }
 

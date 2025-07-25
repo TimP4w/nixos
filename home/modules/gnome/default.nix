@@ -27,6 +27,10 @@ in {
       gnomeExtensions.gsconnect
       gnomeExtensions.hide-top-bar
       gnomeExtensions.tiling-shell
+
+      gnomeExtensions.gjs-osk # Needed since default OSK sucks (for rocinante)
+      gnomeExtensions.disable-unredirect # Fixes (for rocinante) bug where top bar hides too fast
+
       adwaita-icon-theme
       gnome-themes-extra
       imagemagick # Needed by dash2dock-lite

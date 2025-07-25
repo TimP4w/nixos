@@ -1,4 +1,4 @@
-{ config, pkgs, lib, VARS, ... }:
+{ config, pkgs, lib, ... }:
 with lib; let
   cfg = config.modules.nixos.desktop;
 in
@@ -16,7 +16,6 @@ in
     fonts.packages = with pkgs; [
       fira-code
       fira-code-symbols
-      # (nerdfonts.override { fonts = [ "FiraCode" ]; })
       nerd-fonts.fira-code
       corefonts # windows fonts, Segoe UI missing ):
     ];
@@ -45,6 +44,9 @@ in
       impression # Bootable USB writer
       amberol # Audio player
       showtime # Video player
+      gnupg # gpg
+      pinentry# gpg
+      pinentry-tty# gpg
     ];
   };
 }

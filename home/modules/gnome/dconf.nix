@@ -21,7 +21,7 @@ with lib.hm.gvariant;
 
      "org/gnome/shell/extensions/user-theme" = {
       name = "CustomShell";
-    };
+    };                                         
 
 
     "org/gnome/settings-daemon/plugins/power" = {
@@ -67,19 +67,21 @@ with lib.hm.gvariant;
 
     "org/gnome/shell" = {
       disable-user-extensions = false;
-      enabled-extensions = [
-        pkgs.gnomeExtensions.user-themes.extensionUuid
-        pkgs.gnomeExtensions.appindicator.extensionUuid # appindicatorsupport@rgcjonas.gmail.com
-        pkgs.gnomeExtensions.dash2dock-lite.extensionUuid # dash2dock-lite@icedman.github.com
-        pkgs.gnomeExtensions.mpris-label.extensionUuid # "mprisLabel@moon-0xff.github.com"
-        pkgs.gnomeExtensions.quake-terminal.extensionUuid # "quake-terminal@diegodario88.github.io"
-        pkgs.gnomeExtensions.blur-my-shell.extensionUuid # "blur-my-shell@aunetx"
-        pkgs.gnomeExtensions.solaar-extension.extensionUuid # "solaar-extension@sidevesh"
-        pkgs.gnomeExtensions.clipboard-history.extensionUuid
+      enabled-extensions = with pkgs; [
+        gnomeExtensions.user-themes.extensionUuid
+        gnomeExtensions.appindicator.extensionUuid # appindicatorsupport@rgcjonas.gmail.com
+        gnomeExtensions.dash2dock-lite.extensionUuid # dash2dock-lite@icedman.github.com
+        gnomeExtensions.mpris-label.extensionUuid # "mprisLabel@moon-0xff.github.com"
+        gnomeExtensions.quake-terminal.extensionUuid # "quake-terminal@diegodario88.github.io"
+        gnomeExtensions.blur-my-shell.extensionUuid # "blur-my-shell@aunetx"
+        gnomeExtensions.solaar-extension.extensionUuid # "solaar-extension@sidevesh"
+        gnomeExtensions.clipboard-history.extensionUuid
         #pkgs.gnomeExtensions.compiz-alike-magic-lamp-effect # Looks nice, breaks a lot of stuff
         #pkgs.gnomeExtensions.gsconnect
-        pkgs.gnomeExtensions.hide-top-bar.extensionUuid
-        pkgs.gnomeExtensions.tiling-shell.extensionUuid
+        gnomeExtensions.hide-top-bar.extensionUuid
+        gnomeExtensions.disable-unredirect.extensionUuid # Fixes (for rocinante) bug where top bar hides too fast
+        gnomeExtensions.tiling-shell.extensionUuid
+        gnomeExtensions.gjs-osk.extensionUuid
       ];
       favorite-apps = [
         "brave-browser.desktop"
@@ -94,7 +96,6 @@ with lib.hm.gvariant;
         "spotify.desktop"
         "plexmediaplayer.desktop"
         "org.gnome.Nautilus.desktop"
-        "dev.warp.Warp.desktop"
       ];
     };
 
@@ -237,6 +238,37 @@ with lib.hm.gvariant;
       wine-behavior = true;
     };
 
+        "org/gnome/shell/extensions/gjsosk" = {
+      background-a = 1.0;
+      background-a-dark = 1.0;
+      background-b = 250.0;
+      background-b-dark = 26.0;
+      background-g = 250.0;
+      background-g-dark = 24.0;
+      background-r = 250.0;
+      background-r-dark = 24.0;
+      border-spacing-px = 3;
+      default-monitor = "1:eDP-1";
+      default-snap = 7;
+      enable-drag = false;
+      enable-tap-gesture = 1;
+      font-bold = false;
+      font-size-px = 13;
+      indicator-enabled = true;
+      landscape-height-percent = 40;
+      landscape-width-percent = 85;
+      layout-landscape = 4;
+      layout-portrait = 0;
+      outer-spacing-px = 4;
+      play-sound = true;
+      portrait-height-percent = 30;
+      portrait-width-percent = 100;
+      round-key-corners = true;
+      show-icons = true;
+      snap-spacing-px = 0;
+      system-accent-col = false;
+    };
+
     "org/gnome/shell/extensions/tiling-assistant" = {
       activate-layout0 = [ ];
       activate-layout1 = [ ];
@@ -244,40 +276,40 @@ with lib.hm.gvariant;
       activate-layout3 = [ ];
       active-window-hint = 1;
       active-window-hint-color = "rgb(8,96,242)";
-      auto-tile = [ ];
-      center-window = [ ];
-      debugging-free-rects = [ ];
-      debugging-show-tiled-rects = [ ];
+      auto-tile = [];
+      center-window = [];
+      debugging-free-rects = [];
+      debugging-show-tiled-rects = [];
       default-move-mode = 0;
       dynamic-keybinding-behavior = 0;
       import-layout-examples = false;
       last-version-installed = 47;
       maximize-with-gap = false;
       restore-window = [ "<Super>Down" ];
-      search-popup-layout = [ ];
+      search-popup-layout = [];
       single-screen-gap = 8;
       tile-bottom-half = [ "<Super>KP_2" ];
-      tile-bottom-half-ignore-ta = [ ];
+      tile-bottom-half-ignore-ta = [];
       tile-bottomleft-quarter = [ "<Super>KP_1" ];
-      tile-bottomleft-quarter-ignore-ta = [ ];
+      tile-bottomleft-quarter-ignore-ta = [];
       tile-bottomright-quarter = [ "<Super>KP_3" ];
-      tile-bottomright-quarter-ignore-ta = [ ];
+      tile-bottomright-quarter-ignore-ta = [];
       tile-edit-mode = [ "<Shift><Alt>l" ];
       tile-left-half = [ "<Super>Left" "<Super>KP_4" ];
-      tile-left-half-ignore-ta = [ ];
+      tile-left-half-ignore-ta = [];
       tile-maximize = [ "<Super>Up" "<Super>KP_5" ];
-      tile-maximize-horizontally = [ ];
-      tile-maximize-vertically = [ ];
+      tile-maximize-horizontally = [];
+      tile-maximize-vertically = [];
       tile-right-half = [ "<Super>Right" "<Super>KP_6" ];
-      tile-right-half-ignore-ta = [ ];
+      tile-right-half-ignore-ta = [];
       tile-top-half = [ "<Super>KP_8" ];
-      tile-top-half-ignore-ta = [ ];
+      tile-top-half-ignore-ta = [];
       tile-topleft-quarter = [ "<Super>KP_7" ];
-      tile-topleft-quarter-ignore-ta = [ ];
+      tile-topleft-quarter-ignore-ta = [];
       tile-topright-quarter = [ "<Super>KP_9" ];
-      tile-topright-quarter-ignore-ta = [ ];
-      toggle-always-on-top = [ ];
-      toggle-tiling-popup = [ ];
+      tile-topright-quarter-ignore-ta = [];
+      toggle-always-on-top = [];
+      toggle-tiling-popup = [];
       window-gap = 8;
     };
 

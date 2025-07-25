@@ -8,7 +8,7 @@
   go = import ./development/go.nix;
   gaming = import ./gaming;
   kitty = import ./kitty;
-  nvim = import ./nvim;
+  #nvim = import ./nvim;
   ssh = import ./ssh;
   zsh = import ./zsh;
   git = import ./git;

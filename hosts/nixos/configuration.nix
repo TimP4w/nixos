@@ -17,10 +17,6 @@
     nodejs
     gparted
     vscode
-    mdadm # raid
-    gnupg
-    pinentry
-    pinentry-tty
     xclip
     wineWowPackages.stable
     winetricks
