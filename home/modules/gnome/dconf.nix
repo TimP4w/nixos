@@ -11,7 +11,7 @@ with lib.hm.gvariant;
   ###
   home.file.".local/share/themes/CustomShell/gnome-shell/gnome-shell.css".source = ./theme.css;
 
-    home.file.".local/share/themes/CustomShell/index.theme".text = ''
+  home.file.".local/share/themes/CustomShell/index.theme".text = ''
     [Shell]
     Name=CustomShell
     Comment=Custom GNOME Shell Theme
@@ -19,10 +19,9 @@ with lib.hm.gvariant;
 
   dconf.settings = {
 
-     "org/gnome/shell/extensions/user-theme" = {
+    "org/gnome/shell/extensions/user-theme" = {
       name = "CustomShell";
-    };                                         
-
+    };
 
     "org/gnome/settings-daemon/plugins/power" = {
       sleep-inactive-ac-type = "nothing"; # Do not suspend on AC
@@ -38,11 +37,17 @@ with lib.hm.gvariant;
     };
 
     "org/gnome/mutter" = {
-      experimental-features = [ "xwayland-native-scaling" "variable-refresh-rate" "scale-monitor-framebuffer"  ];
+      experimental-features = [
+        "xwayland-native-scaling"
+        "variable-refresh-rate"
+        "scale-monitor-framebuffer"
+      ];
     };
 
     "org/gnome/settings-daemon/plugins/media-keys" = {
-      custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/resources/" ];
+      custom-keybindings = [
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/resources/"
+      ];
     };
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/resources" = {
@@ -52,7 +57,7 @@ with lib.hm.gvariant;
     };
 
     "org/gnome/desktop/break-reminders" = {
-      selected-breaks = [];
+      selected-breaks = [ ];
     };
 
     "org/gnome/desktop/break-reminders/eyesight" = {
@@ -143,6 +148,17 @@ with lib.hm.gvariant;
       blur = false;
     };
 
+    "org/gnome/shell/extensions/blur-my-shell/applications" = {
+      blur = true;
+      blur-on-overview = false;
+      brightness = 1.0;
+      dynamic-opacity = false;
+      enable-all = false;
+      opacity = 200;
+      sigma = 25;
+      whitelist = [ "kitty" ];
+    };
+
     "org/gnome/shell/extensions/dash2dock-lite" = {
       animate-icons-unmute = true;
       animation-bounce = 0.75;
@@ -154,7 +170,12 @@ with lib.hm.gvariant;
       apps-icon-front = true;
       autohide-dash = true;
       autohide-speed = 0;
-      background-color = mkTuple [ 0.0 0.0 0.0 0.0 ];
+      background-color = mkTuple [
+        0.0
+        0.0
+        0.0
+        0.0
+      ];
       blur-background = false;
       blur-resolution = 0;
       # border-color = mkTuple [ 6.666666828095913e-3 6.666666828095913e-3 6.666666828095913e-3 1.0 ];
@@ -182,7 +203,12 @@ with lib.hm.gvariant;
       mounted-icon = true;
       msg-to-ext = "";
       multi-monitor-preference = 1;
-      notification-badge-color = mkTuple [ 0.0 0.5 1.0 1.0 ];
+      notification-badge-color = mkTuple [
+        0.0
+        0.5
+        1.0
+        1.0
+      ];
       notification-badge-size = 2;
       notification-badge-style = 1;
       open-app-animation = true;
@@ -190,19 +216,33 @@ with lib.hm.gvariant;
       preferred-monitor = 0;
       pressure-sense = false;
       pressure-sense-sensitivity = 0.4;
-      running-indicator-color = mkTuple [ 1.0 1.0 1.0 1.0 ];
+      running-indicator-color = mkTuple [
+        1.0
+        1.0
+        1.0
+        1.0
+      ];
       running-indicator-size = 0;
       running-indicator-style = 1;
       scroll-sensitivity = 0.4;
       separator-thickness = 2;
-      separator-color = mkTuple [ 1.0 1.0 1.0 1.0 ];
+      separator-color = mkTuple [
+        1.0
+        1.0
+        1.0
+        1.0
+      ];
       shrink-icons = 1;
       topbar-blur-background = false;
       topbar-border-thickness = 0;
-      topbar-foreground-color = mkTuple [ 1.0 1.0 1.0 1.0 ];
+      topbar-foreground-color = mkTuple [
+        1.0
+        1.0
+        1.0
+        1.0
+      ];
       trash-icon = true;
     };
-
 
     "org/gnome/shell/extensions/mpris-label" = {
       album-size = 60;
@@ -238,7 +278,7 @@ with lib.hm.gvariant;
       wine-behavior = true;
     };
 
-        "org/gnome/shell/extensions/gjsosk" = {
+    "org/gnome/shell/extensions/gjsosk" = {
       background-a = 1.0;
       background-a-dark = 1.0;
       background-b = 250.0;
@@ -276,51 +316,71 @@ with lib.hm.gvariant;
       activate-layout3 = [ ];
       active-window-hint = 1;
       active-window-hint-color = "rgb(8,96,242)";
-      auto-tile = [];
-      center-window = [];
-      debugging-free-rects = [];
-      debugging-show-tiled-rects = [];
+      auto-tile = [ ];
+      center-window = [ ];
+      debugging-free-rects = [ ];
+      debugging-show-tiled-rects = [ ];
       default-move-mode = 0;
       dynamic-keybinding-behavior = 0;
       import-layout-examples = false;
       last-version-installed = 47;
       maximize-with-gap = false;
       restore-window = [ "<Super>Down" ];
-      search-popup-layout = [];
+      search-popup-layout = [ ];
       single-screen-gap = 8;
       tile-bottom-half = [ "<Super>KP_2" ];
-      tile-bottom-half-ignore-ta = [];
+      tile-bottom-half-ignore-ta = [ ];
       tile-bottomleft-quarter = [ "<Super>KP_1" ];
-      tile-bottomleft-quarter-ignore-ta = [];
+      tile-bottomleft-quarter-ignore-ta = [ ];
       tile-bottomright-quarter = [ "<Super>KP_3" ];
-      tile-bottomright-quarter-ignore-ta = [];
+      tile-bottomright-quarter-ignore-ta = [ ];
       tile-edit-mode = [ "<Shift><Alt>l" ];
-      tile-left-half = [ "<Super>Left" "<Super>KP_4" ];
-      tile-left-half-ignore-ta = [];
-      tile-maximize = [ "<Super>Up" "<Super>KP_5" ];
-      tile-maximize-horizontally = [];
-      tile-maximize-vertically = [];
-      tile-right-half = [ "<Super>Right" "<Super>KP_6" ];
-      tile-right-half-ignore-ta = [];
+      tile-left-half = [
+        "<Super>Left"
+        "<Super>KP_4"
+      ];
+      tile-left-half-ignore-ta = [ ];
+      tile-maximize = [
+        "<Super>Up"
+        "<Super>KP_5"
+      ];
+      tile-maximize-horizontally = [ ];
+      tile-maximize-vertically = [ ];
+      tile-right-half = [
+        "<Super>Right"
+        "<Super>KP_6"
+      ];
+      tile-right-half-ignore-ta = [ ];
       tile-top-half = [ "<Super>KP_8" ];
-      tile-top-half-ignore-ta = [];
+      tile-top-half-ignore-ta = [ ];
       tile-topleft-quarter = [ "<Super>KP_7" ];
-      tile-topleft-quarter-ignore-ta = [];
+      tile-topleft-quarter-ignore-ta = [ ];
       tile-topright-quarter = [ "<Super>KP_9" ];
-      tile-topright-quarter-ignore-ta = [];
-      toggle-always-on-top = [];
-      toggle-tiling-popup = [];
+      tile-topright-quarter-ignore-ta = [ ];
+      toggle-always-on-top = [ ];
+      toggle-tiling-popup = [ ];
       window-gap = 8;
     };
 
     "org/gnome/shell/extensions/tilingshell" = {
+      enable-blur-selected-tilepreview = true;
+      enable-blur-snap-assistant = true;
       enable-screen-edges-windows-suggestions = true;
       enable-snap-assistant-windows-suggestions = true;
       enable-tiling-system-windows-suggestions = true;
       last-version-name-installed = "16.4";
       layouts-json = "[{\"id\":\"Layout 1\",\"tiles\":[{\"x\":0,\"y\":0,\"width\":0.22,\"height\":0.5,\"groups\":[1,2]},{\"x\":0,\"y\":0.5,\"width\":0.22,\"height\":0.5,\"groups\":[1,2]},{\"x\":0.22,\"y\":0,\"width\":0.56,\"height\":1,\"groups\":[2,3]},{\"x\":0.78,\"y\":0,\"width\":0.22,\"height\":0.5,\"groups\":[3,4]},{\"x\":0.78,\"y\":0.5,\"width\":0.22,\"height\":0.5,\"groups\":[3,4]}]},{\"id\":\"Layout 2\",\"tiles\":[{\"x\":0,\"y\":0,\"width\":0.22,\"height\":1,\"groups\":[1]},{\"x\":0.22,\"y\":0,\"width\":0.56,\"height\":1,\"groups\":[1,2]},{\"x\":0.78,\"y\":0,\"width\":0.22,\"height\":1,\"groups\":[2]}]},{\"id\":\"Layout 3\",\"tiles\":[{\"x\":0,\"y\":0,\"width\":0.33,\"height\":1,\"groups\":[1]},{\"x\":0.33,\"y\":0,\"width\":0.67,\"height\":1,\"groups\":[1]}]},{\"id\":\"Layout 4\",\"tiles\":[{\"x\":0,\"y\":0,\"width\":0.67,\"height\":1,\"groups\":[1]},{\"x\":0.67,\"y\":0,\"width\":0.33,\"height\":1,\"groups\":[1]}]},{\"id\":\"1451752\",\"tiles\":[{\"x\":0,\"y\":0,\"width\":0.5001953125,\"height\":1,\"groups\":[1]},{\"x\":0.5001953125,\"y\":0,\"width\":0.4998046874999929,\"height\":1,\"groups\":[1]}]},{\"id\":\"118070\",\"tiles\":[{\"x\":0,\"y\":0,\"width\":1,\"height\":0.5013888888888889,\"groups\":[1]},{\"x\":0,\"y\":0.5013888888888889,\"width\":1,\"height\":0.4986111111111111,\"groups\":[1]}]}]";
       overridden-settings = "{\"org.gnome.mutter.keybindings\":{\"toggle-tiled-right\":\"['<Super>Right']\",\"toggle-tiled-left\":\"['<Super>Left']\"},\"org.gnome.desktop.wm.keybindings\":{\"maximize\":\"['<Super>Up']\",\"unmaximize\":\"['<Super>Down', '<Alt>F5']\"},\"org.gnome.mutter\":{\"edge-tiling\":\"false\"}}";
-      selected-layouts = [ [ "Layout 1" "Layout 1" ] [ "Layout 1" "Layout 1" ] ];
+      selected-layouts = [
+        [
+          "Layout 1"
+          "Layout 1"
+        ]
+        [
+          "Layout 1"
+          "Layout 1"
+        ]
+      ];
     };
   };
 }

@@ -54,7 +54,7 @@
     plasma.enable = false;
     grub = {
       enable = true;
-      resolution = "2880x1800";
+      resolution = "1920x1440";
     };
     ld.enable = true;
     network.enable = true;
